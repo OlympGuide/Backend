@@ -9,4 +9,8 @@ services:
      - "8000:8000"
     volumes:
       - ../Frontend:/src
-    
+  backend:
+    build:
+        context: ./OlympGuide/
+    ports:
+      - "8081:8080"
