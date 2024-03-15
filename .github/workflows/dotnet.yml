@@ -39,3 +39,18 @@ jobs:
     - name: Test
       run: dotnet test --no-build --verbosity normal
       working-directory: ${{ env.BACKEND_DIRECTORY }}
+
+  docker-build:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build image           
+        uses: ./.github/actions/image-build
+        with:
+          working-directory: ${{ env.BACKEND_DIRECTORY }}
+          registry: ${{ env.REGISTRY }}
+          image-name: ${{ env.IMAGE_NAME }}
+          tags: latest
+          github-token: ${{ secrets.GITHUB_TOKEN }}
