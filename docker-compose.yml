@@ -6,7 +6,9 @@ services:
       context: ../Frontend/
       target: development
     ports:
-     - "8000:8000"
+      - "8000:8000"
+    volumes:
+      - ../Frontend:/src
   backend:
     build:
         context: ./OlympGuide/
