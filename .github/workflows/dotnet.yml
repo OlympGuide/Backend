@@ -54,7 +54,7 @@ jobs:
         id: latest-tag
         run: |
           echo "fetching tags"
-          TAG=$(git describe --tags $(git rev-list --tags --max-count=1))
+          TAG=$(git describe --tags $(git rev-list --tags --max-count=1) 2>/dev/null || echo "latest")
           echo "fetchedt tags: $TAG "
           if [ -z "$TAG" ]; then
             echo "no tag found, default tag: lastest will be used"
