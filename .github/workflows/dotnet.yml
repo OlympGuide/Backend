@@ -55,6 +55,7 @@ jobs:
         run: |
           echo "fetching tags"
           TAG=$(git describe --tags $(git rev-list --tags --max-count=1) 2>/dev/null || echo "latest")
+          echo "parsed tag: $TAG"
 
       - name: image-build
         uses: ./.github/workflows/image-build
