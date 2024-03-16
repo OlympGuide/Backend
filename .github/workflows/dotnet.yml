@@ -60,7 +60,7 @@ jobs:
         id: latest-tag
         run: |
           echo "fetching tags"
-          TAG=$(git describe --tags $(git rev-list --tags --max-count=1) 2>/dev/null || echo "latest")
+          TAG=$(git describe --tags $(git rev-list --tags --max-count=1) 2>/dev/null || echo "version.${{ github.run_number }}")
           echo "parsed tag: $TAG"
           echo "image-tag=$TAG" >> $GITHUB_OUTPUT
 
