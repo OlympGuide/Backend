@@ -13,7 +13,7 @@ env:
   BACKEND_DIRECTORY: OlympGuide
   # DOCKER env
   REGISTRY: ghcr.io
-  IMAGE_NAME: ${{ github.repository }}
+  IMAGE_NAME: ${{ github.repository }}/webserver
   ORGANISATION: OlympGuide
 
   # HELM env
@@ -60,25 +60,25 @@ jobs:
           echo "parsed tag: $TAG"
           echo "image-tag=$TAG" >> $GITHUB_OUTPUT
 
-      - name: Log in to GitHub Container Registry
-        uses: docker/login-action@v3.1.0
-        with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{secrets.GITHUB_TOKEN}}
-          
-      - name: Build and push Docker image
-        run: |
-          docker build -t ${{env.IMAGE_NAME}}:latest -f ${{env.BACKEND_DIRECTORY}}/Dockerfile ${{ env.BACKEND_DIRECTORY }}
-          echo "push image: ${{ env.IMAGE_NAME }}:${{ steps.latest-tag.outputs.image-tag }}"
-          docker push ${{ env.IMAGE_NAME }}:${{ steps.latest-tag.outputs.image-tag }}
-
-      # - name: image-build
-      #   uses: ./.github/workflows/image-build
+      # - name: Log in to GitHub Container Registry
+      #   uses: docker/login-action@v3.1.0
       #   with:
-      #     working-directory: ${{ env.BACKEND_DIRECTORY }}
-      #     registry: ${{ env.REGISTRY }}
-      #     image-name: ${{ env.IMAGE_NAME }}
-      #     tags: ${{ steps.latest-tag.outputs.image-tag }}
-      #     github-token: ${{ secrets.GITHUB_TOKEN }}
+      #     registry: ghcr.io
+      #     username: ${{ github.actor }}
+      #     password: ${{secrets.GITHUB_TOKEN}}
+          
+      # - name: Build and push Docker image
+      #   run: |
+      #     docker build -t ${{env.IMAGE_NAME}}:latest -f ${{env.BACKEND_DIRECTORY}}/Dockerfile ${{ env.BACKEND_DIRECTORY }}
+      #     echo "push image: ${{ env.IMAGE_NAME }}:${{ steps.latest-tag.outputs.image-tag }}"
+      #     docker push ${{ env.IMAGE_NAME }}:${{ steps.latest-tag.outputs.image-tag }}
+
+      - name: image-build
+        uses: ./.github/workflows/image-build
+        with:
+          working-directory: ${{ env.BACKEND_DIRECTORY }}
+          registry: ${{ env.REGISTRY }}
+          image-name: ${{ env.IMAGE_NAME }}
+          tags: ${{ steps.latest-tag.outputs.image-tag }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
           
