@@ -55,6 +55,7 @@ jobs:
         run: |
           echo "fetching tags"
           TAG=$(git describe --tags $(git rev-list --tags --max-count=1))
+          echo "fetchedt tags: $TAG "
           if [ -z "$TAG" ]; then
             echo "no tag found, default tag: lastest will be used"
             echo "imagetag=latest" >> $GITHUB_OUTPUT
