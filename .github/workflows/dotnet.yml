@@ -11,7 +11,7 @@ env:
   BACKEND_DIRECTORY: OlympGuide
   # DOCKER env
   REGISTRY: ghcr.io
-  IMAGE_NAME: ${{ github.repository }}/backend
+  IMAGE_NAME: olympguide/backend
   ORGANISATION: OlympGuide
   REPOSITROY: Olympguide-Backend
   # HELM env
