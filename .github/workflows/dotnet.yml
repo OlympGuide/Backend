@@ -12,6 +12,8 @@ env:
   # DOCKER env
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}/backend
+  ORGANISATION: OlympGuide
+  REPOSITROY: Olympguide-Backend
   # HELM env
   HELM_DIRECTORY: helm
   HELM_RELEASE_NAME: olympguid
@@ -45,7 +47,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-
+      
       - name: Build image           
         uses: ./.github/actions/image-build
         with:
@@ -53,4 +55,17 @@ jobs:
           registry: ${{ env.REGISTRY }}
           image-name: ${{ env.IMAGE_NAME }}
           tags: latest
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v3.1.0
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{secrets.GITHUB_TOKEN}}
+  
+      - name: Build Docker image
+        run: docker build -t ghcr.io/${{ github.repository }}/${{env.IMAGE_NAME}}:latest .
+  
+      - name: Push Docker image to GHCR
+        run: docker push ghcr.io/${{ github.repository }}/${{env.IMAGE_NAME}}:latest 
+          
