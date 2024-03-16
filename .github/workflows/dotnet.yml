@@ -6,6 +6,8 @@ name: production
 on:
   push:
     branches: [ "main" ]
+  workflow_dispatch:
+  
 env:
   # GENERAL
   BACKEND_DIRECTORY: OlympGuide
