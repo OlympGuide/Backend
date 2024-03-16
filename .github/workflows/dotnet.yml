@@ -58,12 +58,12 @@ jobs:
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
-          password: ${{secrets.GITHUB_TOKEN}}
+          password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build and push Docker image
         run: |
           IMAGE_TAG=${{ steps.latest-tag.outputs.tag }}
           if [ -z "$IMAGE_TAG" ]; then IMAGE_TAG='latest'; fi
-          docker build -t ${{env.IMAGE_NAME}}:$IMAGE_TAG -f ${{env.BACKEND_DIRECTORY}}/Dockerfile ${{env.BACKEND_DIRECTORY}}
+          docker build -t ${{ env.IMAGE_NAME }}:$IMAGE_TAG -f ${{ env.BACKEND_DIRECTORY }}/Dockerfile ${{ env.BACKEND_DIRECTORY }}
           docker push ${{ env.IMAGE_NAME }}:$IMAGE_TAG
           
