@@ -49,14 +49,15 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
+
       - name: Get latest tag
         id: latest-tag
         run: |
           TAG=$(git describe --tags $(git rev-list --tags --max-count=1))
           if [ -z "$TAG" ]; then
-            echo "{tag}={latest}" >> $GITHUB_OUTPUT
+            echo "imagetag=latest" >> $GITHUB_OUTPUT
           else
-            echo "{tag}={$TAG}" >> $GITHUB_OUTPUT
+            echo "imagetag=$TAG" >> $GITHUB_OUTPUT
           fi
 
       - name: image-build
@@ -65,6 +66,6 @@ jobs:
           working-directory: ${{ env.BACKEND_DIRECTORY }}
           registry: ${{ env.REGISTRY }}
           image-name: ${{ env.IMAGE_NAME }}
-          tags: ${{ steps.latest-tag.outputs.tag }}
+          tags: ${{ steps.latest-tag.outputs.imagetag }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
           
