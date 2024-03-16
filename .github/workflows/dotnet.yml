@@ -47,17 +47,23 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-    
+        with:
+          fetch-depth: 0
+      - name: Get latest tag
+        id: latest-tag
+        run: echo "::set-output name=tag::$(git describe --tags $(git rev-list --tags --max-count=1))"
+        
       - name: Log in to GitHub Container Registry
         uses: docker/login-action@v3.1.0
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{secrets.GITHUB_TOKEN}}
-  
-      - name: Build Docker image
-        run: docker build -t ${{env.IMAGE_NAME}}:latest -f ${{env.BACKEND_DIRECTORY}}/Dockerfile ${{env.BACKEND_DIRECTORY}}
-  
-      - name: Push Docker image to GHCR
-        run: docker push ${{env.IMAGE_NAME}}:latest 
+
+      - name: Build and push Docker image
+        run: |
+          IMAGE_TAG=${{ steps.latest-tag.outputs.tag }}
+          if [ -z "$IMAGE_TAG" ]; then IMAGE_TAG='latest'; fi
+          docker build -t ${{env.IMAGE_NAME}}:$IMAGE_TAG -f ${{env.BACKEND_DIRECTORY}}/Dockerfile ${{env.BACKEND_DIRECTORY}}
+          docker push ${{ env.IMAGE_NAME }}:$IMAGE_TAG
           
