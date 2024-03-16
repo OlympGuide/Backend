@@ -11,9 +11,9 @@ env:
   BACKEND_DIRECTORY: OlympGuide
   # DOCKER env
   REGISTRY: ghcr.io
-  IMAGE_NAME: olympguide/backend
+  IMAGE_NAME: ${{ githib.respository }}/backend
   ORGANISATION: OlympGuide
-  REPOSITROY: Olympguide-Backend
+
   # HELM env
   HELM_DIRECTORY: helm
   HELM_RELEASE_NAME: olympguid
@@ -56,6 +56,8 @@ jobs:
           echo "fetching tags"
           TAG=$(git describe --tags $(git rev-list --tags --max-count=1) 2>/dev/null || echo "latest")
           echo "parsed tag: $TAG"
+          echo "image-tag=$TAG" >> $GITHUB_OUTPUT
+
 
       - name: image-build
         uses: ./.github/workflows/image-build
@@ -63,6 +65,6 @@ jobs:
           working-directory: ${{ env.BACKEND_DIRECTORY }}
           registry: ${{ env.REGISTRY }}
           image-name: ${{ env.IMAGE_NAME }}
-          tags: ${{ steps.latest-tag.outputs.imagetag }}
+          tags: ${{ steps.latest-tag.outputs.image-tag }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
           
