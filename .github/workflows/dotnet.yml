@@ -54,9 +54,9 @@ jobs:
         run: |
           TAG=$(git describe --tags $(git rev-list --tags --max-count=1))
           if [ -z "$TAG" ]; then
-            echo "tag=latest" >> $GITHUB_OUTPUT
+            echo "{tag}={latest}" >> $GITHUB_OUTPUT
           else
-            echo "tag=$TAG" >> $GITHUB_OUTPUT
+            echo "{tag}={$TAG}" >> $GITHUB_OUTPUT
           fi
 
       - name: image-build
