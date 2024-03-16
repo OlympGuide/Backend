@@ -51,19 +51,20 @@ jobs:
           fetch-depth: 0
       - name: Get latest tag
         id: latest-tag
-        run: echo "tag=$(git describe --tags $(git rev-list --tags --max-count=1))" >> $GITHUB_OUTPUT
-        
-      - name: Log in to GitHub Container Registry
-        uses: docker/login-action@v3.1.0
-        with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Build and push Docker image
         run: |
-          IMAGE_TAG=${{ steps.latest-tag.outputs.tag }}
-          if [ -z "$IMAGE_TAG" ]; then IMAGE_TAG='latest'; fi
-          docker build -t ${{ env.IMAGE_NAME }}:$IMAGE_TAG -f ${{ env.BACKEND_DIRECTORY }}/Dockerfile ${{ env.BACKEND_DIRECTORY }}
-          docker push ${{ env.IMAGE_NAME }}:$IMAGE_TAG
+          TAG=$(git describe --tags $(git rev-list --tags --max-count=1))
+          if [ -z "$TAG" ]; then
+            echo "tag=latest" >> $GITHUB_OUTPUT
+          else
+            echo "tag=$TAG" >> $GITHUB_OUTPUT
+          fi
+
+      - name: image-build
+        uses: ./.github/actions/image-build
+        with:
+          working-directory: ${{ env.BACKEND_DIRECTORY }}
+          registry: ${{ env.REGISTRY }}
+          image-name: ${{ env.IMAGE_NAME }}
+          tags: ${{ steps.latest-tag.outputs.tag }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
           
