@@ -62,6 +62,6 @@ jobs:
           working-directory: ${{ env.BACKEND_DIRECTORY }}
           registry: ${{ env.REGISTRY }}
           image-name: ${{ env.IMAGE_NAME }}
-          tags: lastest
+          tags: latest
           github-token: ${{ secrets.GITHUB_TOKEN }}
           
