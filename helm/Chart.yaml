@@ -1,0 +1,5 @@
+apiVersion: v2
+name: olymp-guide
+description: A Helm chart for deploying an ASP.NET Core web app container
+version: 0.1.0
+appVersion: 1.0.0

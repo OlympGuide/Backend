@@ -19,6 +19,12 @@ inputs:
   helm-values-file:
     required: true
     description: value file
+  helm-values-image-key:
+    required: true
+    description: image key in values file
+  image-tag:
+    required: true
+    description: image tag
 
 runs:
   using: "composite"
@@ -35,6 +41,6 @@ runs:
     - name: upgrading helm release
       shell: bash
       run: |-
-        helm package ${{ inputs.helm-directory }}
-        package=$(find . -name "${CHART_NAME}*.tgz")
-        helm upgrade ${{ inputs.helm-release-name }} $package  -f ${{ inputs.helm-directory }}/${{ inputs.helm-values-file }} --install -n ${{ inputs.k8s-namespace  }} --wait
+        helm package ${{ github.workspace }}/${{ secrets.HELM_DIRECTORY }}
+        package=$(find . -name "${{ secrets.CHART_NAME }}*.tgz")
+        helm upgrade ${{ secrets.HELM_RELEASE_NAME }} $package -f ${{ github.workspace }}/${{ secrets.HELM_DIRECTORY }}/${{ secrets.HELM_VALUES_FILE }} --install -n ${{ secrets.K8S_NAMESPACE }} --set ${{ helm-values-image-key }}=${{ inputs.image-tag }} --wait

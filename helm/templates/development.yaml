@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.backend.deployment.name }}
+  labels:
+    app: {{ .Values.backend.deployment.name }}
+spec:
+  replicas: {{ .Values.backend.deployment.replicas }}
+  selector:
+    matchLabels:
+      app: {{ .Values.backend.deployment.name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.backend.deployment.name }}
+      annotations:
+        {{- if .Values.backend.deployment.forceRedeploy }}
+        forceReDeploy: {{ randAlphaNum 5 | quote }}
+        {{- end }}
+    spec:
+      imagePullSecrets:
+        - name: {{ .Values.backend.deployment.image.pullSecret }}
+      containers:
+      - name: {{ .Values.backend.deployment.name }}
+        image: "{{ .Values.backend.deployment.image.repository }}:{{ .Values.backend.deployment.image.tag | default .Chart.Version }}"
+        imagePullPolicy: {{ .Values.backend.deployment.image.pullPolicy }}
+        ports:
+        - containerPort: {{ .Values.backend.deployment.port }} # Default port for ASP.NET Core, change if your app uses a different port
+        env:
+        - name: ASPNETCORE_ENVIRONMENT
+          value: "Production" # Set the environment your application is running in
+        resources:
+            requests:
+                cpu: {{ .Values.backend.deployment.resources.requests.cpu }}
+                memory: {{ .Values.backend.deployment.resources.requests.memory }}
+            limits:
+                cpu: {{ .Values.backend.deployment.resources.limits.cpu }}
+                memory: {{ .Values.backend.deployment.resources.limits.memory }}
