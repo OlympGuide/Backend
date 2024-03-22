@@ -90,5 +90,5 @@ jobs:
           k8s-namespace: ${{ env.K8S_NAMESPACE }}
           helm-release-name: ${{ env.HELM_RELEASE_NAME }}
           helm-values-file: values.yaml
-          helm-values-image-key: ${{ steps.latest-tag.outputs.image-tag }}
-          image-tag: backend.production.image.tag
+          image-tag: ${{ steps.latest-tag.outputs.image-tag }}
+          helm-values-image-key: backend.production.image.tag
