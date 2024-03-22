@@ -25,7 +25,7 @@ env:
   HELM_RELEASE_NAME: olympguid
   # K8S env
   K8S_API: https://pm4.init-lab.ch/k8s/clusters/local
-  K8S_NAMESPACE: olympguide-stage
+  K8S_NAMESPACE: olymp-guide-prod
 
 jobs:
   build:
@@ -73,3 +73,21 @@ jobs:
           tags: ${{ steps.latest-tag.outputs.image-tag }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
           
+  deploy-helm-ci:
+    runs-on: ubuntu-22.04
+    needs: [docker-build]
+    environment: staging
+
+    steps:
+      - name: checkout sources
+        uses: actions/checkout@v4
+      - name: deploy
+        uses: ./.github/actions/helm-release
+        with:
+          helm-directory: ${{ env.HELM_DIRECTORY }}
+          k8s-token: ${{ secrets.K8S_TOKEN }}
+          k8s-api: ${{ env.K8S_API }}
+          k8s-namespace: ${{ env.K8S_NAMESPACE }}
+          helm-release-name: ${{ env.HELM_RELEASE_NAME }}
+          helm-values-file: values.yaml
+          helm-values-image-key: ${{ steps.latest-tag.outputs.image-tag }}
