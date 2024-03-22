@@ -41,6 +41,6 @@ runs:
     - name: upgrading helm release
       shell: bash
       run: |-
-        helm package ${{ github.workspace }}/${{ secrets.HELM_DIRECTORY }}
-        package=$(find . -name "${{ secrets.CHART_NAME }}*.tgz")
-        helm upgrade ${{ secrets.HELM_RELEASE_NAME }} $package -f ${{ github.workspace }}/${{ secrets.HELM_DIRECTORY }}/${{ secrets.HELM_VALUES_FILE }} --install -n ${{ secrets.K8S_NAMESPACE }} --set ${{ helm-values-image-key }}=${{ inputs.image-tag }} --wait
+        helm package ${{ github.workspace }}/${{ inputs.helm-directory }}
+        package=$(find . -name "${CHART_NAME}*.tgz")
+        helm upgrade ${{ secrets.HELM_RELEASE_NAME }} $package -f ${{ github.workspace }}/${{ inputs.helm-directory }}/${{ inputs.helm-values-file }} --install -n ${{ inputs.k8s-namespace }} --set ${{ inputs.helm-values-image-key }}=${{ inputs.image-tag }} --wait
