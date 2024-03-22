@@ -91,3 +91,4 @@ jobs:
           helm-release-name: ${{ env.HELM_RELEASE_NAME }}
           helm-values-file: values.yaml
           helm-values-image-key: ${{ steps.latest-tag.outputs.image-tag }}
+          image-tag: backend.production.image.tag
