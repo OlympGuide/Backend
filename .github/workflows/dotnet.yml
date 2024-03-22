@@ -82,7 +82,7 @@ jobs:
       - name: checkout sources
         uses: actions/checkout@v4
       - name: deploy
-        uses: ./.github/actions/helm-release
+        uses: ./.github/helm-release
         with:
           helm-directory: ${{ env.HELM_DIRECTORY }}
           k8s-token: ${{ secrets.K8S_TOKEN }}
