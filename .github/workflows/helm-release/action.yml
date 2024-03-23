@@ -33,14 +33,9 @@ runs:
       uses: azure/setup-kubectl@v3
     - name: Create kube config
       shell: bash
-      # run: |-
-      #   kubectl config set-credentials sa --token=${{ inputs.k8s-token }}
-      #   kubectl config set-cluster default --server=${{ inputs.k8s-api }}
-      #   kubectl config set-context sa/default --user=ci-cd --cluster=default --namespace=${{ inputs.k8s-namespace }}
-      #   kubectl config use-context ci-cd/default 
-        run: |
-          mkdir ${HOME}/.kube 
-          echo ${{ secrets.KUBE_CONFIG }} | base64 -d > ${HOME}/.kube/config
+      run: |
+        mkdir ${HOME}/.kube 
+        echo ${{ secrets.KUBE_CONFIG }} | base64 -d > ${HOME}/.kube/config
     - name: use config
       run: kubectl config use-context olymp-guide
     - name: upgrading helm release
