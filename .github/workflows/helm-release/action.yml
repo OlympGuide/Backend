@@ -36,9 +36,9 @@ runs:
       uses: azure/setup-kubectl@v3
     - name: Create kube config
       shell: bash
-        run: |
-          mkdir ${HOME}/.kube 
-          echo "${{ inputs.kube-config }}" | base64 -d > ${HOME}/.kube/config
+      run: |-
+        mkdir ${HOME}/.kube
+        echo ${{ inputs.kube-config }} | base64 -d > ${HOME}/.kube/config
     - name: use config
       run: kubectl config use-context olymp-guide
     - name: upgrading helm release
