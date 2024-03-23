@@ -45,4 +45,4 @@ runs:
         package=$(find . -name "${CHART_NAME}*.tgz")
         echo "package file: ${{ github.workspace }}/${{ inputs.helm-directory }}/${{ inputs.helm-values-file }}"
         echo "image key-value: ${{ inputs.helm-values-image-key }}=${{ inputs.image-tag }}"
-        helm upgrade ${{ inputs.helm-release-name }} $package -f ${{ github.workspace }}/${{ inputs.helm-directory }}/${{ inputs.helm-values-file }} --install -n ${{ inputs.k8s-namespace }} --set ${{ inputs.helm-values-image-key }}=${{ inputs.image-tag }} --wait
+        helm upgrade ${{ inputs.helm-release-name }} -f ${{ github.workspace }}/${{ inputs.helm-directory }}/${{ inputs.helm-values-file }} --install -n ${{ inputs.k8s-namespace }} --set ${{ inputs.helm-values-image-key }}=${{ inputs.image-tag }} --wait
