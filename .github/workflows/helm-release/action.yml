@@ -36,8 +36,8 @@ runs:
       run: |-
         kubectl config set-credentials sa --token=${{ inputs.k8s-token }}
         kubectl config set-cluster default --server=${{ inputs.k8s-api }}
-        kubectl config set-context sa/default --user=sa --cluster=default --namespace=${{ inputs.k8s-namespace }}
-        kubectl config use-context sa/default
+        kubectl config set-context sa/ci-cd --user=sa --cluster=default --namespace=${{ inputs.k8s-namespace }}
+        kubectl config use-context sa/ci-cd 
     - name: upgrading helm release
       shell: bash
       run: |-
