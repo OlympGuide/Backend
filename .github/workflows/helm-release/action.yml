@@ -41,7 +41,7 @@ runs:
         echo "${{ inputs.kube-config }}" | base64 -d > ${HOME}/.kube/config
     - name: Use config
       shell: bash
-      run: kubectl config use-context olymp-guide
+      run: kubectl config use-context pm4-cluster
     - name: Upgrading helm release
       shell: bash
       run: |
