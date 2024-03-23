@@ -85,6 +85,7 @@ jobs:
       - name: deploy
         uses: ./.github/workflows/helm-release
         with:
+          kube-config: ${{ secrets.KUBE_CONFIG }}
           helm-directory: ${{ env.HELM_DIRECTORY }}
           k8s-token: ${{ secrets.K8S_TOKEN }}
           k8s-api: ${{ env.K8S_API }}
