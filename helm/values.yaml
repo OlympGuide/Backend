@@ -10,7 +10,7 @@ backend:
     replicas: 2
     forceRedeploy: true
     image:
-      pullSecret: backendImage ## Key for Service Account Secret on K8s
+      pullSecret: github-token-secret ## Key for Service Account Secret on K8s
       repository: ghcr.io/olympguide/backend/webserver
       pullPolicy: Always
     port: 8080
