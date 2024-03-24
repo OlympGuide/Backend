@@ -2,48 +2,49 @@ name: helm-release
 description: packages and releases the helm chart
 inputs:
   helm-directory:
-    required: true
     description: directory of helm sources
+    required: true
   k8s-token:
-    required: true
     description: k8s service account token
+    required: true
   k8s-api:
-    required: true
     description: k8s api server
+    required: true
   k8s-namespace:
-    required: true
     description: k8s namespace
+    required: true
   helm-release-name:
-    required: true
     description: helm release name
+    required: true
   helm-values-file:
-    required: true
     description: value file
+    required: true
   helm-values-image-key:
-    required: true
     description: image key in values file
+    required: true
   image-tag:
-    required: true
     description: image tag
-  kube-config:
     required: true
+  kube-config:
     description: kube config
+    required: true
 
 runs:
   using: "composite"
   steps:
-    - name: setup kubectl
+    - name: Setup kubectl
       uses: azure/setup-kubectl@v3
     - name: Create kube config
       shell: bash
-        run: |
-          mkdir ${HOME}/.kube 
-          echo "${{ inputs.kube-config }}" | base64 -d > ${HOME}/.kube/config
-    - name: use config
-      run: kubectl config use-context pm4-cluster
-    - name: upgrading helm release
+      run: |
+        mkdir -p ${HOME}/.kube
+        echo "${{ inputs.kube-config }}" | base64 -d > ${HOME}/.kube/config
+    - name: Use config
       shell: bash
-      run: |-
+      run: kubectl config use-context pm4-cluster
+    - name: Upgrading helm release
+      shell: bash
+      run: |
         helm package ${{ github.workspace }}/${{ inputs.helm-directory }}
         package=$(find . -name "${CHART_NAME}*.tgz")
         echo "package file: ${{ github.workspace }}/${{ inputs.helm-directory }}/${{ inputs.helm-values-file }}"
