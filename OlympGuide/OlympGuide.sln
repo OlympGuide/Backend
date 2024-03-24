@@ -5,7 +5,13 @@ VisualStudioVersion = 17.8.34511.84
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OlympGuide", "OlympGuide.csproj", "{1D3829B8-F790-4FA8-B1CB-9C24D7BC2A98}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OlympGuideTests", "..\OlympGuideTests\OlympGuideTests.csproj", "{FA4A8C0D-984B-4A40-8149-D793001B0224}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OlympGuideTests", "..\OlympGuideTests\OlympGuideTests.csproj", "{FA4A8C0D-984B-4A40-8149-D793001B0224}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OlympGuide.Domain", "..\OlympGuide.Domain\OlympGuide.Domain.csproj", "{FC8A68F1-6BBC-44A1-BF14-0EF5972CB45B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OlympGuide.Infrastructre", "..\OlympGuide.Infrastructre\OlympGuide.Infrastructre.csproj", "{FD3B7F85-D1AF-4016-BB58-B76FBD2166A0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OlympGuide.Application", "..\OlympGuide.Application\OlympGuide.Application.csproj", "{14FA4D14-2EC6-485C-9396-776493A1B014}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +27,18 @@ Global
 		{FA4A8C0D-984B-4A40-8149-D793001B0224}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FA4A8C0D-984B-4A40-8149-D793001B0224}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FA4A8C0D-984B-4A40-8149-D793001B0224}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FC8A68F1-6BBC-44A1-BF14-0EF5972CB45B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FC8A68F1-6BBC-44A1-BF14-0EF5972CB45B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FC8A68F1-6BBC-44A1-BF14-0EF5972CB45B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FC8A68F1-6BBC-44A1-BF14-0EF5972CB45B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FD3B7F85-D1AF-4016-BB58-B76FBD2166A0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FD3B7F85-D1AF-4016-BB58-B76FBD2166A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FD3B7F85-D1AF-4016-BB58-B76FBD2166A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FD3B7F85-D1AF-4016-BB58-B76FBD2166A0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{14FA4D14-2EC6-485C-9396-776493A1B014}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{14FA4D14-2EC6-485C-9396-776493A1B014}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{14FA4D14-2EC6-485C-9396-776493A1B014}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{14FA4D14-2EC6-485C-9396-776493A1B014}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

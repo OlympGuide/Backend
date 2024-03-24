@@ -23,7 +23,7 @@ env:
 
   # HELM env
   HELM_DIRECTORY: helm
-  HELM_RELEASE_NAME: olympguid
+  HELM_RELEASE_NAME: olympguide
   # K8S env
   K8S_API: https://pm4.init-lab.ch/k8s/clusters/local
   K8S_NAMESPACE: olymp-guide-prod
