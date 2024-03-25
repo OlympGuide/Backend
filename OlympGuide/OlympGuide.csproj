@@ -15,4 +15,10 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\OlympGuide.Application\OlympGuide.Application.csproj" />
+    <ProjectReference Include="..\OlympGuide.Domain\OlympGuide.Domain.csproj" />
+    <ProjectReference Include="..\OlympGuide.Infrastructre\OlympGuide.Infrastructre.csproj" />
+  </ItemGroup>
+
 </Project>
