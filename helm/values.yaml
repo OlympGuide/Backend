@@ -21,7 +21,7 @@ backend:
     port: 8081
     targetPort: 8081
   ingress:
-    host: backend-olympguide-prod.pm4.init-lab.ch
+    host: olympguide-backend.pm4.init-lab.ch
     path: /
     pathType: Prefix
    

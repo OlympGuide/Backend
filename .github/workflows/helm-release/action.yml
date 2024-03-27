@@ -34,19 +34,16 @@ runs:
   steps:
     - name: Setup kubectl
       uses: azure/setup-kubectl@v3
-    - name: Create kube config
+    - name: configure kubectl
       shell: bash
-      run: |
-        mkdir -p ${HOME}/.kube
-        echo "${{ inputs.kube-config }}" | base64 -d > ${HOME}/.kube/config
-    - name: Use config
+      run: |-
+        kubectl config set-credentials sa --token=${{ inputs.k8s-token }}
+        kubectl config set-cluster default --server=${{ inputs.k8s-api }}
+        kubectl config set-context sa/default --user=sa --cluster=default --namespace=${{ inputs.k8s-namespace }}
+        kubectl config use-context sa/default
+  - name: upgrading helm release
       shell: bash
-      run: kubectl config use-context pm4-cluster
-    - name: Upgrading helm release
-      shell: bash
-      run: |
-        helm package ${{ github.workspace }}/${{ inputs.helm-directory }}
+      run: |-
+        helm package ${{ inputs.helm-directory }}
         package=$(find . -name "${CHART_NAME}*.tgz")
-        echo "package file: ${{ github.workspace }}/${{ inputs.helm-directory }}/${{ inputs.helm-values-file }}"
-        echo "image key-value: ${{ inputs.helm-values-image-key }}=${{ inputs.image-tag }}"
-        helm upgrade ${{ inputs.helm-release-name }} $package -f ${{ github.workspace }}/${{ inputs.helm-directory }}/${{ inputs.helm-values-file }} --install -n ${{ inputs.k8s-namespace }} --set ${{ inputs.helm-values-image-key }}=${{ inputs.image-tag }} --wait
+        helm upgrade ${{ inputs.helm-release-name }} $package -f ${{ github.workspace }}/${{ inputs.helm-directory }}/values.yaml --install -n ${{ inputs.k8s-namespace }} --wait
