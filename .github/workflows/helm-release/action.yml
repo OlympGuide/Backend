@@ -46,4 +46,4 @@ runs:
       run: |-
         helm package ${{ inputs.helm-directory }}
         package=$(find . -name "${{ inputs.helm-release-name }}*.tgz")  # Updated to use inputs.helm-release-name for CHART_NAME
-        helm upgrade ${{ inputs.helm-release-name }} $package -f ${{ github.workspace }}/${{ inputs.helm-directory }}/values.yaml --install -n ${{ inputs.k8s-namespace }} --wait
+        helm upgrade ${{ inputs.helm-release-name }} -f ${{ github.workspace }}/${{ inputs.helm-directory }}/values.yaml --install -n ${{ inputs.k8s-namespace }} --wait
