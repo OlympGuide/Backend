@@ -12,17 +12,17 @@ namespace OlympGuide.Domain.Features.SportField
 
         public Task<SportField> AddSportField(SportField sportFieldToAdd)
         {
-            throw new NotImplementedException();
+            return _repository.AddSportField(sportFieldToAdd);
         }
 
         public Task<List<SportField>> GetAllSportsField()
         {
-            throw new NotImplementedException();
+            return _repository.GetAllSportsField();
         }
 
         public Task<SportField> GetSportFieldByID(Guid sportFieldID)
         {
-            throw new NotImplementedException();
+            return _repository.GetSportFieldByID(sportFieldID);
         }
     }
 }

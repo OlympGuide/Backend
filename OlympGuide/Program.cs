@@ -1,4 +1,5 @@
 using OlympGuide.Domain.Features.SportField;
+using OlympGuide.Application.Features.SportField;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,10 +10,9 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-
+builder.Services.AddAutoMapper(typeof(Program));
 
 builder.Services.AddScoped<ISportFieldService, SportFieldService>();
-builder.Services.Ad
 
 var app = builder.Build();
 

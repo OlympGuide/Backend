@@ -1,4 +1,6 @@
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using OlympGuide.Application.Features.SportField;
 using OlympGuide.Domain.Features.SportField;
 using System.Collections.Generic;
 
@@ -6,26 +8,42 @@ namespace OlympGuide.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class SportFieldController(ISportFieldService service) : ControllerBase
+    public class SportFieldController(ISportFieldService service, IMapper mapper) : ControllerBase
     {
-        private List<SportField> sportFields = new List<SportField>();
+        private IMapper _mapper = mapper;
+        private ISportFieldService _service = service;
 
         [HttpGet]
-        public Task<List<SportField>> GetAllSportFields()
+        public async Task<List<SportFieldDTO>> GetAllSportFields()
         {
-            return null;
+            List<SportField> list = await _service.GetAllSportsField();
+
+            List<SportFieldDTO> result = new List<SportFieldDTO>();
+
+            foreach (var item in list)
+            {
+                result.Add(_mapper.Map<SportFieldDTO>(item));
+            }
+
+            return result;
         }
 
         [HttpGet]
-        public Task<SportField> GetSportFieldByID(Guid id)
+        public async Task<SportFieldDTO> GetSportFieldByID(Guid id)
         {
-            return null;
+            SportField sportField = await _service.GetSportFieldByID(id);
+
+            SportFieldDTO sportFieldDTO = _mapper.Map<SportFieldDTO>(sportField);
+
+            return sportFieldDTO;
         }
 
         [HttpPost]
-        public Task<SportField> AddSportField(SportField newSportField)
+        public async Task<SportField> AddSportField(SportFieldDTO newSportField)
         {
-            return null;
+            SportField sportField = _mapper.Map<SportField>(newSportField);
+
+            return await _service.AddSportField(sportField);
         }
     }
 }
