@@ -13,11 +13,13 @@ namespace OlympGuide.Domain.Features.SportField
 
         public Task<SportField> AddSportField(CreateSportFieldRequestDTO sportFieldToAdd)
         {
-            SportField newSportField = new SportField();
-            newSportField.Name = sportFieldToAdd.Name;
-            newSportField.Description = sportFieldToAdd.Description;
-            newSportField.Latitude = sportFieldToAdd.Latitude;
-            newSportField.Longitude = sportFieldToAdd.Longitude;
+            SportField newSportField = new SportField()
+            {
+                Name = sportFieldToAdd.Name,
+                Description = sportFieldToAdd.Description,
+                Longitude = sportFieldToAdd.Longitude,
+                Latitude = sportFieldToAdd.Latitude
+            };
 
             return _repository.AddSportField(newSportField);
         }
