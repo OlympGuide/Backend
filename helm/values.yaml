@@ -15,11 +15,11 @@ backend:
       limits:
         memory: "1Gi"
         cpu: "500m"
-    port: 8081
+    port: 8080
   service:
     name: olympguide-backend
-    port: 8081
-    targetPort: 8081
+    port: 8080
+    targetPort: 8080
   ingress:
     host: olympguide-backend.pm4.init-lab.ch
     path: /
