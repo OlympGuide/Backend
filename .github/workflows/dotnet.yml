@@ -56,10 +56,10 @@ jobs:
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: 8.0.x
-      - name: Display structure
-        run: ls -R
+      - name: create directory
+        run: mkdir app
       - name: Build Project
-        run: dotnet publish ./OlympGuide/OlympGuide.csproj -c Release -o ./ /p:UseAppHost=false
+        run: dotnet publish ./OlympGuide/OlympGuide.csproj -c Release -o ./app /p:UseAppHost=false
       - name: Display structure
         run: ls -R  
 
@@ -67,7 +67,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: backend-artifact
-          path: app/publish/
+          path: app/
 
   docker-build:
     needs: upload-artifact
@@ -81,7 +81,7 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: backend-solution
-          path: app/publish/
+          path: app/
 
       - name: Display structure of downloaded files
         run: ls -R
