@@ -19,7 +19,6 @@ env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}/webserver
   ORGANISATION: OlympGuide
-
   # HELM env
   HELM_DIRECTORY: helm
   HELM_RELEASE_NAME: olympguide
@@ -48,13 +47,40 @@ jobs:
       run: dotnet test --no-build --verbosity normal
       working-directory: ${{ env.BACKEND_DIRECTORY }}
 
-  docker-build:
+  upload-artifact:
     needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x
+      - name: create directory
+        run: mkdir app
+        
+      - name: Build Project
+        run: dotnet publish ./OlympGuide/OlympGuide.csproj -c Release -o ./app /p:UseAppHost=false
+
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: backend-artifact
+          path: app/
+
+  docker-build:
+    needs: upload-artifact
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
+
+      - name: Download Artifacts
+        uses: actions/download-artifact@v2
+        with:
+          name: backend-artifact
+          path: ./OlympGuide/app/
 
       - name: Get latest tag
         id: latest-tag
@@ -63,7 +89,7 @@ jobs:
           TAG=$(git describe --tags $(git rev-list --tags --max-count=1) 2>/dev/null || echo "version.${{ github.run_number }}")
           echo "parsed tag: $TAG"
           echo "image-tag=$TAG" >> $GITHUB_OUTPUT
-
+       
       - name: image-build
         uses: ./.github/workflows/image-build
         with:
