@@ -97,7 +97,7 @@ jobs:
       - name: image-build
         uses: ./.github/workflows/image-build
         with:
-          working-directory: ${{ github.repository }}
+          working-directory: ${{ env.BACKEND_DIRECTORY }}
           registry: ${{ env.REGISTRY }}
           image-name: ${{ env.IMAGE_NAME }}
           tags: ${{ steps.latest-tag.outputs.image-tag }}
