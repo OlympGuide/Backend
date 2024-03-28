@@ -3,34 +3,26 @@ using OlympGuide.Domain.Features.SportField;
 
 namespace OlympGuide.Infrastructre
 {
-    public class SportFieldRepository : ISportFieldRepository
+    public class SportFieldRepository(OlympGuideDBContext context) : ISportFieldRepository
     {
-        public async Task<List<SportField>> GetAllSportsField()
+        public Task<List<SportField>> GetAllSportsField()
         {
-            await using OlympGuideDBContext context = new OlympGuideDBContext();
-
-            return context.SportFields
-                .ToList();
+            return Task.FromResult(context.SportFields
+                .ToList()); //TODO: Replace with proper async await
         }
 
-        public async Task<SportField> GetSportFieldByID(Guid sportFieldID)
+        public Task<SportField> GetSportFieldByID(Guid sportFieldID)
         {
-            await using OlympGuideDBContext context = new OlympGuideDBContext();
-
-            return context.SportFields
-                .Single(sf => sf.Id == sportFieldID);
+            return Task.FromResult(context.SportFields
+                .Single(sf => sf.Id == sportFieldID)); //TODO: Replace with proper async await
         }
 
-        public async Task<SportField> AddSportField(SportField sportFieldToAdd)
+        public Task<SportField> AddSportField(SportField sportFieldToAdd)
         {
-            await using OlympGuideDBContext context = new OlympGuideDBContext();
-
             context.SportFields
                 .Add(sportFieldToAdd);
 
-            await context.SaveChangesAsync();
-
-            return sportFieldToAdd;
+            return Task.FromResult(sportFieldToAdd); //TODO: Replace with proper async await
         }
     }
 }
