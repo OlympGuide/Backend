@@ -19,7 +19,6 @@ env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}/webserver
   ORGANISATION: OlympGuide
-
   # HELM env
   HELM_DIRECTORY: helm
   HELM_RELEASE_NAME: olympguide
@@ -78,7 +77,7 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: backend-solution
-          path: artifact
+          path: app/publish/
 
       - name: Display structure of downloaded files
         run: ls -R
