@@ -58,10 +58,9 @@ jobs:
           dotnet-version: 8.0.x
       - name: create directory
         run: mkdir app
+        
       - name: Build Project
         run: dotnet publish ./OlympGuide/OlympGuide.csproj -c Release -o ./app /p:UseAppHost=false
-      - name: Display structure
-        run: ls -R  
 
       - name: Upload Artifacts
         uses: actions/upload-artifact@v2
@@ -82,9 +81,6 @@ jobs:
         with:
           name: backend-artifact
           path: ./OlympGuide/app/
-
-      - name: Display structure of downloaded files
-        run: ls -R
 
       - name: Get latest tag
         id: latest-tag
