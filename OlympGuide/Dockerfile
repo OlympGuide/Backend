@@ -12,5 +12,5 @@ WORKDIR /src
 
 FROM base AS final
 WORKDIR /app
-COPY  /app .
+COPY  ./../app/ .
 ENTRYPOINT ["dotnet", "OlympGuide.dll"]
