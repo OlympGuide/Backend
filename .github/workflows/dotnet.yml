@@ -56,9 +56,13 @@ jobs:
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: 8.0.x
+      - name: Display structure
+        run: ls -R
       - name: Build Project
-        run: dotnet publish ./OlympGuide/OlympGuide.csproj -c Release -o /app/publish /p:UseAppHost=false
-        
+        run: dotnet publish ./OlympGuide/OlympGuide.csproj -c Release -o ./ /p:UseAppHost=false
+      - name: Display structure
+        run: ls -R  
+
       - name: Upload Artifacts
         uses: actions/upload-artifact@v2
         with:
