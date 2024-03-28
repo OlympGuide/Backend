@@ -6,4 +6,9 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\OlympGuide.Domain\OlympGuide.Domain.csproj" />
+    <ProjectReference Include="..\OlympGuide.Infrastructre\OlympGuide.Infrastructre.csproj" />
+  </ItemGroup>
+
 </Project>
