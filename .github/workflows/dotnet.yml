@@ -81,7 +81,7 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: backend-artifact
-          path: app/
+          path: ./OlympGuide/app/
 
       - name: Display structure of downloaded files
         run: ls -R
@@ -94,28 +94,14 @@ jobs:
           echo "parsed tag: $TAG"
           echo "image-tag=$TAG" >> $GITHUB_OUTPUT
        
-      - name: download artifacts
-        uses: actions/download-artifact@v4
-      - name: setup docker buildx
-        uses: docker/setup-buildx-action@v3
-      - name: docker login
-        uses: docker/login-action@v3.0.0
+      - name: image-build
+        uses: ./.github/workflows/image-build
         with:
+          working-directory: ${{ github.repository }}
           registry: ${{ env.REGISTRY }}
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-      - name: extract metadata for docker image
-        uses: docker/metadata-action@v5.5.1
-        id: image-meta
-        with:
-          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          image-name: ${{ env.IMAGE_NAME }}
           tags: ${{ steps.latest-tag.outputs.image-tag }}
-      - name: build and push docker image
-        uses: docker/build-push-action@v5.2.0
-        with:
-          context: ./
-          push: true
-          tags: ${{ steps.image-meta.outputs.tags }}    
+          github-token: ${{ secrets.GITHUB_TOKEN }}
           
   deploy-helm-ci:
     runs-on: ubuntu-22.04
