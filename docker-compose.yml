@@ -12,5 +12,6 @@ services:
   backend:
     build:
         context: ./OlympGuide/
+        dockerfile: ./OlympGuide/Dockerfile.local
     ports:
       - "8081:8080"
