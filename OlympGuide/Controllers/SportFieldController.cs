@@ -10,40 +10,35 @@ namespace OlympGuide.Controllers
     [Route("[controller]")]
     public class SportFieldController(ISportFieldService service, IMapper mapper) : ControllerBase
     {
-        private IMapper _mapper = mapper;
+        private readonly IMapper _mapper = mapper;
         private ISportFieldService _service = service;
 
-        [HttpGet]
+        [HttpGet("GetAllSportFields")]
         public async Task<List<SportFieldDTO>> GetAllSportFields()
         {
             List<SportField> list = await _service.GetAllSportsField();
-
-            List<SportFieldDTO> result = new List<SportFieldDTO>();
-
-            foreach (var item in list)
-            {
-                result.Add(_mapper.Map<SportFieldDTO>(item));
-            }
+            List<SportFieldDTO> result = _mapper.Map<List<SportField>,List<SportFieldDTO>>(list);
 
             return result;
         }
 
-        [HttpGet]
+        [HttpGet("GetSportFieldByID/{id}")]
         public async Task<SportFieldDTO> GetSportFieldByID(Guid id)
         {
             SportField sportField = await _service.GetSportFieldByID(id);
-
-            SportFieldDTO sportFieldDTO = _mapper.Map<SportFieldDTO>(sportField);
+            SportFieldDTO sportFieldDTO = _mapper.Map<SportField,SportFieldDTO>(sportField);
 
             return sportFieldDTO;
         }
 
-        [HttpPost]
-        public async Task<SportField> AddSportField(SportFieldDTO newSportField)
+        [HttpPost("AddSportField")]
+        public async Task<SportFieldDTO> AddSportField([FromBody] CreateSportFieldRequestDTO sportFieldToAdd)
         {
-            SportField sportField = _mapper.Map<SportField>(newSportField);
 
-            return await _service.AddSportField(sportField);
+            SportField sportField = await _service.AddSportField(sportFieldToAdd);
+            SportFieldDTO sportFieldDTO = _mapper.Map<SportField, SportFieldDTO>(sportField);
+
+            return sportFieldDTO;
         }
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using OlympGuide.Application.Features.SportField;
 
 namespace OlympGuide.Domain.Features.SportField
 {
@@ -10,9 +11,15 @@ namespace OlympGuide.Domain.Features.SportField
     {
         private readonly ISportFieldRepository _repository = repository;
 
-        public Task<SportField> AddSportField(SportField sportFieldToAdd)
+        public Task<SportField> AddSportField(CreateSportFieldRequestDTO sportFieldToAdd)
         {
-            return _repository.AddSportField(sportFieldToAdd);
+            SportField newSportField = new SportField();
+            newSportField.Name = sportFieldToAdd.Name;
+            newSportField.Description = sportFieldToAdd.Description;
+            newSportField.Latitude = sportFieldToAdd.Latitude;
+            newSportField.Longitude = sportFieldToAdd.Longitude;
+
+            return _repository.AddSportField(newSportField);
         }
 
         public Task<List<SportField>> GetAllSportsField()

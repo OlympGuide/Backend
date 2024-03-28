@@ -6,6 +6,6 @@ public class MappingProfiles: Profile
 {
     public MappingProfiles()
     {
-        CreateMap<SportFieldDTO, SportField>();
+        CreateMap<SportFieldDTO, SportField>().ReverseMap();
     }
 }

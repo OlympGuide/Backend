@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace OlympGuide.Application.Features.SportField
 {
-    public record SportFieldDTO(Guid id, string Name, string Description, float Longitude, float Latitude)
-    {    
+    public record CreateSportFieldRequestDTO(string Name, string Description, float Longitude, float Latitude)
+    {
 
     }
 }
