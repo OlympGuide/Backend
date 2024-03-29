@@ -44,6 +44,6 @@ jobs:
         uses: docker/setup-buildx-action@v1
 
       - name: Build Docker Image
-        run: docker build . --file ${{ github.repository }}/${{ env.BACKEND_DIRECTORY }}/Dockerfile.local
+        run: docker build . --file ./${{ env.BACKEND_DIRECTORY }}/Dockerfile.local
 
         
