@@ -19,15 +19,7 @@ inputs:
   helm-values-file:
     description: value file
     required: true
-  helm-values-image-key:
-    description: image key in values file
-    required: true
-  image-tag:
-    description: image tag
-    required: true
-  kube-config:
-    description: kube config
-    required: true
+
 
 runs:
   using: "composite"
@@ -47,4 +39,4 @@ runs:
         helm package ${{ inputs.helm-directory }}
         package=$(find . -name "${CHART_NAME}*.tgz")
         echo $package
-        helm upgrade ${{ inputs.helm-release-name }} $package -f ${{ github.workspace }}/${{ inputs.helm-directory }}/values.yaml --install -n ${{ inputs.k8s-namespace }} --wait
+        helm upgrade ${{ inputs.helm-release-name }} $package -f ${{ github.workspace }}/${{ inputs.helm-directory }}/${{ inputs.helm-values-file }} --install -n ${{ inputs.k8s-namespace }} --wait
