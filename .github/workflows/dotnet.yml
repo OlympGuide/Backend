@@ -60,6 +60,7 @@ jobs:
         id: tag-name
         run: |
           TAG_NAME=$(cat version.txt)
+          echo TAG_NAME
           echo "TAG_NAME=$TAG_NAME" >> $GITHUB_OUTPUT
           
   deploy-helm-ci:
