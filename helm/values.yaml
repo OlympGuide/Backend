@@ -7,7 +7,7 @@ backend:
       pullSecret: github-token-secret ## Key for Service Account Secret on K8s
       repository: ghcr.io/olympguide/backend/webserver
       pullPolicy: Always
-      tag: version.64
+      tag: latest
     resources:
       requests:
         memory: "250Mi"
