@@ -39,6 +39,6 @@ runs:
     - name: build and push docker image
       uses: docker/build-push-action@v5.2.0
       with:
-        context: ./${{ inputs.working-directory }}
+        context: ${{ inputs.working-directory }}
         push: true
         tags: ${{ steps.image-meta.outputs.tags }}
