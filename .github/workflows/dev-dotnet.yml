@@ -67,6 +67,7 @@ jobs:
         with:
           name: backend-artifact
           path: app/
+          retention-days: 20
 
   docker-build:
     needs: upload-artifact
@@ -82,7 +83,7 @@ jobs:
           name: backend-artifact
           path: ./OlympGuide/app/
 
-      - name: image-build
+      - name: image-build-lastest
         uses: ./.github/workflows/image-build
         with:
           working-directory: ${{ env.BACKEND_DIRECTORY }}
@@ -91,6 +92,24 @@ jobs:
           tags: latest
           github-token: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: image-build-tagged
+        uses: ./.github/workflows/image-build
+        with:
+          working-directory: ${{ env.BACKEND_DIRECTORY }}
+          registry: ${{ env.REGISTRY }}
+          image-name: ${{ env.IMAGE_NAME }}
+          tags: version.${{ github.run_number}}.0.0
+          github-token: ${{ secrets.GITHUB_TOKEN }}  
+
+      - name: Save Tag Name
+        run: echo "version.${{ github.run_number }}.0.0" > version.txt
+
+      - name: Upload Tag Name Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: tag-name
+          path: version.txt
+        
   deploy-helm-ci:
     runs-on: ubuntu-22.04
     needs: [docker-build]
@@ -108,5 +127,5 @@ jobs:
           k8s-namespace: ${{ env.K8S_NAMESPACE }}
           helm-release-name: ${{ env.HELM_RELEASE_NAME }}
           helm-values-file: values.yaml
-          helm-values-image-key: ${{ steps.latest-tag.outputs.image-tag }}
+          helm-values-image-key: latest
           image-tag: backend.production.image.tag

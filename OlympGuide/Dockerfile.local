@@ -9,46 +9,15 @@ EXPOSE 8081
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY OlympGuide/OlympGuide.sln ./OlympGuide/
-COPY OlympGuide/*.csproj ./OlympGuide/
-COPY OlympGuide.Application/*.csproj ./OlympGuide.Application/
-COPY OlympGuide.Domain/*.csproj ./OlympGuide.Domain/
-COPY OlympGuide.Infrastructre/*.csproj ./OlympGuide.Infrastructre/
-COPY OlympGuideTests/*.csproj ./OlympGuideTests/
-
-RUN dotnet restore "./OlympGuide/OlympGuide.csproj"
-
-# WORKDIR /src/OlympGuide
-# RUN dotnet build -c $BUILD_CONFIGURATION -o /app/build
-
-# # RUN dotnet restore "./OlympGuide.Application"
-# WORKDIR /src/OlympGuide.Application
-# RUN dotnet build -c $BUILD_CONFIGURATION -o /app/build
-
-# # RUN dotnet restore "./OlympGuide.Domain"
-# WORKDIR /src/OlympGuide.Domain
-# RUN dotnet build -c $BUILD_CONFIGURATION -o /app/build
-
-# # RUN dotnet restore "./OlympGuide.Infrastructure"
-# WORKDIR /src/OlympGuide.Infrastructure
-# RUN dotnet build -c $BUILD_CONFIGURATION -o /app/build
-
-# # RUN dotnet restore "./OlympGuideTests"
-# WORKDIR /src/OlympGuideTests
-# RUN dotnet build -c $BUILD_CONFIGURATION -o /app/build
-
-# sources
-# https://medium.com/@jaydeepvpatil225/containerization-of-the-net-core-7-web-api-using-docker-3abdd543f78a
-# https://stackoverflow.com/a/48599532
-# https://stackoverflow.com/a/55183951
-
-COPY . ./
-
-RUN dotnet build "./OlympGuide/OlympGuide.csproj" -c $BUILD_CONFIGURATION -o /app/build
+COPY OlympGuide/OlympGuide.csproj .
+RUN dotnet restore "./OlympGuide.csproj"
+COPY . .
+WORKDIR /src
+RUN dotnet build OlympGuide/OlympGuide.csproj -c $BUILD_CONFIGURATION -o /app/build
 
 FROM build AS publish
 ARG BUILD_CONFIGURATION=Release
-RUN dotnet publish "./OlympGuide/OlympGuide.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
+RUN dotnet publish OlympGuide/OlympGuide.csproj -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
 
 FROM base AS final
 WORKDIR /app
