@@ -12,7 +12,7 @@ services:
       - ../Frontend:/src
   backend:
     build:
-      context: ./OlympGuide/
-      dockerfile: ./Dockerfile.local
+      context: ./
+      dockerfile: ./OlympGuide/Dockerfile.local
     ports:
       - "8081:8080"
