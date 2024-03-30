@@ -22,6 +22,7 @@ env:
   # HELM env
   HELM_DIRECTORY: helm
   HELM_RELEASE_NAME: olympguide
+  HELM_VALUES_FILE: values.yaml
   # K8S env
   K8S_API: https://pm4.init-lab.ch/k8s/clusters/local
   K8S_NAMESPACE: olymp-guide-prod
@@ -60,6 +61,7 @@ jobs:
         id: tag-name
         run: |
           TAG_NAME=$(cat version.txt)
+          echo TAG_NAME
           echo "TAG_NAME=$TAG_NAME" >> $GITHUB_OUTPUT
           
   deploy-helm-ci:
@@ -77,12 +79,9 @@ jobs:
       - name: deploy
         uses: ./.github/workflows/helm-release
         with:
-          kube-config: ${{ secrets.KUBE_CONFIG }}
           helm-directory: ${{ env.HELM_DIRECTORY }}
           k8s-token: ${{ secrets.K8S_TOKEN }}
           k8s-api: ${{ env.K8S_API }}
           k8s-namespace: ${{ env.K8S_NAMESPACE }}
           helm-release-name: ${{ env.HELM_RELEASE_NAME }}
-          helm-values-file: values.yaml
-          image-tag: ${{ needs.get-tag-name.outputs.TAG_NAME }}
-          helm-values-image-key: backend.production.image.tag
+          helm-values-file: ${{ env.HELM_VALUES_FILE }}
