@@ -6,7 +6,6 @@ name: production
 on:
   push:
     branches: [ "main" ]
-  workflow_dispatch:
  
     ## Permissions
 permissions:
@@ -20,7 +19,6 @@ env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}/webserver
   ORGANISATION: OlympGuide
-
   # HELM env
   HELM_DIRECTORY: helm
   HELM_RELEASE_NAME: olympguide
@@ -49,39 +47,33 @@ jobs:
       run: dotnet test --no-build --verbosity normal
       working-directory: ${{ env.BACKEND_DIRECTORY }}
 
-  docker-build:
+  get-tag-name:
     needs: build
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - name: Download Tag Name Artifact
+        uses: actions/download-artifact@v2
         with:
-          fetch-depth: 0
-
-      - name: Get latest tag
-        id: latest-tag
+          name: tag-name
+    
+      - name: Read Tag Name
+        id: tag-name
         run: |
-          echo "fetching tags"
-          TAG=$(git describe --tags $(git rev-list --tags --max-count=1) 2>/dev/null || echo "version.${{ github.run_number }}")
-          echo "parsed tag: $TAG"
-          echo "image-tag=$TAG" >> $GITHUB_OUTPUT
-
-      - name: image-build
-        uses: ./.github/workflows/image-build
-        with:
-          working-directory: ${{ env.BACKEND_DIRECTORY }}
-          registry: ${{ env.REGISTRY }}
-          image-name: ${{ env.IMAGE_NAME }}
-          tags: ${{ steps.latest-tag.outputs.image-tag }}
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+          TAG_NAME=$(cat version.txt)
+          echo "TAG_NAME=$TAG_NAME" >> $GITHUB_OUTPUT
           
   deploy-helm-ci:
     runs-on: ubuntu-22.04
-    needs: [docker-build]
-    environment: staging
+    needs: [get-tag-name]
+    environment: production
 
     steps:
       - name: checkout sources
         uses: actions/checkout@v4
+        
+      - name: print tag name
+        run: echo ${{ needs.get-tag-name.outputs.TAG_NAME }}
+
       - name: deploy
         uses: ./.github/workflows/helm-release
         with:
@@ -92,5 +84,5 @@ jobs:
           k8s-namespace: ${{ env.K8S_NAMESPACE }}
           helm-release-name: ${{ env.HELM_RELEASE_NAME }}
           helm-values-file: values.yaml
-          image-tag: ${{ needs.docker-build.outputs.latest-tag }}
+          image-tag: ${{ needs.get-tag-name.outputs.TAG_NAME }}
           helm-values-image-key: backend.production.image.tag

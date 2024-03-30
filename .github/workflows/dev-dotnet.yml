@@ -6,7 +6,6 @@ name: dev-stage
 on:
   push:
     branches: [ "development" ]
-  workflow_dispatch:
   
 permissions:
   contents: read
@@ -48,15 +47,43 @@ jobs:
       run: dotnet test --no-build --verbosity normal
       working-directory: ${{ env.BACKEND_DIRECTORY }}
 
-  docker-build:
+  upload-artifact:
     needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x
+      - name: create directory
+        run: mkdir app
+        
+      - name: Build Project
+        run: dotnet publish ./OlympGuide/OlympGuide.csproj -c Release -o ./app /p:UseAppHost=false
+
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: backend-artifact
+          path: app/
+          retention-days: 20
+
+  docker-build:
+    needs: upload-artifact
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
+          
+      - name: Download Artifacts
+        uses: actions/download-artifact@v2
+        with:
+          name: backend-artifact
+          path: ./OlympGuide/app/
 
-      - name: image-build
+      - name: image-build-lastest
         uses: ./.github/workflows/image-build
         with:
           working-directory: ${{ env.BACKEND_DIRECTORY }}
@@ -65,6 +92,24 @@ jobs:
           tags: latest
           github-token: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: image-build-tagged
+        uses: ./.github/workflows/image-build
+        with:
+          working-directory: ${{ env.BACKEND_DIRECTORY }}
+          registry: ${{ env.REGISTRY }}
+          image-name: ${{ env.IMAGE_NAME }}
+          tags: version.${{ github.run_number}}.0.0
+          github-token: ${{ secrets.GITHUB_TOKEN }}  
+
+      - name: Save Tag Name
+        run: echo "version.${{ github.run_number }}.0.0" > version.txt
+
+      - name: Upload Tag Name Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: tag-name
+          path: version.txt
+        
   deploy-helm-ci:
     runs-on: ubuntu-22.04
     needs: [docker-build]
@@ -82,5 +127,5 @@ jobs:
           k8s-namespace: ${{ env.K8S_NAMESPACE }}
           helm-release-name: ${{ env.HELM_RELEASE_NAME }}
           helm-values-file: values.yaml
-          helm-values-image-key: ${{ steps.latest-tag.outputs.image-tag }}
+          helm-values-image-key: latest
           image-tag: backend.production.image.tag

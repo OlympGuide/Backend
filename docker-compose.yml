@@ -4,6 +4,7 @@ services:
   frontend:
     build:
       context: ../Frontend/
+      dockerfile: ./Dockerfile.local
       target: development
     ports:
       - "8000:8000"
@@ -11,6 +12,7 @@ services:
       - ../Frontend:/src
   backend:
     build:
-        context: ./OlympGuide/
+      context: ./OlympGuide/
+      dockerfile: ./Dockerfile.local
     ports:
       - "8081:8080"

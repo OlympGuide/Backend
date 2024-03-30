@@ -1,23 +1,28 @@
 backend:
-  development:
-    image:
-      tag: latest
-  production:
-    image:
-      tag: latest
   deployment:
     name: olympguide-backend
-    replicas: 2
-    forceRedeploy: true
+    replicas: 1
+    forceRedeploy: false
     image:
       pullSecret: github-token-secret ## Key for Service Account Secret on K8s
       repository: ghcr.io/olympguide/backend/webserver
       pullPolicy: Always
-    port: 8080
+      tag: version.64
     resources:
       requests:
-        cpu: 100m
-        memory: 256Mi
+        memory: "250Mi"
+        cpu: "200m"
       limits:
-        cpu: 200m
-        memory: 512Mi
+        memory: "1Gi"
+        cpu: "500m"
+    port: 8080
+  service:
+    name: olympguide-backend
+    port: 8080
+    targetPort: 8080
+  ingress:
+    host: olympguide-backend.pm4.init-lab.ch
+    path: /
+    pathType: Prefix
+   
+   
