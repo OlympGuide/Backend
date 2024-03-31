@@ -2,6 +2,7 @@ using OlympGuide.Domain.Features.SportField;
 using System.Text.Json;
 using Microsoft.EntityFrameworkCore;
 using OlympGuide.Infrastructre;
+using OlympGuide.Infrastructre.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 

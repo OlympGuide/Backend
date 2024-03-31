@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using OlympGuide.Domain.Features.SportField;
 
-namespace OlympGuide.Infrastructre
+namespace OlympGuide.Infrastructre.Repositories
 {
     public class SportFieldRepository(OlympGuideDBContext context) : ISportFieldRepository
     {
