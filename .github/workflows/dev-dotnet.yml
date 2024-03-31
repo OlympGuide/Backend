@@ -21,6 +21,7 @@ env:
 
   # HELM env
   HELM_DIRECTORY: helm
+  HELM_VALUES_FILE: values-stage.yaml
   HELM_RELEASE_NAME: olympguide-backend
   # K8S env
   K8S_API: https://pm4.init-lab.ch/k8s/clusters/local
@@ -126,6 +127,4 @@ jobs:
           k8s-api: ${{ env.K8S_API }}
           k8s-namespace: ${{ env.K8S_NAMESPACE }}
           helm-release-name: ${{ env.HELM_RELEASE_NAME }}
-          helm-values-file: values.yaml
-          helm-values-image-key: latest
-          image-tag: backend.production.image.tag
+          helm-values-file: ${{ env.HELM_VALUES_FILE }}
