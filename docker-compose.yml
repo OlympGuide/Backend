@@ -17,17 +17,20 @@ services:
     ports:
       - "8081:8080"
     environment:
-      "ConnectionStrings_OlympGuideDB": "Host=db;Database=OlympGuide;Username=ogDbUser;Password=ogDbPasword" 
+      "ConnectionStrings__OlympGuideDB": "Host=postgres_db;Database=OlympGuide;Username=ogDbUser;Password=ogDbPassword" 
     depends_on:
       - db
   db:
     image: postgres:16
+    container_name: postgres_db
     environment:
-      POSTGRES_DB: OlympGuide
-      POSTGRES_USER: ogDbUser
-      POSTGRES_PASSWORD: ogDbPasword
+      - POSTGRES_USER=ogDbUser
+      - POSTGRES_PASSWORD=ogDbPassword
+      - POSTGRES_DB=OlympGuide
     ports:
-      - "5432:5432"  
+      - "5432:5432"
+    expose:
+      - "5432"
     volumes:
       - pgdata:/var/lib/postgresql/data
 
