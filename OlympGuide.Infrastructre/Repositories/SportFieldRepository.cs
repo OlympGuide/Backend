@@ -1,28 +1,34 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.EntityFrameworkCore;
 using OlympGuide.Domain.Features.SportField;
 
 namespace OlympGuide.Infrastructre.Repositories
 {
     public class SportFieldRepository(OlympGuideDBContext context) : ISportFieldRepository
     {
-        public Task<List<SportField>> GetAllSportsField()
+        public async Task<List<SportField>> GetAllSportsField()
         {
-            return Task.FromResult(context.SportFields
-                .ToList()); //TODO: Replace with proper async await
+            var sportFieldList = await context.SportFields
+                .ToListAsync();
+
+            return sportFieldList;
         }
 
-        public Task<SportField> GetSportFieldByID(Guid sportFieldID)
+        public async Task<SportField> GetSportFieldByID(Guid sportFieldID)
         {
-            return Task.FromResult(context.SportFields
-                .Single(sf => sf.Id == sportFieldID)); //TODO: Replace with proper async await
+            var sportField = await context.SportFields
+                .SingleAsync(sf => sf.Id == sportFieldID);
+
+            return sportField;
         }
 
-        public Task<SportField> AddSportField(SportField sportFieldToAdd)
+        public async Task<SportField> AddSportField(SportField sportFieldToAdd)
         {
-            context.SportFields
-                .Add(sportFieldToAdd);
+            await context.SportFields
+                .AddAsync(sportFieldToAdd);
 
-            return Task.FromResult(sportFieldToAdd); //TODO: Replace with proper async await
+            await context.SaveChangesAsync();
+
+            return sportFieldToAdd;
         }
     }
 }
