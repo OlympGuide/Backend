@@ -1,6 +1,8 @@
 using OlympGuide.Domain.Features.SportField;
-using OlympGuide.Application.Features.SportField;
 using System.Text.Json;
+using Microsoft.EntityFrameworkCore;
+using OlympGuide.Infrastructre;
+using OlympGuide.Infrastructre.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,9 +18,10 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 builder.Services.AddScoped<ISportFieldService, SportFieldService>();
+builder.Services.AddScoped<ISportFieldRepository, SportFieldRepository>();
 
-//Respository adden:
-//builder.Services.AddScoped<ISportFieldRepository, SportFieldRepository>();
+builder.Services.AddDbContext<OlympGuideDBContext>(options =>
+    options.UseNpgsql(builder.Configuration.GetConnectionString("OlympGuideDB")));
 
 var app = builder.Build();
 
