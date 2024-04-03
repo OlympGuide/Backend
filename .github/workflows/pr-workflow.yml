@@ -18,16 +18,22 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
+      with:
+        ref:  ${{ github.event.pull_request.head.ref }}
+
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
       with:
         dotnet-version: 8.0.x
+
     - name: Restore dependencies
       run: dotnet restore
       working-directory: ${{ env.BACKEND_DIRECTORY }}
+
     - name: Build
       run: dotnet build --no-restore
       working-directory: ${{ env.BACKEND_DIRECTORY }}
+      
     - name: Test
       run: dotnet test --no-build --verbosity normal
       working-directory: ${{ env.BACKEND_DIRECTORY }}
@@ -37,10 +43,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref:  ${{ github.event.pull_request.head.ref }}
+
       - name: Setup .NET
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: 8.0.x
+
       - name: create directory
         run: mkdir app
         
@@ -51,6 +61,6 @@ jobs:
         uses: docker/setup-buildx-action@v1
 
       - name: Build Docker Image
-        run: docker build . --file ./${{ env.BACKEND_DIRECTORY }}/Dockerfile
+        run: docker build . --file ./${{ env.BACKEND_DIRECTORY }}/Dockerfile.development
 
         
