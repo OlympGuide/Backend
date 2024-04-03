@@ -6,23 +6,30 @@ using System.Threading.Tasks;
 
 namespace OlympGuide.Application.Features.SportField
 {
-    public class SportFieldValidation
+
+    public static class SportFieldValidation
     {
-        public Boolean checkSportFieldRequestDTO(CreateSportFieldRequestDTO sportFieldToCheck)
+
+        private const float MaxLatitude = 90.0F;
+        private const float MinLatitude = -90.0F;
+        private const float MaxLongitude = 180.0F;
+        private const float MinLongitude = -180.0F;
+
+        public static bool CheckSportFieldRequestDTO(CreateSportFieldRequestDTO sportFieldToCheck)
         {
-            Boolean result = false;
+            bool result = false;
             if (sportFieldToCheck != null)
             {
-                result = checkName(sportFieldToCheck) && checkCoordinates(sportFieldToCheck);
+                result = CheckName(sportFieldToCheck) && CheckCoordinates(sportFieldToCheck);
 
             }
 
             return result;
         }
 
-        private Boolean checkName(CreateSportFieldRequestDTO sportFieldRequestDTO)
+        private static bool CheckName(CreateSportFieldRequestDTO sportFieldRequestDTO)
         {
-            Boolean result = false;
+            bool result = false;
             if (sportFieldRequestDTO.Name != null && !sportFieldRequestDTO.Name.Equals(""))
             {
                 result = true;
@@ -30,13 +37,13 @@ namespace OlympGuide.Application.Features.SportField
             return result;
         }
 
-        private Boolean checkCoordinates(CreateSportFieldRequestDTO sportFieldRequestDTO)
+        private static bool CheckCoordinates(CreateSportFieldRequestDTO sportFieldRequestDTO)
         {
-            Boolean result = false;
+            bool result = false;
 
-            if (sportFieldRequestDTO.Latitude <= 90.0 && sportFieldRequestDTO.Latitude >= -90.0)
+            if (sportFieldRequestDTO.Latitude <= MaxLatitude && sportFieldRequestDTO.Latitude >= MinLatitude)
             {
-                if(sportFieldRequestDTO.Longitude <= 180.0 && sportFieldRequestDTO.Longitude >= -180 - 0)
+                if(sportFieldRequestDTO.Longitude <= MaxLongitude && sportFieldRequestDTO.Longitude >= MinLongitude)
                 {
                     result = true;
                 }

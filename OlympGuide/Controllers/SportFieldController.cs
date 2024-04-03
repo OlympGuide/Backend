@@ -17,11 +17,7 @@ namespace OlympGuide.Controllers
         [HttpGet("GetAllSportFields")]
         public async Task<List<SportFieldDTO>> GetAllSportFields()
         {
-            List<SportField> list = await _service.GetAllSportsField();
-            if(list == null || list.Count == 0)
-            {
-                //throw new NoSportFieldFoundException
-            }
+            List<SportField> list = await _service.GetAllSportFields();
             List<SportFieldDTO> result = _mapper.Map<List<SportField>,List<SportFieldDTO>>(list);
 
             return result;
@@ -30,18 +26,8 @@ namespace OlympGuide.Controllers
         [HttpGet("GetSportFieldByID/{id}")]
         public async Task<SportFieldDTO> GetSportFieldByID(Guid id)
         {
-            if(id == Guid.Empty)
-            {
-                //throw new InvalidParameterException
-            }
+            
             SportField sportField = await _service.GetSportFieldByID(id);
-
-
-            if(sportField == null)
-            {
-                //throw new NoSportFieldFoundException
-            }
-
             SportFieldDTO sportFieldDTO = _mapper.Map<SportField,SportFieldDTO>(sportField);
 
             return sportFieldDTO;
@@ -50,12 +36,6 @@ namespace OlympGuide.Controllers
         [HttpPost("AddSportField")]
         public async Task<SportFieldDTO> AddSportField([FromBody] CreateSportFieldRequestDTO sportFieldToAdd)
         {
-            SportFieldValidation validation = new SportFieldValidation();
-
-            if(sportFieldToAdd == null || validation.checkSportFieldRequestDTO(sportFieldToAdd))
-            {
-                //throw new InvalidParameterException
-            }
 
             SportField sportField = await _service.AddSportField(sportFieldToAdd);
             SportFieldDTO sportFieldDTO = _mapper.Map<SportField, SportFieldDTO>(sportField);

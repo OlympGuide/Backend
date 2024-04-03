@@ -7,7 +7,7 @@ using OlympGuide.Domain.Abstraction;
 
 namespace OlympGuide.Domain.Features.SportField
 {
-    public class SportField: Entity
+    public class SportField(): Entity
     {
         public string Name { get; set; } 
         public string Description { get; set; } 

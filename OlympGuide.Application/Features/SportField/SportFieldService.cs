@@ -12,7 +12,13 @@ namespace OlympGuide.Domain.Features.SportField
         private readonly ISportFieldRepository _repository = repository;
 
         public Task<SportField> AddSportField(CreateSportFieldRequestDTO sportFieldToAdd)
-        {
+        { 
+
+            if (sportFieldToAdd == null || SportFieldValidation.CheckSportFieldRequestDTO(sportFieldToAdd))
+            {
+                throw new ArgumentException();
+            }
+
             SportField newSportField = new SportField()
             {
                 Name = sportFieldToAdd.Name,
@@ -24,14 +30,24 @@ namespace OlympGuide.Domain.Features.SportField
             return _repository.AddSportField(newSportField);
         }
 
-        public Task<List<SportField>> GetAllSportsField()
+        public Task<List<SportField>> GetAllSportFields()
         {
-            return _repository.GetAllSportsField();
+            return _repository.GetAllSportFields();
         }
 
-        public Task<SportField> GetSportFieldByID(Guid sportFieldID)
+        public async Task<SportField> GetSportFieldByID(Guid sportFieldID)
         {
-            return _repository.GetSportFieldByID(sportFieldID);
+            if (sportFieldID == Guid.Empty)
+            {
+                throw new ArgumentException();
+            }
+            SportField sportField = await _repository.GetSportFieldByID(sportFieldID);
+
+            if (sportField == null)
+            {
+                throw new NoSportFieldFoundException();
+            }
+            return sportField;
         }
     }
 }
