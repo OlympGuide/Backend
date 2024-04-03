@@ -28,7 +28,7 @@ spec:
         - containerPort: {{ .Values.backend.deployment.port }} # Default port for ASP.NET Core, change if your app uses a different port
         env:
         - name: ASPNETCORE_ENVIRONMENT
-          value: "Production" # Set the environment your application is running in
+          value: {{ .Values.backend.environment }} # Set the environment your application is running in
         resources:
             requests:
                 cpu: {{ .Values.backend.deployment.resources.requests.cpu }}
