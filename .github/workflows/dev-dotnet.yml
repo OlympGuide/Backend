@@ -19,7 +19,6 @@ env:
   IMAGE_NAME: ${{ github.repository }}/webserver
   ORGANISATION: OlympGuide
   DOCKERFILE-PATH-DEVELOPMENT: Dockerfile.development
-  DOCEKRFILE-PATH-PRODUCTION: Dockerfile.production
   # HELM env
   HELM_DIRECTORY: helm
   HELM_VALUES_FILE: values-stage.yaml
@@ -103,7 +102,7 @@ jobs:
           image-name: ${{ env.IMAGE_NAME }}
           tags: version.${{ github.run_number}}.0.0
           github-token: ${{ secrets.GITHUB_TOKEN }} 
-          dockerfile: ${{ env.DOCKERFILE-PATH-PRODUCTION }} 
+          dockerfile: ${{ env.DOCKERFILE-PATH-DEVELOPMENT }} 
 
       - name: Save Tag Name
         run: echo "version.${{ github.run_number }}.0.0" > version.txt
