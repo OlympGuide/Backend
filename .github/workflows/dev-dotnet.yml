@@ -18,7 +18,7 @@ env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}/webserver
   ORGANISATION: OlympGuide
-  DOCKERFILE-PATH: OlympGuide/Dockerfile.development
+  DOCKERFILE-PATH: Dockerfile.development
   # HELM env
   HELM_DIRECTORY: helm
   HELM_VALUES_FILE: values-stage.yaml
