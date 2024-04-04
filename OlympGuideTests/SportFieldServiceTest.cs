@@ -15,10 +15,9 @@ namespace OlympGuide.Application.Features.SportField.Tests
             // Arrange
             var repositoryMock = new Mock<ISportFieldRepository>();
             var service = new SportFieldService(repositoryMock.Object);
-            CreateSportFieldRequestDTO invalidRequest = null;
 
             // Act & Assert
-            await Assert.ThrowsAsync<ArgumentException>(() => service.AddSportField(invalidRequest));
+            await Assert.ThrowsAsync<ArgumentException>(() => service.AddSportField(null));
 
         }
 

@@ -14,7 +14,7 @@ namespace OlympGuide.Controllers
         private readonly IMapper _mapper = mapper;
         private ISportFieldService _service = service;
 
-        [HttpGet("GetAllSportFields")]
+        [HttpGet("/")]
         public async Task<List<SportFieldDTO>> GetAllSportFields()
         {
             List<SportField> list = await _service.GetAllSportFields();
@@ -23,7 +23,7 @@ namespace OlympGuide.Controllers
             return result;
         }
 
-        [HttpGet("GetSportFieldByID/{id}")]
+        [HttpGet("/{id}")]
         public async Task<SportFieldDTO> GetSportFieldByID(Guid id)
         {
             
@@ -33,7 +33,7 @@ namespace OlympGuide.Controllers
             return sportFieldDTO;
         }
 
-        [HttpPost("AddSportField")]
+        [HttpPost("/")]
         public async Task<SportFieldDTO> AddSportField([FromBody] CreateSportFieldRequestDTO sportFieldToAdd)
         {
 

@@ -41,13 +41,13 @@ namespace OlympGuide.Domain.Features.SportField
         {
             if (sportFieldID == Guid.Empty)
             {
-                throw new ArgumentException();
+                throw new ArgumentException("Guid must no be null");
             }
             SportField sportField = await _repository.GetSportFieldByID(sportFieldID);
 
             if (sportField == null)
             {
-                throw new NoSportFieldFoundException();
+                throw new NoSportFieldFoundException(sportFieldID);
             }
             return sportField;
         }
