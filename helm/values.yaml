@@ -24,5 +24,4 @@ backend:
     host: olympguide-backend.pm4.init-lab.ch
     path: /
     pathType: Prefix
-   
-   
+  environment: Production
