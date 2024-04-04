@@ -34,6 +34,9 @@ namespace OlympGuide
 
             services.AddDbContext<OlympGuideDBContext>(options =>
                 options.UseNpgsql(_configuration.GetConnectionString("OlympGuideDB")));
+
+            services.AddCors();
+            
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -51,6 +54,7 @@ namespace OlympGuide
                 app.UseHsts();
             }
 
+            app.UseCors(option => option.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
             app.UseHttpsRedirection();
             app.UseRouting();
             app.UseAuthorization();
