@@ -1,19 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using OlympGuide.Application.Features.SportField;
+﻿
+using OlympGuide.Domain.Features.SportField;
 
-namespace OlympGuide.Domain.Features.SportField
+namespace OlympGuide.Application.Features.SportField
 {
     public class SportFieldService(ISportFieldRepository repository) : ISportFieldService
     {
         private readonly ISportFieldRepository _repository = repository;
 
-        public Task<SportField> AddSportField(CreateSportFieldRequestDTO sportFieldToAdd)
+        public Task<SportFieldType> AddSportField(CreateSportFieldRequestDTO sportFieldToAdd)
         {
-            SportField newSportField = new SportField()
+            SportFieldType newSportField = new SportFieldType()
             {
                 Name = sportFieldToAdd.Name,
                 Description = sportFieldToAdd.Description,
@@ -24,12 +20,12 @@ namespace OlympGuide.Domain.Features.SportField
             return _repository.AddSportField(newSportField);
         }
 
-        public Task<List<SportField>> GetAllSportsField()
+        public Task<List<SportFieldType>> GetAllSportsField()
         {
             return _repository.GetAllSportsField();
         }
 
-        public Task<SportField> GetSportFieldByID(Guid sportFieldID)
+        public Task<SportFieldType> GetSportFieldByID(Guid sportFieldID)
         {
             return _repository.GetSportFieldByID(sportFieldID);
         }
