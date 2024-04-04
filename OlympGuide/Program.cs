@@ -17,6 +17,6 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 app.MapControllers();
 app.SetupCors();
-app.ApplyDatabaseMigrations(app.Environment);
+app.ApplyDatabaseMigrations(app.Environment, app.Configuration);
 
 app.Run();

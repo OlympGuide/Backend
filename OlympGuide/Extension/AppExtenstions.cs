@@ -19,7 +19,7 @@ namespace OlympGuide.Extension
                 app.UseHsts();
             }
         }
-        public static void ApplyDatabaseMigrations(this IApplicationBuilder app, IHostEnvironment env)
+        public static void ApplyDatabaseMigrations(this IApplicationBuilder app, IHostEnvironment env, IConfiguration configuration)
         {
             var loggerFactory = app.ApplicationServices.GetRequiredService<ILoggerFactory>();
             var logger = loggerFactory.CreateLogger("AppExtenstions");
@@ -29,6 +29,9 @@ namespace OlympGuide.Extension
                 var db = scope.ServiceProvider.GetRequiredService<OlympGuideDBContext>();
                 logger.LogInformation("Apply migration to database");
                 logger.LogInformation($"Environment: {env.EnvironmentName}");
+                var connectionstring = configuration.GetConnectionString("OlympGuideDB");
+                logger.LogInformation($"DB: {connectionstring}");
+
                 db.Database.Migrate();
             }
 
