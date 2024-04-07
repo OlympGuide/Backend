@@ -1,0 +1,7 @@
+global:
+  postgresql:
+    auth:
+      postgresPassword: "ns8TWRX7cjv56qGHkftY"
+      username: "olympguide"
+      password : "ns8TWRX7cjv56qGHkftY"
+      database : "olympguide"

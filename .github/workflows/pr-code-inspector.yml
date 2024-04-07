@@ -1,0 +1,81 @@
+name: PR-Workflow
+on:
+  push:
+    branches: ["KAN-61-Code-Inspector"]
+
+env:
+  # GENERAL
+  BACKEND_DIRECTORY: OlympGuide
+  # DOCKER env
+  IMAGE_NAME: ${{ github.repository }}/webserver
+  ORGANISATION: OlympGuide
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 8.0.x
+
+    - name: Restore dependencies
+      run: dotnet restore
+      working-directory: ${{ env.BACKEND_DIRECTORY }}
+
+    - name: Build
+      run: dotnet build --no-restore
+      working-directory: ${{ env.BACKEND_DIRECTORY }}
+      
+    - name: Test
+      run: dotnet test --no-build --verbosity normal
+      working-directory: ${{ env.BACKEND_DIRECTORY }}
+
+  code-inspector:
+    needs: build
+    runs-on: ubuntu-latest 
+    steps:
+      - uses: actions/checkout@v2
+      
+      # Run NuGet restore for each project/solution to analyze
+      - name: Run NuGet restore
+        run: dotnet restore <%path_to_project_or_solution%>
+      
+      # Run code analysis for all projects/solutions, such that code analysis violations break the build.
+      - name: Run .NET Code Analysis
+        uses: dotnet/code-analysis@v1
+        id: code-analysis
+        with:
+          solution: ./OlympGuide/OlympGuide.sln
+          build-breaking: true
+
+  build-artifact:
+    needs: code-inspector
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref:  ${{ github.event.pull_request.head.ref }}
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x
+
+      - name: create directory
+        run: mkdir app
+        
+      - name: Build Project
+        run: dotnet publish ./OlympGuide/OlympGuide.csproj -c Release -o ./app /p:UseAppHost=false
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Build Docker Image
+        run: docker build . --file ./${{ env.BACKEND_DIRECTORY }}/Dockerfile.development
+
+  
