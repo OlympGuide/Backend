@@ -1,7 +1,7 @@
-name: PR-Workflow
+name: pr-code-inspector
 on:
   push:
-    branches: ["KAN-61-Code-Inspector"]
+    branches: ["KAN-61-Code-Inpsector"]
 
 env:
   # GENERAL
