@@ -5,7 +5,7 @@ namespace OlympGuide.Infrastructre.Repositories
 {
     public class SportFieldRepository(OlympGuideDBContext context) : ISportFieldRepository
     {
-        public async Task<List<SportFieldType>> GetAllSportsField()
+        public async Task<List<SportFieldType>> GetAllSportFields()
         {
             var sportFieldList = await context.SportFields
                 .ToListAsync();
