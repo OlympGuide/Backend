@@ -17,7 +17,7 @@ namespace OlympGuide.Controllers
         [HttpGet("/")]
         public async Task<List<SportFieldDTO>> GetAllSportFields()
         {
-            List<SportFieldType> list = await _service.GetAllSportsField();
+            List<SportFieldType> list = await _service.GetAllSportFields();
             List<SportFieldDTO> result = _mapper.Map<List<SportFieldType>,List<SportFieldDTO>>(list);
 
             return result;
