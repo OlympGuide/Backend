@@ -9,15 +9,19 @@
         private const float MaxLongitude = 180.0F;
         private const float MinLongitude = -180.0F;
 
-        public static bool CheckSportFieldRequestDTO(CreateSportFieldRequestDTO sportFieldToCheck)
+        public static bool CheckSportFieldRequestDTO(CreateSportFieldRequestDTO? sportFieldToCheck)
         {
-            
+            if (sportFieldToCheck == null) return false;
             return CheckName(sportFieldToCheck) && CheckCoordinates(sportFieldToCheck);
         }
 
         private static bool CheckName(CreateSportFieldRequestDTO sportFieldRequestDTO)
         {
-            return !sportFieldRequestDTO.Name.Equals(string.Empty);
+           if(sportFieldRequestDTO.Name == null || sportFieldRequestDTO.Name.Equals(string.Empty))
+            {
+                return false;
+            }
+           return true;
         }
 
         private static bool CheckCoordinates(CreateSportFieldRequestDTO sportFieldRequestDTO)
