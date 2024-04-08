@@ -5,7 +5,7 @@ namespace OlympGuide.Infrastructre.Repositories
 {
     public class SportFieldRepository(OlympGuideDBContext context) : ISportFieldRepository
     {
-        public async Task<List<SportField>> GetAllSportFields()
+        public async Task<List<SportFieldType>> GetAllSportFields()
         {
             var sportFieldList = await context.SportFields
                 .ToListAsync();
@@ -13,7 +13,7 @@ namespace OlympGuide.Infrastructre.Repositories
             return sportFieldList;
         }
 
-        public async Task<SportField> GetSportFieldByID(Guid sportFieldID)
+        public async Task<SportFieldType> GetSportFieldByID(Guid sportFieldID)
         {
             var sportField = await context.SportFields
                 .SingleAsync(sf => sf.Id == sportFieldID);
@@ -21,7 +21,7 @@ namespace OlympGuide.Infrastructre.Repositories
             return sportField;
         }
 
-        public async Task<SportField> AddSportField(SportField sportFieldToAdd)
+        public async Task<SportFieldType> AddSportField(SportFieldType sportFieldToAdd)
         {
             await context.SportFields
                 .AddAsync(sportFieldToAdd);

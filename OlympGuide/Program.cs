@@ -1,41 +1,22 @@
-using OlympGuide.Domain.Features.SportField;
-using System.Text.Json;
-using Microsoft.EntityFrameworkCore;
+using OlympGuide.Extension;
 using OlympGuide.Infrastructre;
-using OlympGuide.Infrastructre.Repositories;
+using OlympGuide.Application;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-
-builder.Services.AddControllers()
-    .AddJsonOptions(options =>
-        options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase);
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-
-builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-
-builder.Services.AddScoped<ISportFieldService, SportFieldService>();
-builder.Services.AddScoped<ISportFieldRepository, SportFieldRepository>();
-
-builder.Services.AddDbContext<OlympGuideDBContext>(options =>
-    options.UseNpgsql(builder.Configuration.GetConnectionString("OlympGuideDB")));
+builder.Services.AddWebServices();
+builder.Services.AddJsonPolicy();
+builder.Services.AddCustomLogging(builder.WebHost);
+builder.Services.AddApplicationServices();
+builder.Services.AddPersistenceInfrastructure(builder.Configuration);
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
-
+app.UseSwagger(app.Environment);
 app.UseHttpsRedirection();
-
 app.UseAuthorization();
-
 app.MapControllers();
+app.SetupCors();
+app.ApplyDatabaseMigrations(app.Environment, app.Configuration);
 
 app.Run();

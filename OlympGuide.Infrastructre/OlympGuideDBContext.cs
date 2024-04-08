@@ -5,6 +5,6 @@ namespace OlympGuide.Infrastructre
 {
     public class OlympGuideDBContext(DbContextOptions<OlympGuideDBContext> options) : DbContext(options)
     {
-        public DbSet<SportField> SportFields { get; set; }
+        public DbSet<SportFieldType> SportFields { get; set; }
     }
 }

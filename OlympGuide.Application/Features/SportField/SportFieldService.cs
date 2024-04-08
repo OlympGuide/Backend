@@ -4,19 +4,20 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore.Query;
-using OlympGuide.Application.Features.SportField;
 
-namespace OlympGuide.Domain.Features.SportField
+using OlympGuide.Domain.Features.SportField;
+
+namespace OlympGuide.Application.Features.SportField
 {
     public class SportFieldService(ISportFieldRepository repository) : ISportFieldService
     {
         private readonly ISportFieldRepository _repository = repository;
 
-        public Task<SportField> AddSportField(CreateSportFieldRequestDTO sportFieldToAdd)
+        public Task<SportFieldType> AddSportField(CreateSportFieldRequestDTO sportFieldToAdd)
         {
             if (sportFieldToAdd != null && SportFieldValidation.CheckSportFieldRequestDTO(sportFieldToAdd))
             {
-                SportField newSportField = new SportField()
+                SportFieldType newSportField = new SportFieldType()
                 {
                     Name = sportFieldToAdd.Name,
                     Description = sportFieldToAdd.Description,
@@ -32,18 +33,18 @@ namespace OlympGuide.Domain.Features.SportField
             }
         }
 
-        public Task<List<SportField>> GetAllSportFields()
+        public Task<List<SportFieldType>> GetAllSportFields()
         {
             return _repository.GetAllSportFields();
         }
 
-        public async Task<SportField> GetSportFieldByID(Guid sportFieldID)
+        public async Task<SportFieldType> GetSportFieldByID(Guid sportFieldID)
         {
             if (sportFieldID == Guid.Empty)
             {
                 throw new ArgumentException("Guid must no be null");
             }
-            SportField sportField = await _repository.GetSportFieldByID(sportFieldID);
+            SportFieldType sportField = await _repository.GetSportFieldByID(sportFieldID);
 
             if (sportField == null)
             {
