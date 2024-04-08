@@ -10,7 +10,7 @@ using OlympGuide.Infrastructre;
 
 namespace OlympGuide.Infrastructre.Migrations
 {
-    [DbContext(typeof(OlympGuideDBContext))]
+    [DbContext(typeof(OlympGuideDbContext))]
     partial class OlympGuideDBContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
