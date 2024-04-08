@@ -2,10 +2,13 @@ using AutoMapper;
 using OlympGuide.Application.Features.SportField;
 using OlympGuide.Domain.Features.SportField;
 
-public class MappingProfiles: Profile
+namespace OlympGuide
 {
-    public MappingProfiles()
+    public class MappingProfiles : Profile
     {
-        CreateMap<SportFieldDTO, SportFieldType>().ReverseMap();
+        public MappingProfiles()
+        {
+            CreateMap<SportFieldDto, SportFieldType>().ReverseMap();
+        }
     }
 }

@@ -11,7 +11,7 @@ using OlympGuide.Infrastructre;
 
 namespace OlympGuide.Infrastructre.Migrations
 {
-    [DbContext(typeof(OlympGuideDBContext))]
+    [DbContext(typeof(OlympGuideDbContext))]
     [Migration("20240331200820_InitialCreate")]
     partial class InitialCreate
     {

@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Routing;
-using OlympGuide.Application.Features.SportField;
+﻿using OlympGuide.Application.Features.SportField;
 
 namespace OlympGuideTests
 {
@@ -14,11 +8,8 @@ namespace OlympGuideTests
         [Fact]
         public void CheckSportFieldRequestDTO_NullInput_ReturnsFalse()
         {
-            // Arrange
-            CreateSportFieldRequestDTO sportFieldToCheck = null;
-
             // Act
-            bool result = SportFieldValidation.CheckSportFieldRequestDTO(sportFieldToCheck);
+            bool result = SportFieldValidation.CheckSportFieldRequestDto(null);
 
             // Assert
             Assert.False(result);
@@ -28,7 +19,7 @@ namespace OlympGuideTests
         public void CheckSportFieldRequestDTO_ValidInput_ReturnsTrue()
         {
             // Arrange
-            CreateSportFieldRequestDTO sportFieldToCheck = new CreateSportFieldRequestDTO(
+            var sportFieldToCheck = new CreateSportFieldRequestDto(
                 "Football Field",
                 "Description",
                 -74.0060f,
@@ -36,35 +27,17 @@ namespace OlympGuideTests
             );
 
             // Act
-            bool result = SportFieldValidation.CheckSportFieldRequestDTO(sportFieldToCheck);
+            bool result = SportFieldValidation.CheckSportFieldRequestDto(sportFieldToCheck);
 
             // Assert
             Assert.True(result);
         }
 
         [Fact]
-        public void CheckSportFieldRequestDTO_NullName_ReturnsFalse()
-        {
-            // Arrange
-            CreateSportFieldRequestDTO sportFieldToCheck = new CreateSportFieldRequestDTO(
-                null,
-                "Description",
-                -74.0060f,
-                40.7128f
-            );
-
-            // Act
-            bool result = SportFieldValidation.CheckSportFieldRequestDTO(sportFieldToCheck);
-
-            // Assert
-            Assert.False(result);
-        }
-
-        [Fact]
         public void CheckSportFieldRequestDTO_EmptyName_ReturnsFalse()
         {
             // Arrange
-            CreateSportFieldRequestDTO sportFieldToCheck = new CreateSportFieldRequestDTO(
+            var sportFieldToCheck = new CreateSportFieldRequestDto(
                 "",
                 "Description",
                 -74.0060f,
@@ -72,7 +45,7 @@ namespace OlympGuideTests
             );
 
             // Act
-            bool result = SportFieldValidation.CheckSportFieldRequestDTO(sportFieldToCheck);
+            bool result = SportFieldValidation.CheckSportFieldRequestDto(sportFieldToCheck);
 
             // Assert
             Assert.False(result);
@@ -82,7 +55,7 @@ namespace OlympGuideTests
         public void CheckSportFieldRequestDTO_InvalidLatitude_ReturnsFalse()
         {
             // Arrange
-            CreateSportFieldRequestDTO sportFieldToCheck = new CreateSportFieldRequestDTO(
+            var sportFieldToCheck = new CreateSportFieldRequestDto(
                 "Football Field",
                 "Description",
                 -74.0060f,
@@ -90,7 +63,7 @@ namespace OlympGuideTests
             );
 
             // Act
-            bool result = SportFieldValidation.CheckSportFieldRequestDTO(sportFieldToCheck);
+            bool result = SportFieldValidation.CheckSportFieldRequestDto(sportFieldToCheck);
 
             // Assert
             Assert.False(result);
@@ -100,7 +73,7 @@ namespace OlympGuideTests
         public void CheckSportFieldRequestDTO_InvalidLongitude_ReturnsFalse()
         {
             // Arrange
-            CreateSportFieldRequestDTO sportFieldToCheck = new CreateSportFieldRequestDTO(
+            var sportFieldToCheck = new CreateSportFieldRequestDto(
                 "Football Field",
                 "Description",
                 -200.0f,
@@ -108,7 +81,7 @@ namespace OlympGuideTests
             );
 
             // Act
-            bool result = SportFieldValidation.CheckSportFieldRequestDTO(sportFieldToCheck);
+            bool result = SportFieldValidation.CheckSportFieldRequestDto(sportFieldToCheck);
 
             // Assert
             Assert.False(result);

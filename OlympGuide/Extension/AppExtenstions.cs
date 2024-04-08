@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
 using OlympGuide.Infrastructre;
 
 namespace OlympGuide.Extension
@@ -26,7 +25,7 @@ namespace OlympGuide.Extension
 
             using (var scope = app.ApplicationServices.CreateScope())
             {
-                var db = scope.ServiceProvider.GetRequiredService<OlympGuideDBContext>();
+                var db = scope.ServiceProvider.GetRequiredService<OlympGuideDbContext>();
                 logger.LogInformation("Apply migration to database");
                 logger.LogInformation($"Environment: {env.EnvironmentName}");
                 var connectionstring = configuration.GetConnectionString("OlympGuideDB");

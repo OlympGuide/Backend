@@ -38,8 +38,32 @@ jobs:
       run: dotnet test --no-build --verbosity normal
       working-directory: ${{ env.BACKEND_DIRECTORY }}
 
-  build-artifact:
+  code-inspector:
     needs: build
+    runs-on: ubuntu-latest 
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          ref:  ${{ github.event.pull_request.head.ref }}
+      
+      # Run NuGet restore for each project/solution to analyze
+      - name: Run NuGet restore
+        run: dotnet restore ./OlympGuide/OlympGuide.sln
+      
+      # Run code analysis for all projects/solutions, such that code analysis violations break the build.
+      - name: Run .NET Code Analysis
+        uses: muno92/resharper_inspectcode@v1
+        id: code-analysis
+        with:
+          solutionPath: ./OlympGuide/OlympGuide.sln
+          minimumSeverity: warning
+          ignoreIssueType: | 
+            NotAccessedPositionalProperty.Global
+          exclude: |
+            **DbContext.cs
+
+  build-artifact:
+    needs: code-inspector
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
