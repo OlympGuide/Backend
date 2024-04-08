@@ -8,7 +8,7 @@ namespace OlympGuide.Application.Features.SportField
 
         public Task<SportFieldType> AddSportField(CreateSportFieldRequestDto sportFieldToAdd)
         {
-            if (SportFieldValidation.CheckSportFieldRequestDTO(sportFieldToAdd))
+            if (SportFieldValidation.CheckSportFieldRequestDto(sportFieldToAdd))
             {
                 var newSportField = new SportFieldType()
                 {

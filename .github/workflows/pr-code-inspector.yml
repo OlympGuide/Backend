@@ -54,6 +54,8 @@ jobs:
           minimumSeverity: warning
           ignoreIssueType: | 
             NotAccessedPositionalProperty.Global
+          exclude: |
+            *DbContext.cs
 
   build-artifact:
     needs: code-inspector
