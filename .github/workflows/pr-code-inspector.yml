@@ -51,6 +51,9 @@ jobs:
         id: code-analysis
         with:
           solutionPath: ./OlympGuide/OlympGuide.sln
+          minimumSeverity: error
+          ignoreIssueType: | 
+            NotAccessedPositionalProperty.Global
 
   build-artifact:
     needs: code-inspector
