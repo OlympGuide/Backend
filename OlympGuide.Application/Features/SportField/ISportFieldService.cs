@@ -10,7 +10,7 @@ namespace OlympGuide.Application.Features.SportField
 {
     public interface ISportFieldService
     {
-        public Task<List<SportFieldType>> GetAllSportsField();
+        public Task<List<SportFieldType>> GetAllSportFields();
         public Task<SportFieldType> GetSportFieldByID(Guid sportFieldID);
         public Task<SportFieldType> AddSportField(CreateSportFieldRequestDTO sportFieldToAdd);
     }

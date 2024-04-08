@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using OlympGuide.Application.Features.SportField;
 using OlympGuide.Domain.Features.SportField;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 
 namespace OlympGuide.Controllers
 {
@@ -13,16 +14,16 @@ namespace OlympGuide.Controllers
         private readonly IMapper _mapper = mapper;
         private ISportFieldService _service = service;
 
-        [HttpGet("GetAllSportFields")]
+        [HttpGet("/")]
         public async Task<List<SportFieldDTO>> GetAllSportFields()
         {
-            List<SportFieldType> list = await _service.GetAllSportsField();
+            List<SportFieldType> list = await _service.GetAllSportFields();
             List<SportFieldDTO> result = _mapper.Map<List<SportFieldType>,List<SportFieldDTO>>(list);
 
             return result;
         }
 
-        [HttpGet("GetSportFieldByID/{id}")]
+        [HttpGet("/{id}")]
         public async Task<SportFieldDTO> GetSportFieldByID(Guid id)
         {
             SportFieldType sportField = await _service.GetSportFieldByID(id);
@@ -31,7 +32,7 @@ namespace OlympGuide.Controllers
             return sportFieldDTO;
         }
 
-        [HttpPost("AddSportField")]
+        [HttpPost("/")]
         public async Task<SportFieldDTO> AddSportField([FromBody] CreateSportFieldRequestDTO sportFieldToAdd)
         {
 
