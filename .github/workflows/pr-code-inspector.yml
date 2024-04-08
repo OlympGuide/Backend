@@ -51,7 +51,7 @@ jobs:
         id: code-analysis
         with:
           solutionPath: ./OlympGuide/OlympGuide.sln
-          minimumSeverity: error
+          minimumSeverity: warning
           ignoreIssueType: | 
             NotAccessedPositionalProperty.Global
 
