@@ -6,7 +6,7 @@ namespace OlympGuide.Application.Features.SportField
     {
         private readonly ISportFieldRepository _repository = repository;
 
-        public Task<SportFieldType> AddSportField(CreateSportFieldRequestDTO sportFieldToAdd)
+        public Task<SportFieldType> AddSportField(CreateSportFieldRequestDto sportFieldToAdd)
         {
             if (sportFieldToAdd != null && SportFieldValidation.CheckSportFieldRequestDTO(sportFieldToAdd))
             {

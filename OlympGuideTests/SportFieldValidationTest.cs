@@ -8,11 +8,8 @@ namespace OlympGuideTests
         [Fact]
         public void CheckSportFieldRequestDTO_NullInput_ReturnsFalse()
         {
-            // Arrange
-            CreateSportFieldRequestDTO sportFieldToCheck = null;
-
             // Act
-            bool result = SportFieldValidation.CheckSportFieldRequestDTO(sportFieldToCheck);
+            bool result = SportFieldValidation.CheckSportFieldRequestDTO(null);
 
             // Assert
             Assert.False(result);
@@ -22,7 +19,7 @@ namespace OlympGuideTests
         public void CheckSportFieldRequestDTO_ValidInput_ReturnsTrue()
         {
             // Arrange
-            CreateSportFieldRequestDTO sportFieldToCheck = new CreateSportFieldRequestDTO(
+            var sportFieldToCheck = new CreateSportFieldRequestDto(
                 "Football Field",
                 "Description",
                 -74.0060f,
@@ -40,8 +37,8 @@ namespace OlympGuideTests
         public void CheckSportFieldRequestDTO_NullName_ReturnsFalse()
         {
             // Arrange
-            CreateSportFieldRequestDTO sportFieldToCheck = new CreateSportFieldRequestDTO(
-                null,
+            var sportFieldToCheck = new CreateSportFieldRequestDto(
+                null!,
                 "Description",
                 -74.0060f,
                 40.7128f
@@ -58,7 +55,7 @@ namespace OlympGuideTests
         public void CheckSportFieldRequestDTO_EmptyName_ReturnsFalse()
         {
             // Arrange
-            CreateSportFieldRequestDTO sportFieldToCheck = new CreateSportFieldRequestDTO(
+            var sportFieldToCheck = new CreateSportFieldRequestDto(
                 "",
                 "Description",
                 -74.0060f,
@@ -76,7 +73,7 @@ namespace OlympGuideTests
         public void CheckSportFieldRequestDTO_InvalidLatitude_ReturnsFalse()
         {
             // Arrange
-            CreateSportFieldRequestDTO sportFieldToCheck = new CreateSportFieldRequestDTO(
+            var sportFieldToCheck = new CreateSportFieldRequestDto(
                 "Football Field",
                 "Description",
                 -74.0060f,
@@ -94,7 +91,7 @@ namespace OlympGuideTests
         public void CheckSportFieldRequestDTO_InvalidLongitude_ReturnsFalse()
         {
             // Arrange
-            CreateSportFieldRequestDTO sportFieldToCheck = new CreateSportFieldRequestDTO(
+            var sportFieldToCheck = new CreateSportFieldRequestDto(
                 "Football Field",
                 "Description",
                 -200.0f,

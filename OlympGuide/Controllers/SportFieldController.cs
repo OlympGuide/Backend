@@ -13,29 +13,29 @@ namespace OlympGuide.Controllers
         private readonly ISportFieldService _service = service;
 
         [HttpGet("/")]
-        public async Task<List<SportFieldDTO>> GetAllSportFields()
+        public async Task<List<SportFieldDto>> GetAllSportFields()
         {
             var list = await _service.GetAllSportFields();
-            var result = _mapper.Map<List<SportFieldType>, List<SportFieldDTO>>(list);
+            var result = _mapper.Map<List<SportFieldType>, List<SportFieldDto>>(list);
 
             return result;
         }
 
         [HttpGet("/{id}")]
-        public async Task<SportFieldDTO> GetSportFieldById(Guid id)
+        public async Task<SportFieldDto> GetSportFieldById(Guid id)
         {
             var sportField = await _service.GetSportFieldById(id);
-            var sportFieldDto = _mapper.Map<SportFieldType, SportFieldDTO>(sportField);
+            var sportFieldDto = _mapper.Map<SportFieldType, SportFieldDto>(sportField);
 
             return sportFieldDto;
         }
 
         [HttpPost("/")]
-        public async Task<SportFieldDTO> AddSportField([FromBody] CreateSportFieldRequestDTO sportFieldToAdd)
+        public async Task<SportFieldDto> AddSportField([FromBody] CreateSportFieldRequestDto sportFieldToAdd)
         {
 
             var sportField = await _service.AddSportField(sportFieldToAdd);
-            var sportFieldDto = _mapper.Map<SportFieldType, SportFieldDTO>(sportField);
+            var sportFieldDto = _mapper.Map<SportFieldType, SportFieldDto>(sportField);
 
             return sportFieldDto;
         }

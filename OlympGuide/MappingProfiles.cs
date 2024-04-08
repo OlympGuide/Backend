@@ -8,7 +8,7 @@ namespace OlympGuide
     {
         public MappingProfiles()
         {
-            CreateMap<SportFieldDTO, SportFieldType>().ReverseMap();
+            CreateMap<SportFieldDto, SportFieldType>().ReverseMap();
         }
     }
 }
