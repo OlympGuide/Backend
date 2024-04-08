@@ -3,7 +3,7 @@ using OlympGuide.Domain.Features.SportField;
 
 namespace OlympGuide.Infrastructre.Repositories
 {
-    public class SportFieldRepository(OlympGuideDBContext context) : ISportFieldRepository
+    public class SportFieldRepository(OlympGuideDbContext context) : ISportFieldRepository
     {
         public async Task<List<SportFieldType>> GetAllSportFields()
         {
@@ -13,10 +13,10 @@ namespace OlympGuide.Infrastructre.Repositories
             return sportFieldList;
         }
 
-        public async Task<SportFieldType> GetSportFieldById(Guid sportFieldID)
+        public async Task<SportFieldType> GetSportFieldById(Guid sportFieldId)
         {
             var sportField = await context.SportFields
-                .SingleAsync(sf => sf.Id == sportFieldID);
+                .SingleAsync(sf => sf.Id == sportFieldId);
 
             return sportField;
         }

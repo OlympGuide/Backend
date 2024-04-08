@@ -1,7 +1,8 @@
 ﻿using Moq;
+using OlympGuide.Application.Features.SportField;
 using OlympGuide.Domain.Features.SportField;
 
-namespace OlympGuide.Application.Features.SportField.Tests
+namespace OlympGuideTests
 {
     public class SportFieldServiceTests
     {
@@ -29,7 +30,7 @@ namespace OlympGuide.Application.Features.SportField.Tests
             await service.AddSportField(validRequest);
 
             // Assert
-            repositoryMock.Verify(repo => repo.AddSportField(It.IsAny<Domain.Features.SportField.SportFieldType>()), Times.Once);
+            repositoryMock.Verify(repo => repo.AddSportField(It.IsAny<SportFieldType>()), Times.Once);
         }
 
         [Fact]

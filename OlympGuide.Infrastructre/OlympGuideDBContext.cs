@@ -3,7 +3,7 @@ using OlympGuide.Domain.Features.SportField;
 
 namespace OlympGuide.Infrastructre
 {
-    public class OlympGuideDBContext(DbContextOptions<OlympGuideDBContext> options) : DbContext(options)
+    public class OlympGuideDbContext(DbContextOptions<OlympGuideDbContext> options) : DbContext(options)
     {
         public DbSet<SportFieldType> SportFields { get; set; }
     }

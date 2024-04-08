@@ -11,24 +11,13 @@
 
         public static bool CheckSportFieldRequestDTO(CreateSportFieldRequestDTO sportFieldToCheck)
         {
-            var result = false;
-            if (sportFieldToCheck != null)
-            {
-                result = CheckName(sportFieldToCheck) && CheckCoordinates(sportFieldToCheck);
-
-            }
-
-            return result;
+            
+            return CheckName(sportFieldToCheck) && CheckCoordinates(sportFieldToCheck);
         }
 
         private static bool CheckName(CreateSportFieldRequestDTO sportFieldRequestDTO)
         {
-            var result = false;
-            if (sportFieldRequestDTO.Name != null && !sportFieldRequestDTO.Name.Equals(""))
-            {
-                result = true;
-            }
-            return result;
+            return !sportFieldRequestDTO.Name.Equals(string.Empty);
         }
 
         private static bool CheckCoordinates(CreateSportFieldRequestDTO sportFieldRequestDTO)

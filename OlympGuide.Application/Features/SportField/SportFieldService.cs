@@ -20,10 +20,7 @@ namespace OlympGuide.Application.Features.SportField
 
                 return _repository.AddSportField(newSportField);
             }
-            else
-            {
                 throw new ArgumentException();
-            }
         }
 
         public Task<List<SportFieldType>> GetAllSportFields()
@@ -31,17 +28,17 @@ namespace OlympGuide.Application.Features.SportField
             return _repository.GetAllSportFields();
         }
 
-        public async Task<SportFieldType> GetSportFieldById(Guid sportFieldID)
+        public async Task<SportFieldType> GetSportFieldById(Guid sportFieldId)
         {
-            if (sportFieldID == Guid.Empty)
+            if (sportFieldId == Guid.Empty)
             {
                 throw new ArgumentException("Guid must no be null");
             }
-            var sportField = await _repository.GetSportFieldById(sportFieldID);
+            var sportField = await _repository.GetSportFieldById(sportFieldId);
 
             if (sportField == null)
             {
-                throw new NoSportFieldFoundException(sportFieldID);
+                throw new NoSportFieldFoundException(sportFieldId);
             }
             return sportField;
         }
