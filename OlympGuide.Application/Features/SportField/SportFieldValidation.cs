@@ -15,9 +15,9 @@
             return CheckName(sportFieldToCheck) && CheckCoordinates(sportFieldToCheck);
         }
 
-        private static bool CheckName(CreateSportFieldRequestDto sportFieldRequestDTO)
+        private static bool CheckName(CreateSportFieldRequestDto sportFieldRequestDto)
         {
-           if(sportFieldRequestDTO.Name.Equals(string.Empty))
+           if(sportFieldRequestDto.Name.Equals(string.Empty))
             {
                 return false;
             }

@@ -55,7 +55,7 @@ jobs:
           ignoreIssueType: | 
             NotAccessedPositionalProperty.Global
           exclude: |
-            *DbContext.cs
+            **DbContext.cs
 
   build-artifact:
     needs: code-inspector
