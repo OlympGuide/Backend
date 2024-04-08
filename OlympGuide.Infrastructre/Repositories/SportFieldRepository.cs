@@ -13,7 +13,7 @@ namespace OlympGuide.Infrastructre.Repositories
             return sportFieldList;
         }
 
-        public async Task<SportFieldType> GetSportFieldByID(Guid sportFieldID)
+        public async Task<SportFieldType> GetSportFieldById(Guid sportFieldID)
         {
             var sportField = await context.SportFields
                 .SingleAsync(sf => sf.Id == sportFieldID);

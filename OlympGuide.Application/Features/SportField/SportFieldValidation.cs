@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace OlympGuide.Application.Features.SportField
+﻿namespace OlympGuide.Application.Features.SportField
 {
 
     public static class SportFieldValidation
@@ -17,7 +11,7 @@ namespace OlympGuide.Application.Features.SportField
 
         public static bool CheckSportFieldRequestDTO(CreateSportFieldRequestDTO sportFieldToCheck)
         {
-            bool result = false;
+            var result = false;
             if (sportFieldToCheck != null)
             {
                 result = CheckName(sportFieldToCheck) && CheckCoordinates(sportFieldToCheck);
@@ -29,7 +23,7 @@ namespace OlympGuide.Application.Features.SportField
 
         private static bool CheckName(CreateSportFieldRequestDTO sportFieldRequestDTO)
         {
-            bool result = false;
+            var result = false;
             if (sportFieldRequestDTO.Name != null && !sportFieldRequestDTO.Name.Equals(""))
             {
                 result = true;
@@ -39,7 +33,7 @@ namespace OlympGuide.Application.Features.SportField
 
         private static bool CheckCoordinates(CreateSportFieldRequestDTO sportFieldRequestDTO)
         {
-            bool result = false;
+            var result = false;
 
             if (sportFieldRequestDTO.Latitude <= MaxLatitude && sportFieldRequestDTO.Latitude >= MinLatitude)
             {

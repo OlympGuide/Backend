@@ -2,8 +2,6 @@ using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using OlympGuide.Application.Features.SportField;
 using OlympGuide.Domain.Features.SportField;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 
 namespace OlympGuide.Controllers
 {
@@ -12,34 +10,34 @@ namespace OlympGuide.Controllers
     public class SportFieldController(ISportFieldService service, IMapper mapper) : ControllerBase
     {
         private readonly IMapper _mapper = mapper;
-        private ISportFieldService _service = service;
+        private readonly ISportFieldService _service = service;
 
         [HttpGet("/")]
         public async Task<List<SportFieldDTO>> GetAllSportFields()
         {
-            List<SportFieldType> list = await _service.GetAllSportFields();
-            List<SportFieldDTO> result = _mapper.Map<List<SportFieldType>,List<SportFieldDTO>>(list);
+            var list = await _service.GetAllSportFields();
+            var result = _mapper.Map<List<SportFieldType>, List<SportFieldDTO>>(list);
 
             return result;
         }
 
         [HttpGet("/{id}")]
-        public async Task<SportFieldDTO> GetSportFieldByID(Guid id)
+        public async Task<SportFieldDTO> GetSportFieldById(Guid id)
         {
-            SportFieldType sportField = await _service.GetSportFieldByID(id);
-            SportFieldDTO sportFieldDTO = _mapper.Map<SportFieldType, SportFieldDTO>(sportField);
+            var sportField = await _service.GetSportFieldByID(id);
+            var sportFieldDto = _mapper.Map<SportFieldType, SportFieldDTO>(sportField);
 
-            return sportFieldDTO;
+            return sportFieldDto;
         }
 
         [HttpPost("/")]
         public async Task<SportFieldDTO> AddSportField([FromBody] CreateSportFieldRequestDTO sportFieldToAdd)
         {
 
-            SportFieldType sportField = await _service.AddSportField(sportFieldToAdd);
-            SportFieldDTO sportFieldDTO = _mapper.Map<SportFieldType, SportFieldDTO>(sportField);
+            var sportField = await _service.AddSportField(sportFieldToAdd);
+            var sportFieldDto = _mapper.Map<SportFieldType, SportFieldDTO>(sportField);
 
-            return sportFieldDTO;
+            return sportFieldDto;
         }
     }
 }
