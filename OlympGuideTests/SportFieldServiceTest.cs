@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using Moq;
+﻿using Moq;
 using OlympGuide.Domain.Features.SportField;
-using Xunit;
 
 namespace OlympGuide.Application.Features.SportField.Tests
 {
@@ -27,7 +23,7 @@ namespace OlympGuide.Application.Features.SportField.Tests
             // Arrange
             var repositoryMock = new Mock<ISportFieldRepository>();
             var service = new SportFieldService(repositoryMock.Object);
-            CreateSportFieldRequestDTO validRequest = new CreateSportFieldRequestDTO("Field", "Description", 10.0f, 20.0f);
+            var validRequest = new CreateSportFieldRequestDTO("Field", "Description", 10.0f, 20.0f);
 
             // Act
             await service.AddSportField(validRequest);
@@ -58,7 +54,7 @@ namespace OlympGuide.Application.Features.SportField.Tests
             var service = new SportFieldService(repositoryMock.Object);
 
             // Act & Assert
-            await Assert.ThrowsAsync<ArgumentException>(() => service.GetSportFieldByID(Guid.Empty));
+            await Assert.ThrowsAsync<ArgumentException>(() => service.GetSportFieldById(Guid.Empty));
         }
 
         [Fact]
@@ -66,12 +62,12 @@ namespace OlympGuide.Application.Features.SportField.Tests
         {
             // Arrange
             var repositoryMock = new Mock<ISportFieldRepository>();
-            repositoryMock.Setup(repo => repo.GetSportFieldByID(It.IsAny<Guid>())).ReturnsAsync((Domain.Features.SportField.SportFieldType)null);
+            _ = repositoryMock.Setup(repo => repo.GetSportFieldById(It.IsAny<Guid>())).ReturnsAsync((SportFieldType)null);
             var service = new SportFieldService(repositoryMock.Object);
-            Guid validId = Guid.NewGuid();
+            var validId = Guid.NewGuid();
 
             // Act & Assert
-            await Assert.ThrowsAsync<NoSportFieldFoundException>(() => service.GetSportFieldByID(validId));
+            await Assert.ThrowsAsync<NoSportFieldFoundException>(() => service.GetSportFieldById(validId));
         }
 
         [Fact]
@@ -79,15 +75,15 @@ namespace OlympGuide.Application.Features.SportField.Tests
         {
             // Arrange
             var repositoryMock = new Mock<ISportFieldRepository>();
-            repositoryMock.Setup(repo => repo.GetSportFieldByID(It.IsAny<Guid>())).ReturnsAsync(new Domain.Features.SportField.SportFieldType());
+            repositoryMock.Setup(repo => repo.GetSportFieldById(It.IsAny<Guid>())).ReturnsAsync(new Domain.Features.SportField.SportFieldType());
             var service = new SportFieldService(repositoryMock.Object);
-            Guid validId = Guid.NewGuid();
+            var validId = Guid.NewGuid();
 
             // Act
-            await service.GetSportFieldByID(validId);
+            await service.GetSportFieldById(validId);
 
             // Assert
-            repositoryMock.Verify(repo => repo.GetSportFieldByID(validId), Times.Once);
+            repositoryMock.Verify(repo => repo.GetSportFieldById(validId), Times.Once);
         }
     }
 }

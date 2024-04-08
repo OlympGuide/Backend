@@ -24,7 +24,7 @@ namespace OlympGuide.Controllers
         [HttpGet("/{id}")]
         public async Task<SportFieldDTO> GetSportFieldById(Guid id)
         {
-            var sportField = await _service.GetSportFieldByID(id);
+            var sportField = await _service.GetSportFieldById(id);
             var sportFieldDto = _mapper.Map<SportFieldType, SportFieldDTO>(sportField);
 
             return sportFieldDto;
