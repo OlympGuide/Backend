@@ -1,6 +1,7 @@
 using OlympGuide.Extension;
 using OlympGuide.Infrastructre;
 using OlympGuide.Application;
+using OlympGuide.Domain;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,6 +10,7 @@ builder.Services.AddJsonPolicy();
 builder.Services.AddCustomLogging(builder.WebHost);
 builder.Services.AddApplicationServices();
 builder.Services.AddPersistenceInfrastructure(builder.Configuration);
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Program).Assembly));
 
 var app = builder.Build();
 
