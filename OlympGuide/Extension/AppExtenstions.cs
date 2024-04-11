@@ -31,7 +31,7 @@ namespace OlympGuide.Extension
                 var connectionstring = configuration.GetConnectionString("OlympGuideDB");
                 logger.LogInformation($"DB: {connectionstring}");
 
-                db.Database.Migrate();
+                //db.Database.Migrate();
             }
 
         }

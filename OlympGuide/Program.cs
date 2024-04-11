@@ -9,6 +9,7 @@ builder.Services.AddJsonPolicy();
 builder.Services.AddCustomLogging(builder.WebHost);
 builder.Services.AddApplicationServices();
 builder.Services.AddPersistenceInfrastructure(builder.Configuration);
+builder.Services.AddAuth(builder.Configuration);
 
 var app = builder.Build();
 
