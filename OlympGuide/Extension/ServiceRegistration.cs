@@ -36,7 +36,7 @@ namespace OlympGuide.Extension
         }
         public static void AddAuth(this IServiceCollection services, IConfiguration configuration)
         {
-            var domain = configuration["Auth0:Domain"]!;
+            var domain = $"https://{configuration["Auth0:Domain"]}/";
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
                 {

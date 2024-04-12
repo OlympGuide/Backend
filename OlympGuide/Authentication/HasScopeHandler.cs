@@ -10,17 +10,19 @@ namespace OlympGuide.Authentication
         )
         {
             // If user does not have the scope claim, get out of here
-            if (!context.User.HasClaim(c => c.Type == "scope" && c.Issuer == requirement.Issuer))
+            if (!context.User.HasClaim(c => c.Type == "permissions" && c.Issuer == requirement.Issuer))
                 return Task.CompletedTask;
 
             // Split the scopes string into an array
-            var scopes = context.User
-              .FindFirst(c => c.Type == "scope" && c.Issuer == requirement.Issuer)!.Value.Split(' ');
+            var permissions = context.User
+              .FindAll(c => c.Type == "permissions" && c.Issuer == requirement.Issuer).ToList();
 
             // Succeed if the scope array contains the required scope
-            if (scopes.Any(s => s == requirement.Scope))
+            if (permissions.Any(p => p.Value == requirement.Scope))
                 context.Succeed(requirement);
-
+            else if(permissions.Any(p => p.Value.Equals("access:admin")))
+                context.Succeed(requirement);
+            
             return Task.CompletedTask;
         }
     }
