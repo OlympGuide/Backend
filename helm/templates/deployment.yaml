@@ -29,6 +29,11 @@ spec:
         env:
         - name: ASPNETCORE_ENVIRONMENT
           value: {{ .Values.backend.environment }} # Set the environment your application is running in
+        - name: ConnectionStrings__OlympGuideDB
+          valueFrom:
+            secretKeyRef:
+              name: {{ .Values.backend.deployment.connectionStringSecret }}
+              key: password
         resources:
             requests:
                 cpu: {{ .Values.backend.deployment.resources.requests.cpu }}
