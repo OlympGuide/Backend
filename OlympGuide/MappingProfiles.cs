@@ -1,6 +1,7 @@
 using AutoMapper;
 using OlympGuide.Application.Features.SportField;
 using OlympGuide.Domain.Features.SportField;
+using OlympGuide.Domain.Features.User;
 
 namespace OlympGuide
 {
@@ -9,6 +10,7 @@ namespace OlympGuide
         public MappingProfiles()
         {
             CreateMap<SportFieldDto, SportFieldType>().ReverseMap();
+            CreateMap<CreateUserInformations, UserProfile>().ReverseMap();
         }
     }
 }

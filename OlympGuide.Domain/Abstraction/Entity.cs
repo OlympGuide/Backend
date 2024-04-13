@@ -2,6 +2,6 @@
 {
     public abstract class Entity
     {
-        public Guid Id { get; init; } = new Guid();
+        public Guid Id { get; set; } = new Guid();
     }
 }
