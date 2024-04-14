@@ -1,4 +1,6 @@
-﻿namespace OlympGuide.Application.Features.SportField
+﻿using OlympGuide.Domain.Features.SportFieldProposal;
+
+namespace OlympGuide.Application.Features.SportField
 {
 
     public static class SportFieldValidation
@@ -9,28 +11,28 @@
         private const float MaxLongitude = 180.0F;
         private const float MinLongitude = -180.0F;
 
-        public static bool CheckSportFieldRequestDto(CreateSportFieldRequestDto? sportFieldToCheck)
+        public static bool CheckSportFieldProposal(SportFieldProposalType sportFieldToCheck)
         {
             if (sportFieldToCheck == null) return false;
             return CheckName(sportFieldToCheck) && CheckCoordinates(sportFieldToCheck);
         }
 
-        private static bool CheckName(CreateSportFieldRequestDto sportFieldRequestDto)
+        private static bool CheckName(SportFieldProposalType sportFieldProposal)
         {
-           if(sportFieldRequestDto.Name.Equals(string.Empty))
+            if (sportFieldProposal.SportFieldName.Equals(string.Empty))
             {
                 return false;
             }
-           return true;
+            return true;
         }
 
-        private static bool CheckCoordinates(CreateSportFieldRequestDto sportFieldRequestDto)
+        private static bool CheckCoordinates(SportFieldProposalType sportFieldProposal)
         {
             var result = false;
 
-            if (sportFieldRequestDto.Latitude <= MaxLatitude && sportFieldRequestDto.Latitude >= MinLatitude)
+            if (sportFieldProposal.SportFieldLatitude <= MaxLatitude && sportFieldProposal.SportFieldLatitude >= MinLatitude)
             {
-                if(sportFieldRequestDto.Longitude <= MaxLongitude && sportFieldRequestDto.Longitude >= MinLongitude)
+                if (sportFieldProposal.SportFieldLongitude <= MaxLongitude && sportFieldProposal.SportFieldLongitude >= MinLongitude)
                 {
                     result = true;
                 }

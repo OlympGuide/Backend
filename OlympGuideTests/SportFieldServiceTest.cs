@@ -24,7 +24,7 @@ namespace OlympGuideTests
             // Arrange
             var repositoryMock = new Mock<ISportFieldRepository>();
             var service = new SportFieldService(repositoryMock.Object);
-            var validRequest = new CreateSportFieldRequestDto("Field", "Description", 10.0f, 20.0f);
+            var validRequest = new CreateSportFieldDto("Field", "Description", 10.0f, 20.0f);
 
             // Act
             await service.AddSportField(validRequest);

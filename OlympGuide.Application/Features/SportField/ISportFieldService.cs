@@ -1,4 +1,5 @@
 ﻿using OlympGuide.Domain.Features.SportField;
+using OlympGuide.Domain.Features.SportFieldProposal;
 
 
 namespace OlympGuide.Application.Features.SportField
@@ -7,6 +8,6 @@ namespace OlympGuide.Application.Features.SportField
     {
         public Task<List<SportFieldType>> GetAllSportFields();
         public Task<SportFieldType> GetSportFieldById(Guid sportFieldId);
-        public Task<SportFieldType> AddSportField(CreateSportFieldRequestDto sportFieldToAdd);
+        public Task<SportFieldType> AddSportField(SportFieldProposalType sportFieldToAdd);
     }
 }

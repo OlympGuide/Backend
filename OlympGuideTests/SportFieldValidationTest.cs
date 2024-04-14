@@ -19,7 +19,7 @@ namespace OlympGuideTests
         public void CheckSportFieldRequestDTO_ValidInput_ReturnsTrue()
         {
             // Arrange
-            var sportFieldToCheck = new CreateSportFieldRequestDto(
+            var sportFieldToCheck = new CreateSportFieldDto(
                 "Football Field",
                 "Description",
                 -74.0060f,
@@ -37,7 +37,7 @@ namespace OlympGuideTests
         public void CheckSportFieldRequestDTO_EmptyName_ReturnsFalse()
         {
             // Arrange
-            var sportFieldToCheck = new CreateSportFieldRequestDto(
+            var sportFieldToCheck = new CreateSportFieldDto(
                 "",
                 "Description",
                 -74.0060f,
@@ -55,7 +55,7 @@ namespace OlympGuideTests
         public void CheckSportFieldRequestDTO_InvalidLatitude_ReturnsFalse()
         {
             // Arrange
-            var sportFieldToCheck = new CreateSportFieldRequestDto(
+            var sportFieldToCheck = new CreateSportFieldDto(
                 "Football Field",
                 "Description",
                 -74.0060f,
@@ -73,7 +73,7 @@ namespace OlympGuideTests
         public void CheckSportFieldRequestDTO_InvalidLongitude_ReturnsFalse()
         {
             // Arrange
-            var sportFieldToCheck = new CreateSportFieldRequestDto(
+            var sportFieldToCheck = new CreateSportFieldDto(
                 "Football Field",
                 "Description",
                 -200.0f,

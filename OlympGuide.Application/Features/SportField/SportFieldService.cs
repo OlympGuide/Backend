@@ -1,4 +1,5 @@
 ﻿using OlympGuide.Domain.Features.SportField;
+using OlympGuide.Domain.Features.SportFieldProposal;
 
 namespace OlympGuide.Application.Features.SportField
 {
@@ -6,16 +7,16 @@ namespace OlympGuide.Application.Features.SportField
     {
         private readonly ISportFieldRepository _repository = repository;
 
-        public Task<SportFieldType> AddSportField(CreateSportFieldRequestDto sportFieldToAdd)
+        public Task<SportFieldType> AddSportField(SportFieldProposalType sportFieldToAdd)
         {
-            if (SportFieldValidation.CheckSportFieldRequestDto(sportFieldToAdd))
+            if (SportFieldValidation.CheckSportFieldProposal(sportFieldToAdd))
             {
                 var newSportField = new SportFieldType()
                 {
-                    Name = sportFieldToAdd.Name,
-                    Description = sportFieldToAdd.Description,
-                    Longitude = sportFieldToAdd.Longitude,
-                    Latitude = sportFieldToAdd.Latitude
+                    Name = sportFieldToAdd.SportFieldName,
+                    Description = sportFieldToAdd.SportFieldDescription,
+                    Longitude = sportFieldToAdd.SportFieldLongitude,
+                    Latitude = sportFieldToAdd.SportFieldLatitude
                 };
 
                 return _repository.AddSportField(newSportField);
