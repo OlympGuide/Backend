@@ -16,6 +16,7 @@ backend:
         memory: "1Gi"
         cpu: "500m"
     port: 8080
+    connectionStringSecret: olymp-guide-postgres-secret
   service:
     name: olympguide-backend
     port: 8080
