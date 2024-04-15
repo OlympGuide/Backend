@@ -1,4 +1,5 @@
 ﻿using OlympGuide.Application.Features.SportField;
+using OlympGuide.Domain.Features.SportFieldProposal;
 
 namespace OlympGuideTests
 {
@@ -9,7 +10,7 @@ namespace OlympGuideTests
         public void CheckSportFieldRequestDTO_NullInput_ReturnsFalse()
         {
             // Act
-            bool result = SportFieldValidation.CheckSportFieldRequestDto(null);
+            bool result = SportFieldValidation.CheckSportFieldProposal(null);
 
             // Assert
             Assert.False(result);
@@ -19,15 +20,18 @@ namespace OlympGuideTests
         public void CheckSportFieldRequestDTO_ValidInput_ReturnsTrue()
         {
             // Arrange
-            var sportFieldToCheck = new CreateSportFieldDto(
-                "Football Field",
-                "Description",
-                -74.0060f,
-                40.7128f
-            );
+            var sportFieldToCheck = new SportFieldProposalType(){
+                Date = DateTime.Now,
+                UserId = Guid.Empty,
+                SportFieldName = "Football Field",
+                SportFieldDescription = "Description",
+                SportFieldLongitude = -74.0060f,
+                SportFieldLatitude = 40.7128f,
+                State = SportFieldProposalStates.Open
+            };
 
             // Act
-            bool result = SportFieldValidation.CheckSportFieldRequestDto(sportFieldToCheck);
+            bool result = SportFieldValidation.CheckSportFieldProposal(sportFieldToCheck);
 
             // Assert
             Assert.True(result);
@@ -37,15 +41,18 @@ namespace OlympGuideTests
         public void CheckSportFieldRequestDTO_EmptyName_ReturnsFalse()
         {
             // Arrange
-            var sportFieldToCheck = new CreateSportFieldDto(
-                "",
-                "Description",
-                -74.0060f,
-                40.7128f
-            );
+            var sportFieldToCheck = new SportFieldProposalType() {
+                Date = DateTime.Now,
+                UserId = Guid.Empty,
+                SportFieldName = "",
+                SportFieldDescription = "Description",
+                SportFieldLongitude = -74.0060f,
+                SportFieldLatitude = 40.7128f,
+                State = SportFieldProposalStates.Open
+            };
 
             // Act
-            bool result = SportFieldValidation.CheckSportFieldRequestDto(sportFieldToCheck);
+            bool result = SportFieldValidation.CheckSportFieldProposal(sportFieldToCheck);
 
             // Assert
             Assert.False(result);
@@ -55,15 +62,18 @@ namespace OlympGuideTests
         public void CheckSportFieldRequestDTO_InvalidLatitude_ReturnsFalse()
         {
             // Arrange
-            var sportFieldToCheck = new CreateSportFieldDto(
-                "Football Field",
-                "Description",
-                -74.0060f,
-                100.0f
-            );
+            var sportFieldToCheck = new SportFieldProposalType() {
+                Date = DateTime.Now,
+                UserId = Guid.Empty,
+                SportFieldName = "Football Field",
+                SportFieldDescription = "Description",
+                SportFieldLongitude = -74.0060f,
+                SportFieldLatitude = 100.0f,
+                State = SportFieldProposalStates.Open
+            };
 
             // Act
-            bool result = SportFieldValidation.CheckSportFieldRequestDto(sportFieldToCheck);
+            bool result = SportFieldValidation.CheckSportFieldProposal(sportFieldToCheck);
 
             // Assert
             Assert.False(result);
@@ -73,15 +83,18 @@ namespace OlympGuideTests
         public void CheckSportFieldRequestDTO_InvalidLongitude_ReturnsFalse()
         {
             // Arrange
-            var sportFieldToCheck = new CreateSportFieldDto(
-                "Football Field",
-                "Description",
-                -200.0f,
-                40.7128f
-            );
+            var sportFieldToCheck = new SportFieldProposalType() {
+                Date = DateTime.Now,
+                UserId = Guid.Empty,
+                SportFieldName = "Football Field",
+                SportFieldDescription = "Description",
+                SportFieldLongitude = -200.0f,
+                SportFieldLatitude = 40.7128f,
+                State = SportFieldProposalStates.Open
+            };
 
             // Act
-            bool result = SportFieldValidation.CheckSportFieldRequestDto(sportFieldToCheck);
+            bool result = SportFieldValidation.CheckSportFieldProposal(sportFieldToCheck);
 
             // Assert
             Assert.False(result);

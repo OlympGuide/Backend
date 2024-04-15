@@ -22,7 +22,7 @@ namespace OlympGuide.Application.Features.SportFieldProposal
             var newSportFieldProposal = new SportFieldProposalType()
             {
                 Date = DateTime.Now,
-                UserId = user,
+                UserId = Guid.Empty, //TODO: Replace with userID
                 SportFieldName = sportFieldToAdd.SportFieldName,
                 SportFieldDescription = sportFieldToAdd.SportFieldDescription,
                 SportFieldLongitude = sportFieldToAdd.SportFieldLongitude,

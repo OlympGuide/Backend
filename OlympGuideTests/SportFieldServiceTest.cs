@@ -1,6 +1,7 @@
 ﻿using Moq;
 using OlympGuide.Application.Features.SportField;
 using OlympGuide.Domain.Features.SportField;
+using OlympGuide.Domain.Features.SportFieldProposal;
 
 namespace OlympGuideTests
 {
@@ -24,7 +25,15 @@ namespace OlympGuideTests
             // Arrange
             var repositoryMock = new Mock<ISportFieldRepository>();
             var service = new SportFieldService(repositoryMock.Object);
-            var validRequest = new CreateSportFieldDto("Field", "Description", 10.0f, 20.0f);
+            var validRequest = new SportFieldProposalType() {
+                Date = DateTime.Now,
+                UserId = Guid.Empty,
+                SportFieldName = "Football Field",
+                SportFieldDescription = "Description",
+                SportFieldLongitude = 10.0f,
+                SportFieldLatitude = 20.0f,
+                State = SportFieldProposalStates.Open
+            };
 
             // Act
             await service.AddSportField(validRequest);
