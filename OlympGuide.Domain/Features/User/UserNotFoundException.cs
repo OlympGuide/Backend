@@ -1,4 +1,4 @@
-﻿namespace OlympGuide.Application.Features.User
+﻿namespace OlympGuide.Domain.Features.User
 {
     public class UserNotFoundException: Exception
     {

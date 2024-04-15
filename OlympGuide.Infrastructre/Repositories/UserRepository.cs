@@ -1,11 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using OlympGuide.Domain.Features.User;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection.Metadata.Ecma335;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace OlympGuide.Infrastructre.Repositories
 {
@@ -19,15 +13,36 @@ namespace OlympGuide.Infrastructre.Repositories
             return user;
         }
 
-        public Task<UserProfile> GetById(Guid id)
+        public Task AddUserIdentifierMapping(AuthenticationUserMapping userMapping)
         {
-
-           return _context.Users.SingleAsync(u => u.Id == id);
+            _context.AuthenticationUserMappings.Add(userMapping);
+            return _context.SaveChangesAsync();
         }
 
-        public Task<UserProfile> GetByToken(string token)
+        public async Task<UserProfile> GetById(Guid id)
         {
-            return _context.Users.SingleAsync(u => u.AccessToken == token);
+            var existingUser = await _context.Users.SingleAsync(u => u.Id == id);
+            if (existingUser == null)
+                throw new UserNotFoundException(id);
+
+            return existingUser;
+        }
+
+        public async Task<UserProfile> GetByIdentifier(string identifier)
+        {
+
+            var mapping = await _context.AuthenticationUserMappings.SingleAsync(u => u.AuthenticationProviderId == identifier);
+            if (mapping == null)
+                throw new UserNotFoundException(identifier);
+            return await _context.Users.SingleAsync(u => u.Id.Equals(mapping.UserId));
+        }
+
+        public async Task<Guid> GetUserIdByAuthenticationProviderIdentifier(string identifier)
+        {
+            var mapping = await _context.AuthenticationUserMappings.SingleAsync(u => u.AuthenticationProviderId == identifier);
+            if (mapping == null)
+                throw new UserNotFoundException(identifier);
+            return mapping.UserId;
         }
 
         public async Task<UserProfile> UpdateUser(UserProfile user)

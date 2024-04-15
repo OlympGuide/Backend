@@ -1,7 +1,7 @@
-﻿using Auth0.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.IdentityModel.Tokens;
+using OlympGuide.Application.Features.User;
 using OlympGuide.Authentication;
 using System.Security.Claims;
 using System.Text.Json;
@@ -72,6 +72,10 @@ namespace OlympGuide.Extension
               });
               
             services.AddSingleton<IAuthorizationHandler, HasScopeHandler>();
+        }
+        public static void AddAuthenticationProvider(this IServiceCollection services)
+        {
+            services.AddScoped<IAuthenticationProvider, Auth0AuthenticationProvider>();
         }
     }
 }

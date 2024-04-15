@@ -11,7 +11,6 @@ namespace OlympGuide.Application
         {
             services.AddScoped<ISportFieldService, SportFieldService>();
             services.AddScoped<IUserService, UserService>();
-            services.AddScoped<IAuthenticationProvider, Auth0AuthenticationProvider>();
         }
     }
 }

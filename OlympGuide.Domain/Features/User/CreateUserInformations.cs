@@ -1,5 +1,5 @@
 ﻿namespace OlympGuide.Domain.Features.User
 {
-    public record CreateUserInformations(string Firstname, string Lastname, string DisplayName, string Email, List<UserRole> userRoles);
+    public record CreateUserInformations(string UserIdentifier, string Name, string DisplayName, string Email, List<UserRole> Roles);
     
 }

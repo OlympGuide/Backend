@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using OlympGuide.Infrastructre;
@@ -11,9 +12,11 @@ using OlympGuide.Infrastructre;
 namespace OlympGuide.Infrastructre.Migrations
 {
     [DbContext(typeof(OlympGuideDbContext))]
-    partial class OlympGuideDBContextModelSnapshot : ModelSnapshot
+    [Migration("20240414083442_adduser")]
+    partial class adduser
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -47,31 +50,15 @@ namespace OlympGuide.Infrastructre.Migrations
                     b.ToTable("SportFields");
                 });
 
-            modelBuilder.Entity("OlympGuide.Domain.Features.User.AuthenticationUserMapping", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("AuthenticationProviderId")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uuid");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("AuthenticationUserMappings");
-                });
-
             modelBuilder.Entity("OlympGuide.Domain.Features.User.UserProfile", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
+
+                    b.Property<string>("AccessToken")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<string>("DisplayName")
                         .IsRequired()
@@ -81,13 +68,16 @@ namespace OlympGuide.Infrastructre.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("Name")
+                    b.Property<string>("Firstname")
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<int[]>("Roles")
+                    b.Property<string>("Lastname")
                         .IsRequired()
-                        .HasColumnType("integer[]");
+                        .HasColumnType("text");
+
+                    b.Property<int>("Role")
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 

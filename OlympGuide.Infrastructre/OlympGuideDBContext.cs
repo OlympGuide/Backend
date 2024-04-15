@@ -8,5 +8,6 @@ namespace OlympGuide.Infrastructre
     {
         public DbSet<SportFieldType> SportFields { get; set; }
         public DbSet<UserProfile> Users { get; set; }
+        public DbSet<AuthenticationUserMapping> AuthenticationUserMappings { get; set; }
     }
 }

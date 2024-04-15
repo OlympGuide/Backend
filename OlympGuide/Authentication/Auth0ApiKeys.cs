@@ -10,12 +10,11 @@ namespace OlympGuide.Authentication
             { "access:user", UserRole.DefaultUser }
         };
 
-        public static List<string> UserInformationKeys = new List<string> { "given_name", "family_name", "nickname", "email" };
+        public static List<string> UserInformationKeys = new List<string> { "sub", "name", "nickname", "email" };
 
-        public static string SurnameKey = "given_name";
-        public static string LastnameKey = "family_name";
+        public static string UserIdentifierKey = "sub";
+        public static string NameKey = "name";
         public static string DisplayNameKey = "nickname";
         public static string EmailKey = "email";
-
     }
 }

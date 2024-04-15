@@ -1,5 +1,4 @@
 ﻿using OlympGuide.Domain.Features.User;
-using System.Text.Json.Nodes;
 
 namespace OlympGuide.Application.Features.User
 {
@@ -13,5 +12,7 @@ namespace OlympGuide.Application.Features.User
         /// <exception cref="UserNotFoundException">Thrown if no user information is returned by the API.</exception>
         /// <exception cref="InvalidCastException">Thrown if the returned JSON cannot be parsed.</exception>
         Task<CreateUserInformations> GetUserInformations(string accessToken);
+
+        Task<string> GetUserIdentifierFromToken(string accessToken);
     }
 }

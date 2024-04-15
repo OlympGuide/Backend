@@ -70,7 +70,7 @@ namespace OlympGuide.Authentication
         /// <returns>A task that represents the asynchronous operation, resulting in the JSON string returned by the API.</returns>
         private async Task<string> MakeAPICallForUserInformations(string accessToken)
         {
-            var domain = _configuration["Auht0.Domain"]!;
+            var domain = _configuration["Auth0:Domain"]!;
             string url = $"https://{domain}/userinfo";
 
             _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
@@ -95,14 +95,13 @@ namespace OlympGuide.Authentication
                 throw new InvalidDataException("User informations does not contains all requiered informations");
 
             return new CreateUserInformations(
-                    (string)informations[Auth0ApiKeys.SurnameKey]!,
-                    (string)informations[Auth0ApiKeys.LastnameKey]!,
+                    (string)informations[Auth0ApiKeys.UserIdentifierKey]!,
+                    (string)informations[Auth0ApiKeys.NameKey]!,
                     (string)informations[Auth0ApiKeys.DisplayNameKey]!,
                     (string)informations[Auth0ApiKeys.EmailKey]!,
                     userRoles
-                );
+                ) ;
         }
-
 
         /// <summary>
         /// Checks if the JSON object contains all required user information fields.
@@ -120,6 +119,17 @@ namespace OlympGuide.Authentication
                 }
             }
             return true;
+        }
+
+        public Task<string> GetUserIdentifierFromToken(string accessToken)
+        {
+            var handler = new JwtSecurityTokenHandler();
+            var jwtToken = handler.ReadJwtToken(accessToken);
+
+            var identifier = jwtToken.Claims.Where(claim => claim.Type == "sub").Single();
+            if (identifier == null)
+                throw new KeyNotFoundException("JWT does not contains required indentifier");
+            return Task.FromResult(identifier.Value);
         }
     }
 }
