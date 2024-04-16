@@ -1,7 +1,8 @@
 using OlympGuide.Extension;
 using OlympGuide.Infrastructre;
 using OlympGuide.Application;
-using OlympGuide.Domain;
+using MediatR;
+using OlympGuide.Application.Features.SportFieldProposal;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,6 +12,7 @@ builder.Services.AddCustomLogging(builder.WebHost);
 builder.Services.AddApplicationServices();
 builder.Services.AddPersistenceInfrastructure(builder.Configuration);
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Program).Assembly));
+builder.Services.AddScoped<INotificationHandler<SportFieldProposalAcceptedEvent>, SportFieldProposalEventHandler>();
 
 var app = builder.Build();
 

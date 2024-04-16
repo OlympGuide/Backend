@@ -1,11 +1,13 @@
-﻿using OlympGuide.Application.Features.SportField;
+﻿using MediatR;
+using OlympGuide.Application.Features.SportField;
 using OlympGuide.Domain.Features.SportFieldProposal;
 
 namespace OlympGuide.Application.Features.SportFieldProposal
 {
-    public class SportFieldProposalService(ISportFieldProposalRepository repository) : ISportFieldProposalService
+    public class SportFieldProposalService(ISportFieldProposalRepository repository, IMediator mediator) : ISportFieldProposalService
     {
         private readonly ISportFieldProposalRepository _repository = repository;
+        private readonly IMediator _mediator = mediator;
 
         public Task<List<SportFieldProposalType>> GetAllSportFieldProposals()
         {
@@ -60,6 +62,12 @@ namespace OlympGuide.Application.Features.SportFieldProposal
             if (sportFieldProposal == null)
             {
                 throw new NoSportFieldFoundException(sportFieldProposalId);
+            }
+
+            if(newState == SportFieldProposalStates.Open)
+            {
+                var Event = new SportFieldProposalAcceptedEvent(sportFieldProposal);
+                await _mediator.Publish(Event);
             }
             return sportFieldProposal;
         }
