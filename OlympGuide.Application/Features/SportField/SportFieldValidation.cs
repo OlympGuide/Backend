@@ -1,4 +1,4 @@
-﻿using OlympGuide.Domain.Features.SportFieldProposal;
+﻿using OlympGuide.Domain.Features.SportField;
 
 namespace OlympGuide.Application.Features.SportField
 {
@@ -11,28 +11,28 @@ namespace OlympGuide.Application.Features.SportField
         private const float MaxLongitude = 180.0F;
         private const float MinLongitude = -180.0F;
 
-        public static bool CheckSportFieldProposal(SportFieldProposalType sportFieldToCheck)
+        public static bool CheckSportField(SportFieldType sportFieldToCheck)
         {
             if (sportFieldToCheck == null) return false;
             return CheckName(sportFieldToCheck) && CheckCoordinates(sportFieldToCheck);
         }
 
-        private static bool CheckName(SportFieldProposalType sportFieldProposal)
+        private static bool CheckName(SportFieldType sportField)
         {
-            if (sportFieldProposal.SportFieldName.Equals(string.Empty))
+            if (sportField.Name.Equals(string.Empty))
             {
                 return false;
             }
             return true;
         }
 
-        private static bool CheckCoordinates(SportFieldProposalType sportFieldProposal)
+        private static bool CheckCoordinates(SportFieldType sportField)
         {
             var result = false;
 
-            if (sportFieldProposal.SportFieldLatitude <= MaxLatitude && sportFieldProposal.SportFieldLatitude >= MinLatitude)
+            if (sportField.Latitude <= MaxLatitude && sportField.Latitude >= MinLatitude)
             {
-                if (sportFieldProposal.SportFieldLongitude <= MaxLongitude && sportFieldProposal.SportFieldLongitude >= MinLongitude)
+                if (sportField.Longitude <= MaxLongitude && sportField.Longitude >= MinLongitude)
                 {
                     result = true;
                 }

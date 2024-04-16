@@ -17,16 +17,17 @@ namespace OlympGuide.Application.Features.SportFieldProposal
             return _repository.GetAllOpenSportFieldProposals();
         }
 
-        public Task<SportFieldProposalType> AddSportFieldProposal(SportFieldProposalDto sportFieldToAdd)
+        public Task<SportFieldProposalType> AddSportFieldProposal(SportFieldProposalDto sportFieldProposalToAdd)
         {
             var newSportFieldProposal = new SportFieldProposalType()
             {
                 Date = DateTime.Now,
                 UserId = Guid.Empty, //TODO: Replace with userID
-                SportFieldName = sportFieldToAdd.SportFieldName,
-                SportFieldDescription = sportFieldToAdd.SportFieldDescription,
-                SportFieldLongitude = sportFieldToAdd.SportFieldLongitude,
-                SportFieldLatitude = sportFieldToAdd.SportFieldLatitude,
+                SportFieldName = sportFieldProposalToAdd.SportFieldName,
+                SportFieldDescription = sportFieldProposalToAdd.SportFieldDescription,
+                SportFieldLongitude = sportFieldProposalToAdd.SportFieldLongitude,
+                SportFieldLatitude = sportFieldProposalToAdd.SportFieldLatitude,
+                SportFieldAddress = sportFieldProposalToAdd.SportFieldAddress,
                 State = SportFieldProposalStates.Open
             };
 

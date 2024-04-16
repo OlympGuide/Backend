@@ -10,6 +10,7 @@ namespace OlympGuide.Domain.Features.SportFieldProposal
         public string SportFieldDescription { get; set; } = string.Empty;
         public float SportFieldLongitude { get; set; }
         public float SportFieldLatitude { get; set; }
+        public string SportFieldAddress {  get; set; } = string.Empty;
         public SportFieldProposalStates State { get; set; } = SportFieldProposalStates.Open;
     }
 }
