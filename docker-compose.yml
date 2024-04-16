@@ -28,7 +28,7 @@ services:
       - POSTGRES_PASSWORD=ogDbPassword
       - POSTGRES_DB=OlympGuide
     ports:
-      - "5433:5433"
+      - "5433:5432"
     expose:
       - "5433"
     volumes:
