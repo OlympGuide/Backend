@@ -12,8 +12,8 @@ using OlympGuide.Infrastructre;
 namespace OlympGuide.Infrastructre.Migrations
 {
     [DbContext(typeof(OlympGuideDbContext))]
-    [Migration("20240416145645_UserAuthentication")]
-    partial class UserAuthentication
+    [Migration("20240416184518_AddUserAuthentication")]
+    partial class AddUserAuthentication
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
