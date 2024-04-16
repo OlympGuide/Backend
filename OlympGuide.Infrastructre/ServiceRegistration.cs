@@ -12,7 +12,10 @@ namespace OlympGuide.Infrastructre
         public static void AddPersistenceInfrastructure(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddDbContext<OlympGuideDbContext>(options =>
-                  options.UseNpgsql(configuration.GetConnectionString("OlympGuideDB")));
+                  options
+                      .UseNpgsql(configuration.GetConnectionString("OlympGuideDB"))
+                      .UseSnakeCaseNamingConvention()
+                  );
 
             services.AddScoped<ISportFieldRepository, SportFieldRepository>();
             services.AddScoped<IUserRepository, UserRepository>();

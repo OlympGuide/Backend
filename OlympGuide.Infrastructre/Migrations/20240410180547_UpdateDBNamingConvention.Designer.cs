@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using OlympGuide.Infrastructre;
@@ -11,9 +12,11 @@ using OlympGuide.Infrastructre;
 namespace OlympGuide.Infrastructre.Migrations
 {
     [DbContext(typeof(OlympGuideDbContext))]
-    partial class OlympGuideDBContextModelSnapshot : ModelSnapshot
+    [Migration("20240410180547_UpdateDBNamingConvention")]
+    partial class UpdateDBNamingConvention
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -51,53 +54,6 @@ namespace OlympGuide.Infrastructre.Migrations
                         .HasName("pk_sport_fields");
 
                     b.ToTable("sport_fields", (string)null);
-                });
-
-            modelBuilder.Entity("OlympGuide.Domain.Features.User.AuthenticationUserMapping", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("AuthenticationProviderId")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uuid");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("AuthenticationUserMappings");
-                });
-
-            modelBuilder.Entity("OlympGuide.Domain.Features.User.UserProfile", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<string>("DisplayName")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<int[]>("Roles")
-                        .IsRequired()
-                        .HasColumnType("integer[]");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Users");
                 });
 #pragma warning restore 612, 618
         }
