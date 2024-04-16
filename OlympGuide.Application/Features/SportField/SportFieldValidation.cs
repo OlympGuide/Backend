@@ -12,7 +12,6 @@ namespace OlympGuide.Application.Features.SportField
 
         public static bool CheckSportField(SportFieldType sportFieldToCheck)
         {
-            if (sportFieldToCheck == null) return false;
             return CheckName(sportFieldToCheck) && CheckCoordinates(sportFieldToCheck);
         }
 
