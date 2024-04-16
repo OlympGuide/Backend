@@ -1,6 +1,5 @@
 ﻿using OlympGuide.Application.Features.SportField;
 using OlympGuide.Domain.Features.SportField;
-using OlympGuide.Domain.Features.SportFieldProposal;
 
 namespace OlympGuideTests.SportField
 {
@@ -11,7 +10,7 @@ namespace OlympGuideTests.SportField
         public void CheckSportFieldRequestDTO_NullInput_ReturnsFalse()
         {
             // Act
-            bool result = SportFieldValidation.CheckSportField(null);
+            var result = SportFieldValidation.CheckSportField(null);
 
             // Assert
             Assert.False(result);
@@ -30,7 +29,7 @@ namespace OlympGuideTests.SportField
             };
 
             // Act
-            bool result = SportFieldValidation.CheckSportField(sportFieldToCheck);
+            var result = SportFieldValidation.CheckSportField(sportFieldToCheck);
 
             // Assert
             Assert.True(result);
@@ -49,7 +48,7 @@ namespace OlympGuideTests.SportField
             };
 
             // Act
-            bool result = SportFieldValidation.CheckSportField(sportFieldToCheck);
+            var result = SportFieldValidation.CheckSportField(sportFieldToCheck);
 
             // Assert
             Assert.False(result);
@@ -68,7 +67,7 @@ namespace OlympGuideTests.SportField
             };
 
             // Act
-            bool result = SportFieldValidation.CheckSportField(sportFieldToCheck);
+            var result = SportFieldValidation.CheckSportField(sportFieldToCheck);
 
             // Assert
             Assert.False(result);
@@ -87,7 +86,7 @@ namespace OlympGuideTests.SportField
             };
 
             // Act
-            bool result = SportFieldValidation.CheckSportField(sportFieldToCheck);
+            var result = SportFieldValidation.CheckSportField(sportFieldToCheck);
 
             // Assert
             Assert.False(result);
