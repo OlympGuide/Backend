@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using OlympGuide.Handler;
 using OlympGuide.Infrastructre;
 
 namespace OlympGuide.Extension
@@ -39,6 +40,9 @@ namespace OlympGuide.Extension
         {
             app.UseCors(option => option.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
         }
-        
+        public static void AddExceptionHanlding( this IApplicationBuilder app)
+        {
+            app.UseMiddleware<ExceptionHandlingMiddleware>();
+        }
     }
 }

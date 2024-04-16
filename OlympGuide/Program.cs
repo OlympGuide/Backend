@@ -11,6 +11,8 @@ builder.Services.AddJsonPolicy();
 builder.Services.AddCustomLogging(builder.WebHost);
 builder.Services.AddApplicationServices();
 builder.Services.AddPersistenceInfrastructure(builder.Configuration);
+builder.Services.AddAuth(builder.Configuration);
+builder.Services.AddAuthenticationProvider();
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Program).Assembly));
 builder.Services.AddScoped<INotificationHandler<SportFieldProposalAcceptedEvent>, SportFieldProposalEventHandler>();
 
@@ -21,6 +23,7 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 app.MapControllers();
 app.SetupCors();
+app.AddExceptionHanlding();
 app.ApplyDatabaseMigrations(app.Environment, app.Configuration);
 
 app.Run();

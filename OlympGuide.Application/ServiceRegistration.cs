@@ -1,6 +1,8 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using OlympGuide.Application.Features.SportField;
 using OlympGuide.Application.Features.SportFieldProposal;
+using OlympGuide.Application.Features.User;
+using OlympGuide.Domain.Features.User;
 
 namespace OlympGuide.Application
 {
@@ -10,6 +12,7 @@ namespace OlympGuide.Application
         {
             services.AddScoped<ISportFieldService, SportFieldService>();
             services.AddScoped<ISportFieldProposalService, SportFieldProposalService>();
+            services.AddScoped<IUserService, UserService>();
         }
     }
 }

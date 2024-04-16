@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using OlympGuide.Infrastructre;
@@ -11,9 +12,11 @@ using OlympGuide.Infrastructre;
 namespace OlympGuide.Infrastructre.Migrations
 {
     [DbContext(typeof(OlympGuideDbContext))]
-    partial class OlympGuideDBContextModelSnapshot : ModelSnapshot
+    [Migration("20240416184518_AddUserAuthentication")]
+    partial class AddUserAuthentication
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -28,11 +31,6 @@ namespace OlympGuide.Infrastructre.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid")
                         .HasColumnName("id");
-
-                    b.Property<string>("Address")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("address");
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -56,54 +54,6 @@ namespace OlympGuide.Infrastructre.Migrations
                         .HasName("pk_sport_fields");
 
                     b.ToTable("sport_fields", (string)null);
-                });
-
-            modelBuilder.Entity("OlympGuide.Domain.Features.SportFieldProposal.SportFieldProposalType", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid")
-                        .HasColumnName("id");
-
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("date");
-
-                    b.Property<string>("SportFieldAddress")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("sport_field_address");
-
-                    b.Property<string>("SportFieldDescription")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("sport_field_description");
-
-                    b.Property<float>("SportFieldLatitude")
-                        .HasColumnType("real")
-                        .HasColumnName("sport_field_latitude");
-
-                    b.Property<float>("SportFieldLongitude")
-                        .HasColumnType("real")
-                        .HasColumnName("sport_field_longitude");
-
-                    b.Property<string>("SportFieldName")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("sport_field_name");
-
-                    b.Property<int>("State")
-                        .HasColumnType("integer")
-                        .HasColumnName("state");
-
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("user_id");
-
-                    b.HasKey("Id")
-                        .HasName("pk_sport_field_proposals");
-
-                    b.ToTable("sport_field_proposals", (string)null);
                 });
 
             modelBuilder.Entity("OlympGuide.Domain.Features.User.AuthenticationUserMapping", b =>
