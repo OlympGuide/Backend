@@ -44,18 +44,26 @@ namespace OlympGuide.Application.Features.User
         /// </remarks>
         public async Task<UserProfile> GetUserProfile(string accessToken)
         {
-            var userIdentifier = await _authenticationProvider.GetUserIdentifierFromToken(accessToken);
-            var user = await _repository.GetByIdentifier(userIdentifier);
-
-            if (user == null)
+            
+            try
             {
-                    _logger.LogInformation("User could not be found by token, new user is created.");
-                    await CreateUserProfile(accessToken);
-                    user = await _repository.GetByIdentifier(userIdentifier);
-                    return user ?? throw new UserNotFoundException("An unexpected error occours while creating a new user.");
-            }
-            else
+                var userIdentifier = await _authenticationProvider.GetUserIdentifierFromToken(accessToken);
+                var user = await _repository.GetByIdentifier(userIdentifier);
                 return user;
+            }
+            catch(KeyNotFoundException ex)
+            {
+                _logger.LogInformation("JWT could not be parsed.");
+                throw;
+            }
+            catch(UserNotFoundException ex)
+            {
+                _logger.LogInformation("User could not be found by token, new user is created.");
+                await CreateUserProfile(accessToken);
+                var userIdentifier = await _authenticationProvider.GetUserIdentifierFromToken(accessToken);
+                var user = await _repository.GetByIdentifier(userIdentifier);
+                return user ?? throw new UserNotFoundException("An unexpected error occours while creating a new user.");
+            }
         }
 
         private async Task CreateUserProfile(string token)

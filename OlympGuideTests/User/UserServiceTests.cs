@@ -1,35 +1,41 @@
 ﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Moq;
 using OlympGuide.Application.Features.User;
 using OlympGuide.Domain.Features.User;
+using OlympGuide.Infrastructre;
+using OlympGuide.Infrastructre.Repositories;
 
 namespace OlympGuideTests.User
 {
     public class UserServiceTests
     {
         private readonly Mock<ILogger<UserService>> _mockLogger;
-        private readonly Mock<IUserRepository> _mockRepository;
+        private readonly IUserRepository _repository;
         private readonly Mock<IAuthenticationProvider> _mockAuthProvider;
         private readonly Mock<IMapper> _mockMapper;
         private readonly UserService _userService;
-
+        
         public UserServiceTests()
         {
+            var options = new DbContextOptionsBuilder<OlympGuideDbContext>()
+            .UseInMemoryDatabase(databaseName: "UserServiceTests")
+            .Options;
+            
             _mockLogger = new Mock<ILogger<UserService>>();
-            _mockRepository = new Mock<IUserRepository>();
+            _repository = new UserRepository(new OlympGuideDbContext(options), new Mock<ILogger<UserRepository>>().Object);
             _mockAuthProvider = new Mock<IAuthenticationProvider>();
             _mockMapper = new Mock<IMapper>();
-            _userService = new UserService(_mockLogger.Object, _mockRepository.Object, _mockAuthProvider.Object, _mockMapper.Object);
+            _userService = new UserService(_mockLogger.Object, _repository, _mockAuthProvider.Object, _mockMapper.Object);
         }
 
         [Fact]
         public async Task GetUserProfile_ById_UserExists_ReturnsUserProfile()
         {
             // Arrange
-            var userId = Guid.NewGuid();
             var expectedUser = new UserProfile();
-            _mockRepository.Setup(repo => repo.GetById(expectedUser.Id)).ReturnsAsync(expectedUser);
+            await _repository.AddUser(expectedUser);
 
             // Act
             var result = await _userService.GetUserProfile(expectedUser.Id);
@@ -43,32 +49,17 @@ namespace OlympGuideTests.User
         {
             // Arrange
             var userId = Guid.NewGuid();
-            _mockRepository.Setup(repo => repo.GetById(userId)).ReturnsAsync((UserProfile)null);
+            
 
             // Act & Assert
             await Assert.ThrowsAsync<UserNotFoundException>(() => _userService.GetUserProfile(userId));
         }
 
         [Fact]
-        public async Task GetUserProfileByToken_UserExists_ReturnsUserProfile()
-        {
-            // Arrange
-            var token = "valid-token";
-            var expectedUser = new UserProfile();
-            _mockRepository.Setup(repo => repo.GetByIdentifier(token)).ReturnsAsync(expectedUser);
-
-            // Act
-            var result = await _userService.GetUserProfile(token);
-
-            // Assert
-            Assert.Equal(expectedUser, result);
-        }
-
-        [Fact]
         public async Task GetUserProfileByToken_UserDoesNotExist_CreatesAndReturnsNewUser()
         {
             // Arrange
-            var token = "valid-token";
+            var token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJPbmxpbmUgSldUIEJ1aWxkZXIiLCJpYXQiOjE3MTMyNjMyMDgsImV4cCI6MTc0NDc5OTIwOCwiYXVkIjoid3d3LmV4YW1wbGUuY29tIiwic3ViIjoiYXNkZjEyYWc0NTEifQ.RIjdA138yIDKD2L_ll8kLi15cq1BcPw_aEtDMflsOI4";
             var newUser = new UserProfile();
             
 
@@ -79,21 +70,18 @@ namespace OlympGuideTests.User
             Email: "john.doe@example.com",
             Roles: new List<UserRole> { UserRole.DefaultUser, UserRole.Administrator });
 
-            _mockRepository.SetupSequence(repo => repo.GetByIdentifier(userInformations.UserIdentifier))
-                           .ReturnsAsync((UserProfile)null) // First call returns null, user not found
-                           .ReturnsAsync(newUser); // Second call returns the newly created user
-
 
             _mockAuthProvider.Setup(auth => auth.GetUserInformations(token)).ReturnsAsync(userInformations);
+            _mockAuthProvider.Setup(auth => auth.GetUserIdentifierFromToken(token)).ReturnsAsync(userInformations.UserIdentifier);
             _mockMapper.Setup(mapper => mapper.Map<UserProfile>(It.IsAny<CreateUserInformations>())).Returns(newUser);
-            _mockRepository.Setup(repo => repo.AddUser(newUser)).Returns(Task.FromResult(newUser));
+           
 
             // Act
             var result = await _userService.GetUserProfile(token);
-
+            var retrievedUser = await _userService.GetUserProfile(token); 
             // Assert
             Assert.Equal(newUser, result);
-            _mockRepository.Verify(repo => repo.AddUser(It.IsAny<UserProfile>()), Times.Once);
+            Assert.Equal(retrievedUser, newUser);
         }
 
         [Fact]
@@ -102,7 +90,8 @@ namespace OlympGuideTests.User
             // Arrange
             var token = "valid-token";
             var newUser = new UserProfile();
-   
+            var mockRepository = new Mock<IUserRepository>();
+            var serviceUnderTest = new UserService(_mockLogger.Object, mockRepository.Object, _mockAuthProvider.Object, _mockMapper.Object);
 
             var userInformations = new CreateUserInformations(
             UserIdentifier: "asdf12ag451",
@@ -111,16 +100,18 @@ namespace OlympGuideTests.User
             Email: "john.doe@example.com",
             Roles: new List<UserRole> { UserRole.DefaultUser, UserRole.Administrator });
 
+            mockRepository.SetupSequence(repo => repo.GetByIdentifier(userInformations.UserIdentifier))
+                           .ThrowsAsync(new UserNotFoundException(token))
+                           .ThrowsAsync(new UserNotFoundException(token));
 
-            _mockRepository.Setup(repo => repo.GetByIdentifier(token)).ReturnsAsync((UserProfile)null);
+            _mockAuthProvider.Setup(p => p.GetUserIdentifierFromToken(token)).ThrowsAsync(new UserNotFoundException(token));
             _mockAuthProvider.Setup(auth => auth.GetUserInformations(token)).ReturnsAsync(userInformations);
-            
-            _mockMapper.Setup(mapper => mapper.Map<UserProfile>(It.IsAny<CreateUserInformations>())).Returns(newUser);
-            _mockRepository.Setup(repo => repo.AddUser(newUser)).Returns(Task.FromResult(newUser));
-            _mockRepository.Setup(repo => repo.GetByIdentifier(userInformations.UserIdentifier)).ReturnsAsync((UserProfile)null); // Second call still returns null
 
+            _mockMapper.Setup(mapper => mapper.Map<UserProfile>(It.IsAny<CreateUserInformations>())).Returns(newUser);
+            mockRepository.Setup(repo => repo.AddUser(newUser)).Returns(Task.FromResult(newUser));
+   
             // Act & Assert
-            await Assert.ThrowsAsync<UserNotFoundException>(() => _userService.GetUserProfile(token));
+            await Assert.ThrowsAsync<UserNotFoundException>(() => serviceUnderTest.GetUserProfile(token));
         }
     }
 

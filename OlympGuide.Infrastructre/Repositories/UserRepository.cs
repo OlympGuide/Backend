@@ -1,11 +1,13 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using OlympGuide.Domain.Features.User;
 
 namespace OlympGuide.Infrastructre.Repositories
 {
-    public class UserRepository(OlympGuideDbContext context) : IUserRepository
+    public class UserRepository(OlympGuideDbContext context, ILogger<UserRepository> logger) : IUserRepository
     {
         private readonly OlympGuideDbContext _context = context;
+        private readonly ILogger _logger = logger;
         public async Task<UserProfile> AddUser(UserProfile user)
         {
             _context.Users.Add(user);
@@ -13,36 +15,53 @@ namespace OlympGuide.Infrastructre.Repositories
             return user;
         }
 
-        public Task AddUserIdentifierMapping(AuthenticationUserMapping userMapping)
+        public async Task AddUserIdentifierMapping(AuthenticationUserMapping userMapping)
         {
             _context.AuthenticationUserMappings.Add(userMapping);
-            return _context.SaveChangesAsync();
+            await _context.SaveChangesAsync();
         }
 
         public async Task<UserProfile> GetById(Guid id)
         {
-            var existingUser = await _context.Users.SingleAsync(u => u.Id == id);
-            if (existingUser == null)
+            try
+            {
+                return await _context.Users.FirstAsync(u => u.Id == id);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("User could not be found by id: " + ex.Source);
                 throw new UserNotFoundException(id);
-
-            return existingUser;
+            }
         }
 
         public async Task<UserProfile> GetByIdentifier(string identifier)
         {
-
-            var mapping = await _context.AuthenticationUserMappings.SingleAsync(u => u.AuthenticationProviderId == identifier);
-            if (mapping == null)
+            try
+            {
+                var mappings = await _context.AuthenticationUserMappings.ToListAsync();
+                var mapping = await _context.AuthenticationUserMappings.SingleAsync(u => u.AuthenticationProviderId == identifier);
+                return await _context.Users.SingleAsync(u => u.Id.Equals(mapping.UserId));
+            }
+            catch (InvalidOperationException ex)
+            {
+                _logger.LogError("User mapping could not be found from token" + ex.Source);
                 throw new UserNotFoundException(identifier);
-            return await _context.Users.SingleAsync(u => u.Id.Equals(mapping.UserId));
+            }           
         }
 
         public async Task<Guid> GetUserIdByAuthenticationProviderIdentifier(string identifier)
         {
-            var mapping = await _context.AuthenticationUserMappings.SingleAsync(u => u.AuthenticationProviderId == identifier);
-            if (mapping == null)
+            try
+            {
+                var mapping = await _context.AuthenticationUserMappings.SingleAsync(u => u.AuthenticationProviderId == identifier);
+                return mapping.UserId;
+            }
+            catch(InvalidOperationException ex)
+            {
+                _logger.LogError("User mapping could not be found from authentication identifier" + ex.Source);
                 throw new UserNotFoundException(identifier);
-            return mapping.UserId;
+            }
+            
         }
 
         public async Task<UserProfile> UpdateUser(UserProfile user)
