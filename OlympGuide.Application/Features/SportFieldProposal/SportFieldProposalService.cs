@@ -55,21 +55,22 @@ namespace OlympGuide.Application.Features.SportFieldProposal
         {
             if (sportFieldProposalId == Guid.Empty)
             {
-                throw new ArgumentException("Guid must no be null");
+                throw new ArgumentException("Guid must no be Empty");
             }
-            var sportFieldProposal = await _repository.ChangeStateById(sportFieldProposalId,newState);
-
-            if (sportFieldProposal == null)
+            try
+            {
+                var sportFieldProposal = await _repository.ChangeStateById(sportFieldProposalId, newState);
+                if (newState == SportFieldProposalStates.Open)
+                {
+                    var proposalEvent = new SportFieldProposalAcceptedEvent(sportFieldProposal);
+                    await _mediator.Publish(proposalEvent);
+                }
+                return sportFieldProposal;
+            }
+            catch(InvalidOperationException)
             {
                 throw new NoSportFieldFoundException(sportFieldProposalId);
             }
-
-            if(newState == SportFieldProposalStates.Open)
-            {
-                var Event = new SportFieldProposalAcceptedEvent(sportFieldProposal);
-                await _mediator.Publish(Event);
-            }
-            return sportFieldProposal;
         }
     }
 }

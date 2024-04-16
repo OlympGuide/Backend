@@ -5,7 +5,6 @@ namespace OlympGuide.Application.Features.SportField
 
     public static class SportFieldValidation
     {
-
         private const float MaxLatitude = 90.0F;
         private const float MinLatitude = -90.0F;
         private const float MaxLongitude = 180.0F;
@@ -19,11 +18,7 @@ namespace OlympGuide.Application.Features.SportField
 
         private static bool CheckName(SportFieldType sportField)
         {
-            if (sportField.Name.Equals(string.Empty))
-            {
-                return false;
-            }
-            return true;
+            return !string.IsNullOrEmpty(sportField.Name);
         }
 
         private static bool CheckCoordinates(SportFieldType sportField)

@@ -26,13 +26,15 @@ namespace OlympGuide.Application.Features.SportField
             {
                 throw new ArgumentException("Guid must no be null");
             }
-            var sportField = await _repository.GetSportFieldById(sportFieldId);
-
-            if (sportField == null)
+            
+            try {
+                var sportField = await _repository.GetSportFieldById(sportFieldId);
+                return sportField;
+            }
+            catch(InvalidOperationException)
             {
                 throw new NoSportFieldFoundException(sportFieldId);
             }
-            return sportField;
         }
     }
 }

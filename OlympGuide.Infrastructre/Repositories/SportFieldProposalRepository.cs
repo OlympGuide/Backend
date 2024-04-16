@@ -43,14 +43,11 @@ namespace OlympGuide.Infrastructre.Repositories
         public async Task<SportFieldProposalType> ChangeStateById(Guid sportFieldProposalId, SportFieldProposalStates newState)
         {
             var sportFieldProposal = await context.SportFieldProposals
-                .SingleOrDefaultAsync(sf => sf.Id == sportFieldProposalId);
+                .SingleAsync(sf => sf.Id == sportFieldProposalId);
 
-            if (sportFieldProposal != null)
-            {
-                sportFieldProposal.State = newState;
-                context.SportFieldProposals.Update(sportFieldProposal);
-                await context.SaveChangesAsync();
-            }
+            sportFieldProposal.State = newState;
+            context.SportFieldProposals.Update(sportFieldProposal);
+            await context.SaveChangesAsync();
 
             return sportFieldProposal;
 

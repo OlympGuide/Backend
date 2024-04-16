@@ -10,7 +10,7 @@ namespace OlympGuideTests.SportField
         public void CheckSportFieldRequestDTO_NullInput_ReturnsFalse()
         {
             // Act
-            var result = SportFieldValidation.CheckSportField(null);
+            var result = SportFieldValidation.CheckSportField(null!);
 
             // Assert
             Assert.False(result);
