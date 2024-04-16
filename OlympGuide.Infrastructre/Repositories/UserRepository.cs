@@ -38,7 +38,6 @@ namespace OlympGuide.Infrastructre.Repositories
         {
             try
             {
-                var mappings = await _context.AuthenticationUserMappings.ToListAsync();
                 var mapping = await _context.AuthenticationUserMappings.SingleAsync(u => u.AuthenticationProviderId == identifier);
                 return await _context.Users.SingleAsync(u => u.Id.Equals(mapping.UserId));
             }

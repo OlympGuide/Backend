@@ -22,7 +22,7 @@ namespace OlympGuide.Authentication
         /// <exception cref="InvalidCastException">Thrown if the returned JSON cannot be parsed.</exception>
         public async Task<CreateUserInformations> GetUserInformations(string accessToken)
         {
-            var jsonString = await MakeAPICallForUserInformations(accessToken);
+            var jsonString = await MakeApiCallForUserInformations(accessToken);
 
             if (string.IsNullOrEmpty(jsonString))
             {
@@ -68,7 +68,7 @@ namespace OlympGuide.Authentication
         /// </summary>
         /// <param name="accessToken">The access token used to authenticate with the API.</param>
         /// <returns>A task that represents the asynchronous operation, resulting in the JSON string returned by the API.</returns>
-        private async Task<string> MakeAPICallForUserInformations(string accessToken)
+        private async Task<string> MakeApiCallForUserInformations(string accessToken)
         {
             var domain = _configuration["Auth0:Domain"]!;
             string url = $"https://{domain}/userinfo";

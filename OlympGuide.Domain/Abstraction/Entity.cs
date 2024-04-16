@@ -5,7 +5,7 @@ namespace OlympGuide.Domain.Abstraction
     public abstract class Entity
     {
         [Key]
-        public Guid Id { get; set; } =  Guid.NewGuid();
+        public Guid Id { get; init; } =  Guid.NewGuid();
 
         public override bool Equals(object? obj)
         {

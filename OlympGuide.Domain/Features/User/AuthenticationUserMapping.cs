@@ -2,11 +2,11 @@
 
 namespace OlympGuide.Domain.Features.User
 {
-    public class AuthenticationUserMapping()
+    public class AuthenticationUserMapping
     {
         [Key]
-        public int Id { get; set; }
-        public Guid UserId { get; set; } 
-        public required string AuthenticationProviderId { get; set; }
+        public int Id { get; init; }
+        public Guid UserId { get; init; } 
+        public required string AuthenticationProviderId { get; init; }
     }
 }

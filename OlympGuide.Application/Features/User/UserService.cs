@@ -27,10 +27,7 @@ namespace OlympGuide.Application.Features.User
         /// </remarks>
         public async Task<UserProfile> GetUserProfile(Guid id)
         {
-            var user = await _repository.GetById(id);
-            if (user == null)
-                throw new UserNotFoundException(id);
-            return user;
+             return await _repository.GetById(id);
         }
 
         /// <summary>
@@ -53,10 +50,10 @@ namespace OlympGuide.Application.Features.User
             }
             catch(KeyNotFoundException ex)
             {
-                _logger.LogInformation("JWT could not be parsed.");
+                _logger.LogInformation("JWT could not be parsed." + ex.Message);
                 throw;
             }
-            catch(UserNotFoundException ex)
+            catch(UserNotFoundException)
             {
                 _logger.LogInformation("User could not be found by token, new user is created.");
                 await CreateUserProfile(accessToken);

@@ -1,7 +1,6 @@
 using OlympGuide.Extension;
 using OlympGuide.Infrastructre;
 using OlympGuide.Application;
-using OlympGuide.Domain;
 
 var builder = WebApplication.CreateBuilder(args);
 

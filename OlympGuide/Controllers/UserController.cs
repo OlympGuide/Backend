@@ -15,7 +15,11 @@ namespace OlympGuide.Controllers
         [HttpGet("Me")]
         public async Task<UserProfileDto> GetUser()
         {
-                string token = HttpContext.Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last();
+                string? token = HttpContext.Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last();
+                if (token == null)
+                {
+                    throw new InvalidOperationException("Header does not contain a token");
+                }
                 var user = await _service.GetUserProfile(token);
                 return _mapper.Map<UserProfile, UserProfileDto>(user);
         }
