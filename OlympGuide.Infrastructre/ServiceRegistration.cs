@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using OlympGuide.Domain.Features.SportField;
+using OlympGuide.Domain.Features.User;
 using OlympGuide.Infrastructre.Repositories;
 
 namespace OlympGuide.Infrastructre
@@ -17,6 +18,7 @@ namespace OlympGuide.Infrastructre
                   );
 
             services.AddScoped<ISportFieldRepository, SportFieldRepository>();
+            services.AddScoped<IUserRepository, UserRepository>();
         }
     }
 }
