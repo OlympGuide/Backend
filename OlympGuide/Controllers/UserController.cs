@@ -12,7 +12,7 @@ namespace OlympGuide.Controllers
         private readonly IUserService _service = service;
         private readonly IMapper _mapper = mapper;
 
-        [HttpGet("/Me")]
+        [HttpGet("Me")]
         public async Task<UserProfileDto> GetUser()
         {
                 string token = HttpContext.Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last();
