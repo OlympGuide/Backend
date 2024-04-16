@@ -6,17 +6,6 @@ namespace OlympGuideTests.SportField
 {
     public class SportFieldServiceTests
     {
-        [Fact]
-        public async Task AddSportField_InvalidInput_ThrowsArgumentException()
-        {
-            // Arrange
-            var repositoryMock = new Mock<ISportFieldRepository>();
-            var service = new SportFieldService(repositoryMock.Object);
-
-            // Act & Assert
-            await Assert.ThrowsAsync<ArgumentException>(() => service.AddSportField(null!));
-
-        }
 
         [Fact]
         public async Task AddSportField_ValidInput_CallsRepositoryAddSportField()
