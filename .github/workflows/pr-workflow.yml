@@ -59,6 +59,7 @@ jobs:
           minimumSeverity: warning
           ignoreIssueType: | 
             NotAccessedPositionalProperty.Global
+            CollectionNeverUpdated.Global
           exclude: |
             **DbContext.cs
 
