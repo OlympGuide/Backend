@@ -19,7 +19,7 @@ namespace OlympGuide.Controllers
         [Authorize("access:admin")]
         public async Task<List<SportFieldProposalDetailsDto>> GetAllSportFieldProposals([FromQuery] SportFieldProposalStates state)
         {
-            var list = new List<SportFieldProposalType>();
+            List<SportFieldProposalType> list;
             if (state.Equals(SportFieldProposalStates.Open))
             {
                 list = await _service.GetAllOpenSportFieldProposals();
@@ -28,9 +28,8 @@ namespace OlympGuide.Controllers
             {
                 list = await _service.GetAllSportFieldProposals();
             }
-            var result = _mapper.Map<List<SportFieldProposalType>, List<SportFieldProposalDetailsDto>>(list);
+            return _mapper.Map<List<SportFieldProposalType>, List<SportFieldProposalDetailsDto>>(list);
 
-            return result;
         }
 
         [HttpGet("{id}")]
