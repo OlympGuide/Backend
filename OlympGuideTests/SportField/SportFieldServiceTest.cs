@@ -69,7 +69,7 @@ namespace OlympGuideTests.SportField
         {
             // Arrange
             var repositoryMock = new Mock<ISportFieldRepository>();
-            repositoryMock.Setup(repo => repo.GetSportFieldById(It.IsAny<Guid>())).ReturnsAsync((SportFieldType)null!);
+            repositoryMock.Setup(repo => repo.GetSportFieldById(It.IsAny<Guid>())).ThrowsAsync(new InvalidOperationException());
             var service = new SportFieldService(repositoryMock.Object);
             var validId = Guid.NewGuid();
 
