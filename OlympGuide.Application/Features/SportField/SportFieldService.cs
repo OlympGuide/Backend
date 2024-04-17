@@ -6,21 +6,13 @@ namespace OlympGuide.Application.Features.SportField
     {
         private readonly ISportFieldRepository _repository = repository;
 
-        public Task<SportFieldType> AddSportField(CreateSportFieldRequestDto sportFieldToAdd)
+        public Task<SportFieldType> AddSportField(SportFieldType sportFieldToAdd)
         {
-            if (SportFieldValidation.CheckSportFieldRequestDto(sportFieldToAdd))
+            if (SportFieldValidation.CheckSportField(sportFieldToAdd))
             {
-                var newSportField = new SportFieldType()
-                {
-                    Name = sportFieldToAdd.Name,
-                    Description = sportFieldToAdd.Description,
-                    Longitude = sportFieldToAdd.Longitude,
-                    Latitude = sportFieldToAdd.Latitude
-                };
-
-                return _repository.AddSportField(newSportField);
+                return _repository.AddSportField(sportFieldToAdd);
             }
-                throw new ArgumentException();
+            throw new ArgumentException();
         }
 
         public Task<List<SportFieldType>> GetAllSportFields()
@@ -34,13 +26,15 @@ namespace OlympGuide.Application.Features.SportField
             {
                 throw new ArgumentException("Guid must no be null");
             }
-            var sportField = await _repository.GetSportFieldById(sportFieldId);
-
-            if (sportField == null)
+            
+            try {
+                var sportField = await _repository.GetSportFieldById(sportFieldId);
+                return sportField;
+            }
+            catch(InvalidOperationException)
             {
                 throw new NoSportFieldFoundException(sportFieldId);
             }
-            return sportField;
         }
     }
 }

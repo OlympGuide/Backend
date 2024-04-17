@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using OlympGuide.Infrastructre;
@@ -11,9 +12,11 @@ using OlympGuide.Infrastructre;
 namespace OlympGuide.Infrastructre.Migrations
 {
     [DbContext(typeof(OlympGuideDbContext))]
-    partial class OlympGuideDBContextModelSnapshot : ModelSnapshot
+    [Migration("20240416175305_AddedAddress")]
+    partial class AddedAddress
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -104,63 +107,6 @@ namespace OlympGuide.Infrastructre.Migrations
                         .HasName("pk_sport_field_proposals");
 
                     b.ToTable("sport_field_proposals", (string)null);
-                });
-
-            modelBuilder.Entity("OlympGuide.Domain.Features.User.AuthenticationUserMapping", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasColumnName("id");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("AuthenticationProviderId")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("authentication_provider_id");
-
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("user_id");
-
-                    b.HasKey("Id")
-                        .HasName("pk_authentication_user_mappings");
-
-                    b.ToTable("authentication_user_mappings", (string)null);
-                });
-
-            modelBuilder.Entity("OlympGuide.Domain.Features.User.UserProfile", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid")
-                        .HasColumnName("id");
-
-                    b.Property<string>("DisplayName")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("display_name");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("email");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("name");
-
-                    b.Property<int[]>("Roles")
-                        .IsRequired()
-                        .HasColumnType("integer[]")
-                        .HasColumnName("roles");
-
-                    b.HasKey("Id")
-                        .HasName("pk_users");
-
-                    b.ToTable("users", (string)null);
                 });
 #pragma warning restore 612, 618
         }
