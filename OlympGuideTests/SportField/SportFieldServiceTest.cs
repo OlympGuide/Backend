@@ -2,21 +2,10 @@
 using OlympGuide.Application.Features.SportField;
 using OlympGuide.Domain.Features.SportField;
 
-namespace OlympGuideTests
+namespace OlympGuideTests.SportField
 {
     public class SportFieldServiceTests
     {
-        [Fact]
-        public async Task AddSportField_InvalidInput_ThrowsArgumentException()
-        {
-            // Arrange
-            var repositoryMock = new Mock<ISportFieldRepository>();
-            var service = new SportFieldService(repositoryMock.Object);
-
-            // Act & Assert
-            await Assert.ThrowsAsync<ArgumentException>(() => service.AddSportField(null!));
-
-        }
 
         [Fact]
         public async Task AddSportField_ValidInput_CallsRepositoryAddSportField()
@@ -24,7 +13,13 @@ namespace OlympGuideTests
             // Arrange
             var repositoryMock = new Mock<ISportFieldRepository>();
             var service = new SportFieldService(repositoryMock.Object);
-            var validRequest = new CreateSportFieldRequestDto("Field", "Description", 10.0f, 20.0f);
+            var validRequest = new SportFieldType()
+            {
+                Name = "Football Field",
+                Description = "Description",
+                Longitude = 10.0f,
+                Latitude = 20.0f
+            };
 
             // Act
             await service.AddSportField(validRequest);
@@ -63,7 +58,7 @@ namespace OlympGuideTests
         {
             // Arrange
             var repositoryMock = new Mock<ISportFieldRepository>();
-            repositoryMock.Setup(repo => repo.GetSportFieldById(It.IsAny<Guid>())).ReturnsAsync((SportFieldType)null!);
+            repositoryMock.Setup(repo => repo.GetSportFieldById(It.IsAny<Guid>())).ThrowsAsync(new InvalidOperationException());
             var service = new SportFieldService(repositoryMock.Object);
             var validId = Guid.NewGuid();
 

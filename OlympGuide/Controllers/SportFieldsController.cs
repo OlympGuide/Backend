@@ -29,15 +29,5 @@ namespace OlympGuide.Controllers
 
             return sportFieldDto;
         }
-
-        [HttpPost("")]
-        public async Task<SportFieldDto> AddSportField([FromBody] CreateSportFieldRequestDto sportFieldToAdd)
-        {
-
-            var sportField = await _service.AddSportField(sportFieldToAdd);
-            var sportFieldDto = _mapper.Map<SportFieldType, SportFieldDto>(sportField);
-
-            return sportFieldDto;
-        }
     }
 }
