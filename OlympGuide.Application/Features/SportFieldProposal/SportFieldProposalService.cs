@@ -1,5 +1,4 @@
-﻿using System.Diagnostics;
-using MediatR;
+﻿using MediatR;
 using OlympGuide.Application.Features.SportField;
 using OlympGuide.Domain.Features.SportFieldProposal;
 

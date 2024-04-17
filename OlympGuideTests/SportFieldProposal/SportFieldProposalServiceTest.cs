@@ -4,7 +4,7 @@ using OlympGuide.Domain.Features.SportFieldProposal;
 using MediatR;
 using OlympGuide.Application.Features.SportField;
 
-namespace OlympGuide.Tests.Application.Features.SportFieldProposal
+namespace OlympGuideTests.SportFieldProposal
 {
     public class SportFieldProposalServiceTests
     {
