@@ -10,7 +10,7 @@ namespace OlympGuide.Controllers
     [Authorize("access:admin")]
     [Authorize("access:user")]
     [Route("[controller]")]
-    public class SportFieldProposalController(ISportFieldProposalService service, IMapper mapper) : ControllerBase
+    public class SportFieldProposalsController(ISportFieldProposalService service, IMapper mapper) : ControllerBase
     {
         private readonly IMapper _mapper = mapper;
         private readonly ISportFieldProposalService _service = service;
@@ -53,9 +53,9 @@ namespace OlympGuide.Controllers
             return sportFieldDto;
         }
 
-        [HttpPut("{id}/{newState}")]
+        [HttpPut("{id}")]
         [Authorize("access:admin")]
-        public async Task<SportFieldProposalDetailsDto> ChangeStateById(Guid id, SportFieldProposalStates newState)
+        public async Task<SportFieldProposalDetailsDto> ChangeStateById(Guid id, [FromBody] SportFieldProposalStates newState)
         {
             var sportFieldProposal = await _service.ChangeStateById(id,newState);
             var sportFieldDto = _mapper.Map<SportFieldProposalType, SportFieldProposalDetailsDto>(sportFieldProposal);
