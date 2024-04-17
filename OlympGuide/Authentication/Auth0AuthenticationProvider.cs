@@ -48,7 +48,6 @@ namespace OlympGuide.Authentication
         {
             var handler = new JwtSecurityTokenHandler();
             var jwtToken = handler.ReadJwtToken(accessToken);
-
             var permissions = jwtToken.Claims.Where(claim => claim.Type == "permissions").ToList();
             var roles = new List<UserRole>();
 
