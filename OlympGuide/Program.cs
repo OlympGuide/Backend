@@ -3,6 +3,7 @@ using OlympGuide.Infrastructre;
 using OlympGuide.Application;
 using MediatR;
 using OlympGuide.Application.Features.SportFieldProposal;
+using OlympGuide.Domain.Features.SportFieldProposal;
 
 var builder = WebApplication.CreateBuilder(args);
 

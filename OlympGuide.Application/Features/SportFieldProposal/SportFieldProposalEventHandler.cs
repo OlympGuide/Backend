@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using OlympGuide.Application.Features.SportField;
 using OlympGuide.Domain.Features.SportField;
+using OlympGuide.Domain.Features.SportFieldProposal;
 
 namespace OlympGuide.Application.Features.SportFieldProposal
 {
