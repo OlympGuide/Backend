@@ -33,6 +33,8 @@ runs:
         kubectl config set-cluster default --server=${{ inputs.k8s-api }}
         kubectl config set-context sa/default --user=sa --cluster=default --namespace=${{ inputs.k8s-namespace }}
         kubectl config use-context sa/default
+    - name: Set up Helm
+      uses: azure/setup-helm@v1
     - name: upgrading helm release 
       shell: bash
       run: |-
