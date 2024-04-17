@@ -17,10 +17,10 @@ namespace OlympGuide.Controllers
 
         [HttpGet("")]
         [Authorize("access:admin")]
-        public async Task<List<SportFieldProposalDetailsDto>> GetAllSportFieldProposals([FromQuery] SportFieldProposalStates state)
+        public async Task<List<SportFieldProposalDetailsDto>> GetAllSportFieldProposals([FromQuery] SportFieldProposalStates? state)
         {
             List<SportFieldProposalType> list;
-            if (state.Equals(SportFieldProposalStates.Open))
+            if (state.HasValue && state.Equals(SportFieldProposalStates.Open))
             {
                 list = await _service.GetAllOpenSportFieldProposals();
             }
