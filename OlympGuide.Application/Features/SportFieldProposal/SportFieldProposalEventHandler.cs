@@ -4,11 +4,11 @@ using OlympGuide.Domain.Features.SportField;
 
 namespace OlympGuide.Application.Features.SportFieldProposal
 {
-    public class SportFieldProposalEventHandler(ISportFieldService service) : INotificationHandler<SportFieldProposalAcceptedEvent>
+    public class SportFieldProposalEventHandler(ISportFieldService service) : INotificationHandler<SportFieldProposalApprovedEvent>
     {
 
         private readonly ISportFieldService _service = service;
-        public Task Handle(SportFieldProposalAcceptedEvent message, CancellationToken cancellationToken)
+        public Task Handle(SportFieldProposalApprovedEvent message, CancellationToken cancellationToken)
         {
             SportFieldType sportFieldToAdd = new SportFieldType
             {

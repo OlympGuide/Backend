@@ -53,11 +53,10 @@ namespace OlympGuide.Controllers
             return sportFieldDto;
         }
 
-        [HttpPut("{id}")]
+        [HttpPut("{id}/{newState}")]
         [Authorize("access:admin")]
-        public async Task<SportFieldProposalDetailsDto> ChangeStateById(Guid id, [FromBody] SportFieldProposalStates newState)
+        public async Task<SportFieldProposalDetailsDto> ChangeStateById(Guid id, SportFieldProposalStates newState)
         {
-
             var sportFieldProposal = await _service.ChangeStateById(id,newState);
             var sportFieldDto = _mapper.Map<SportFieldProposalType, SportFieldProposalDetailsDto>(sportFieldProposal);
 

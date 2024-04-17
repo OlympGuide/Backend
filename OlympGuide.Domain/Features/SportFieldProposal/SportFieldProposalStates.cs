@@ -2,8 +2,8 @@
 {
     public enum SportFieldProposalStates
     {
-        Open,
-        Approved,
-        Rejected
+        Open = 0,
+        Approved = 1,
+        Rejected = 2
     }
 }

@@ -14,7 +14,7 @@ builder.Services.AddPersistenceInfrastructure(builder.Configuration);
 builder.Services.AddAuth(builder.Configuration);
 builder.Services.AddAuthenticationProvider();
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Program).Assembly));
-builder.Services.AddScoped<INotificationHandler<SportFieldProposalAcceptedEvent>, SportFieldProposalEventHandler>();
+builder.Services.AddScoped<INotificationHandler<SportFieldProposalApprovedEvent>, SportFieldProposalEventHandler>();
 
 var app = builder.Build();
 

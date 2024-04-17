@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using System.Diagnostics;
+using MediatR;
 using OlympGuide.Application.Features.SportField;
 using OlympGuide.Domain.Features.SportFieldProposal;
 
@@ -23,7 +24,7 @@ namespace OlympGuide.Application.Features.SportFieldProposal
         {
             var newSportFieldProposal = new SportFieldProposalType()
             {
-                Date = DateTime.Now,
+                Date = DateTime.UtcNow,
                 UserId = Guid.Empty, //TODO: Replace with userID
                 SportFieldName = sportFieldProposalToAdd.SportFieldName,
                 SportFieldDescription = sportFieldProposalToAdd.SportFieldDescription,
@@ -42,13 +43,16 @@ namespace OlympGuide.Application.Features.SportFieldProposal
             {
                 throw new ArgumentException("Guid must no be null");
             }
-            var sportFieldProposal = await _repository.GetSportFieldProposalById(sportFieldProposalId);
 
-            if (sportFieldProposal == null)
+            try
+            {
+                var sportFieldProposal = await _repository.GetSportFieldProposalById(sportFieldProposalId);
+                return sportFieldProposal;
+            }
+            catch (InvalidOperationException)
             {
                 throw new NoSportFieldFoundException(sportFieldProposalId);
             }
-            return sportFieldProposal;
         }
 
         public async Task<SportFieldProposalType> ChangeStateById(Guid sportFieldProposalId, SportFieldProposalStates newState)
@@ -60,9 +64,9 @@ namespace OlympGuide.Application.Features.SportFieldProposal
             try
             {
                 var sportFieldProposal = await _repository.ChangeStateById(sportFieldProposalId, newState);
-                if (newState == SportFieldProposalStates.Open)
+                if (newState == SportFieldProposalStates.Approved)
                 {
-                    var proposalEvent = new SportFieldProposalAcceptedEvent(sportFieldProposal);
+                    var proposalEvent = new SportFieldProposalApprovedEvent(sportFieldProposal);
                     await _mediator.Publish(proposalEvent);
                 }
                 return sportFieldProposal;

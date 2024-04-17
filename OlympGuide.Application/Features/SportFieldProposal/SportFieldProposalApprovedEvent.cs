@@ -3,9 +3,9 @@ using OlympGuide.Domain.Features.SportFieldProposal;
 
 namespace OlympGuide.Application.Features.SportFieldProposal
 {
-    public class SportFieldProposalAcceptedEvent : INotification
+    public class SportFieldProposalApprovedEvent : INotification
     {
-        public SportFieldProposalAcceptedEvent(SportFieldProposalType sportFieldProposal) {
+        public SportFieldProposalApprovedEvent(SportFieldProposalType sportFieldProposal) {
             SportFieldProposal = sportFieldProposal;
         }
         public SportFieldProposalType SportFieldProposal { get; init; }
