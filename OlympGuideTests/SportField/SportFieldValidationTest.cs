@@ -1,5 +1,4 @@
-﻿using OlympGuide.Application.Features.SportField;
-using OlympGuide.Domain.Features.SportField;
+﻿using OlympGuide.Domain.Features.SportField;
 
 namespace OlympGuideTests.SportField
 {

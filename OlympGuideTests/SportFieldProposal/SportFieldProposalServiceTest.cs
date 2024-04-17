@@ -2,7 +2,7 @@
 using OlympGuide.Application.Features.SportFieldProposal;
 using OlympGuide.Domain.Features.SportFieldProposal;
 using MediatR;
-using OlympGuide.Application.Features.SportField;
+using OlympGuide.Domain.Features.SportField;
 
 namespace OlympGuideTests.SportFieldProposal
 {
