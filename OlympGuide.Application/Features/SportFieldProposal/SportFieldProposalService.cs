@@ -1,13 +1,15 @@
 ﻿using MediatR;
 using OlympGuide.Domain.Features.SportField;
 using OlympGuide.Domain.Features.SportFieldProposal;
+using OlympGuide.Domain.Features.User;
 
 namespace OlympGuide.Application.Features.SportFieldProposal
 {
-    public class SportFieldProposalService(ISportFieldProposalRepository repository, IMediator mediator) : ISportFieldProposalService
+    public class SportFieldProposalService(ISportFieldProposalRepository repository, IMediator mediator, IUserService userService) : ISportFieldProposalService
     {
         private readonly ISportFieldProposalRepository _repository = repository;
         private readonly IMediator _mediator = mediator;
+        private readonly IUserService _userService = userService;
 
         public Task<List<SportFieldProposalType>> GetAllSportFieldProposals()
         {
@@ -19,12 +21,14 @@ namespace OlympGuide.Application.Features.SportFieldProposal
             return _repository.GetAllOpenSportFieldProposals();
         }
 
-        public Task<SportFieldProposalType> AddSportFieldProposal(SportFieldProposalDto sportFieldProposalToAdd)
+        public async Task<SportFieldProposalType> AddSportFieldProposal(SportFieldProposalDto sportFieldProposalToAdd)
         {
+            var userId = await userService.GetCurrentUserIdFromUserContext();
+
             var newSportFieldProposal = new SportFieldProposalType()
             {
                 Date = DateTime.UtcNow,
-                UserId = Guid.Empty, //TODO: Replace with userID
+                UserId = userId,
                 SportFieldName = sportFieldProposalToAdd.SportFieldName,
                 SportFieldDescription = sportFieldProposalToAdd.SportFieldDescription,
                 SportFieldLongitude = sportFieldProposalToAdd.SportFieldLongitude,
@@ -33,7 +37,7 @@ namespace OlympGuide.Application.Features.SportFieldProposal
                 State = SportFieldProposalStates.Open
             };
 
-            return _repository.AddSportFieldProposal(newSportFieldProposal);
+            return await _repository.AddSportFieldProposal(newSportFieldProposal);
         }
 
         public async Task<SportFieldProposalType> GetSportFieldProposalById(Guid sportFieldProposalId)
