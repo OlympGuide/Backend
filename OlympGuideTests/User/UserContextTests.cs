@@ -19,7 +19,7 @@ namespace OlympGuideTests.User
         public void GetTokenFromCurrentUser_NoHttpContext_ReturnsNull()
         {
             // Arrange
-            _mockHttpContextAccessor.Setup(x => x.HttpContext).Returns((HttpContext)null);
+            _mockHttpContextAccessor.Setup(x => x.HttpContext).Returns((HttpContext)null!);
 
             // Act
             var result = _userContext.GetTokenFromCurrentUser();
