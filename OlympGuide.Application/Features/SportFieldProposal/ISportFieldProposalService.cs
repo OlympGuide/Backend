@@ -1,6 +1,7 @@
-﻿using OlympGuide.Application.Features.SportFieldProposal;
+﻿
+using OlympGuide.Domain.Features.SportFieldProposal;
 
-namespace OlympGuide.Domain.Features.SportFieldProposal
+namespace OlympGuide.Application.Features.SportFieldProposal
 {
     public interface ISportFieldProposalService
     {

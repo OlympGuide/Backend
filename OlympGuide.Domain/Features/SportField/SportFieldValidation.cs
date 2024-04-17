@@ -1,6 +1,5 @@
-﻿using OlympGuide.Domain.Features.SportField;
-
-namespace OlympGuide.Application.Features.SportField
+﻿
+namespace OlympGuide.Domain.Features.SportField
 {
 
     public static class SportFieldValidation
