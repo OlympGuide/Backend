@@ -4,12 +4,36 @@ using OlympGuide.Domain.Features.User;
 
 namespace OlympGuide.Application.Features.User
 {
-    public class UserService(ILogger<UserService> logger, IUserRepository repository, IAuthenticationProvider authenticationProvider, IMapper mapper) : IUserService
+    public class UserService(ILogger<UserService> logger, 
+                            IUserRepository repository,
+                            IAuthenticationProvider authenticationProvider, 
+                            IUserContext userContext, 
+                            IMapper mapper) : IUserService
     {
         private readonly ILogger<UserService> _logger = logger;
         private readonly IUserRepository _repository = repository;
         private readonly IAuthenticationProvider _authenticationProvider = authenticationProvider;
         private readonly IMapper _mapper = mapper;
+        private readonly IUserContext _userContext = userContext;
+
+        public async Task<UserProfile> GetCurrentUserFromUserContext()
+        {
+            var token = _userContext.GetTokenFromCurrentUser();
+            if (string.IsNullOrEmpty(token))
+                throw new InvalidOperationException("Bearer token is emtpy or null");
+            return await GetUserProfile(token);
+        }
+
+        public async Task<Guid> GetCurrentUserIdFromUserContext()
+        {
+            var token = _userContext.GetTokenFromCurrentUser();
+            if (string.IsNullOrEmpty(token))
+                throw new InvalidOperationException("Bearer token is emtpy or null");
+
+            var userIdentifier = await _authenticationProvider.GetUserIdentifierFromToken(token);
+            var user = await _repository.GetByIdentifier(userIdentifier);
+            return user.Id;
+        }
 
         public Task<Guid> GetUserId(string identifier)
         {

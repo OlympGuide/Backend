@@ -16,7 +16,7 @@ namespace OlympGuideTests.User
         private readonly Mock<IAuthenticationProvider> _mockAuthProvider;
         private readonly Mock<IMapper> _mockMapper;
         private readonly UserService _userService;
-        
+        private readonly Mock<IUserContext> _mockUserContext;
         public UserServiceTests()
         {
             var options = new DbContextOptionsBuilder<OlympGuideDbContext>()
@@ -27,7 +27,9 @@ namespace OlympGuideTests.User
             _repository = new UserRepository(new OlympGuideDbContext(options), new Mock<ILogger<UserRepository>>().Object);
             _mockAuthProvider = new Mock<IAuthenticationProvider>();
             _mockMapper = new Mock<IMapper>();
-            _userService = new UserService(_mockLogger.Object, _repository, _mockAuthProvider.Object, _mockMapper.Object);
+            _mockUserContext = new Mock<IUserContext>();
+            _mockUserContext.Setup(c =>c.GetTokenFromCurrentUser()).Returns("eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJPbmxpbmUgSldUIEJ1aWxkZXIiLCJpYXQiOjE3MTMyNjMyMDgsImV4cCI6MTc0NDc5OTIwOCwiYXVkIjoid3d3LmV4YW1wbGUuY29tIiwic3ViIjoiYXNkZjEyYWc0NTEifQ.RIjdA138yIDKD2L_ll8kLi15cq1BcPw_aEtDMflsOI4");
+            _userService = new UserService(_mockLogger.Object, _repository, _mockAuthProvider.Object, _mockUserContext.Object, _mockMapper.Object);
         }
 
         [Fact]
@@ -91,7 +93,7 @@ namespace OlympGuideTests.User
             var token = "valid-token";
             var newUser = new UserProfile();
             var mockRepository = new Mock<IUserRepository>();
-            var serviceUnderTest = new UserService(_mockLogger.Object, mockRepository.Object, _mockAuthProvider.Object, _mockMapper.Object);
+            var serviceUnderTest = new UserService(_mockLogger.Object, mockRepository.Object, _mockAuthProvider.Object, _mockUserContext.Object, _mockMapper.Object);
 
             var userInformations = new CreateUserInformations(
             UserIdentifier: "asdf12ag451",
