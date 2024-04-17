@@ -28,9 +28,9 @@ services:
       - POSTGRES_PASSWORD=ogDbPassword
       - POSTGRES_DB=OlympGuide
     ports:
-      - "5433:5432"
+      - "5432:5432"
     expose:
-      - "5433"
+      - "5432"
     volumes:
       - pgdata:/var/lib/postgresql/data
 

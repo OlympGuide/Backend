@@ -21,9 +21,10 @@ builder.Services.AddScoped<INotificationHandler<SportFieldProposalApprovedEvent>
 
 var app = builder.Build();
 
+app.UseAuthentication();
+app.UseAuthorization();
 app.UseSwagger(app.Environment);
 app.UseHttpsRedirection();
-app.UseAuthorization();
 app.MapControllers();
 app.SetupCors();
 app.AddExceptionHanlding();
