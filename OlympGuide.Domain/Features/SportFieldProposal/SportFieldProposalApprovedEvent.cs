@@ -1,7 +1,6 @@
 ﻿using MediatR;
-using OlympGuide.Domain.Features.SportFieldProposal;
 
-namespace OlympGuide.Application.Features.SportFieldProposal
+namespace OlympGuide.Domain.Features.SportFieldProposal
 {
     public class SportFieldProposalApprovedEvent : INotification
     {

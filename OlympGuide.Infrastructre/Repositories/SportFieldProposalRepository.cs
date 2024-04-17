@@ -7,27 +7,20 @@ namespace OlympGuide.Infrastructre.Repositories
     {
         public async Task<List<SportFieldProposalType>> GetAllSportFieldProposals()
         {
-            var sportFieldProposalList = await context.SportFieldProposals
-                .ToListAsync();
-
-            return sportFieldProposalList;
+            return await context.SportFieldProposals.ToListAsync();
         }
 
         public async Task<List<SportFieldProposalType>> GetAllOpenSportFieldProposals()
         {
-            var sportFieldProposalList = await context.SportFieldProposals
+            return await context.SportFieldProposals
                 .Where(sf => sf.State == SportFieldProposalStates.Open)
                 .ToListAsync();
-
-            return sportFieldProposalList;
         }
 
         public async Task<SportFieldProposalType> GetSportFieldProposalById(Guid sportFieldProposalId)
         {
-            var sportFieldProposal = await context.SportFieldProposals
+            return await context.SportFieldProposals
                 .SingleAsync(sf => sf.Id == sportFieldProposalId);
-
-            return sportFieldProposal;
         }
 
         public async Task<SportFieldProposalType> AddSportFieldProposal(SportFieldProposalType sportFieldProposalToAdd)
