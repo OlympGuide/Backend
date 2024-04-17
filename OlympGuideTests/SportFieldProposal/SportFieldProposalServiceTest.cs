@@ -3,6 +3,7 @@ using OlympGuide.Application.Features.SportFieldProposal;
 using OlympGuide.Domain.Features.SportFieldProposal;
 using MediatR;
 using OlympGuide.Domain.Features.SportField;
+using OlympGuide.Domain.Features.User;
 
 namespace OlympGuideTests.SportFieldProposal
 {
@@ -14,7 +15,9 @@ namespace OlympGuideTests.SportFieldProposal
             // Arrange
             var repositoryMock = new Mock<ISportFieldProposalRepository>();
             var mediatorMock = new Mock<IMediator>();
-            var service = new SportFieldProposalService(repositoryMock.Object, mediatorMock.Object);
+            var userServiceMock = new Mock<IUserService>();
+            userServiceMock.Setup(service => service.GetCurrentUserIdFromUserContext()).ReturnsAsync(Guid.Empty);
+            var service = new SportFieldProposalService(repositoryMock.Object, mediatorMock.Object, userServiceMock.Object);
             var validRequest = new SportFieldProposalDto(
                 "Football Field",
                 "Description",
@@ -36,7 +39,9 @@ namespace OlympGuideTests.SportFieldProposal
             // Arrange
             var repositoryMock = new Mock<ISportFieldProposalRepository>();
             var mediatorMock = new Mock<IMediator>();
-            var service = new SportFieldProposalService(repositoryMock.Object, mediatorMock.Object);
+            var userServiceMock = new Mock<IUserService>();
+            userServiceMock.Setup(service => service.GetCurrentUserIdFromUserContext()).ReturnsAsync(Guid.Empty);
+            var service = new SportFieldProposalService(repositoryMock.Object, mediatorMock.Object, userServiceMock.Object);
 
             // Act & Assert
             await Assert.ThrowsAsync<ArgumentException>(() => service.GetSportFieldProposalById(Guid.Empty));
@@ -49,7 +54,9 @@ namespace OlympGuideTests.SportFieldProposal
             var repositoryMock = new Mock<ISportFieldProposalRepository>();
             repositoryMock.Setup(repo => repo.GetSportFieldProposalById(It.IsAny<Guid>())).ThrowsAsync(new InvalidOperationException());
             var mediatorMock = new Mock<IMediator>();
-            var service = new SportFieldProposalService(repositoryMock.Object, mediatorMock.Object);
+            var userServiceMock = new Mock<IUserService>();
+            userServiceMock.Setup(service => service.GetCurrentUserIdFromUserContext()).ReturnsAsync(Guid.Empty);
+            var service = new SportFieldProposalService(repositoryMock.Object, mediatorMock.Object, userServiceMock.Object);
             var validId = Guid.NewGuid();
 
             // Act & Assert
@@ -62,7 +69,9 @@ namespace OlympGuideTests.SportFieldProposal
             // Arrange
             var repositoryMock = new Mock<ISportFieldProposalRepository>();
             var mediatorMock = new Mock<IMediator>();
-            var service = new SportFieldProposalService(repositoryMock.Object, mediatorMock.Object);
+            var userServiceMock = new Mock<IUserService>();
+            userServiceMock.Setup(service => service.GetCurrentUserIdFromUserContext()).ReturnsAsync(Guid.Empty);
+            var service = new SportFieldProposalService(repositoryMock.Object, mediatorMock.Object, userServiceMock.Object);
 
             // Act & Assert
             await Assert.ThrowsAsync<ArgumentException>(() => service.ChangeStateById(Guid.Empty, SportFieldProposalStates.Open));
@@ -75,7 +84,9 @@ namespace OlympGuideTests.SportFieldProposal
             var repositoryMock = new Mock<ISportFieldProposalRepository>();
             repositoryMock.Setup(repo => repo.ChangeStateById(It.IsAny<Guid>(), It.IsAny<SportFieldProposalStates>())).ThrowsAsync(new InvalidOperationException());
             var mediatorMock = new Mock<IMediator>();
-            var service = new SportFieldProposalService(repositoryMock.Object, mediatorMock.Object);
+            var userServiceMock = new Mock<IUserService>();
+            userServiceMock.Setup(service => service.GetCurrentUserIdFromUserContext()).ReturnsAsync(Guid.Empty);
+            var service = new SportFieldProposalService(repositoryMock.Object, mediatorMock.Object, userServiceMock.Object);
             var validId = Guid.NewGuid();
 
             // Act & Assert
@@ -89,7 +100,9 @@ namespace OlympGuideTests.SportFieldProposal
             var repositoryMock = new Mock<ISportFieldProposalRepository>();
             repositoryMock.Setup(repo => repo.ChangeStateById(It.IsAny<Guid>(), It.IsAny<SportFieldProposalStates>())).ReturnsAsync(new SportFieldProposalType());
             var mediatorMock = new Mock<IMediator>();
-            var service = new SportFieldProposalService(repositoryMock.Object, mediatorMock.Object);
+            var userServiceMock = new Mock<IUserService>();
+            userServiceMock.Setup(service => service.GetCurrentUserIdFromUserContext()).ReturnsAsync(Guid.Empty);
+            var service = new SportFieldProposalService(repositoryMock.Object, mediatorMock.Object, userServiceMock.Object);
             var validId = Guid.NewGuid();
 
             // Act
