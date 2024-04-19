@@ -7,7 +7,7 @@ namespace OlympGuide.Infrastructre.Repositories
     {
         public async Task<List<SportFieldProposalType>> GetAllSportFieldProposals(SportFieldProposalStates? state)
         {
-            var sportFieldProposals = new List<SportFieldProposalType>();
+            List<SportFieldProposalType> sportFieldProposals;
             if (state.HasValue)
             {
                 sportFieldProposals = await context.SportFieldProposals
