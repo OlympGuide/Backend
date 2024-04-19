@@ -5,9 +5,20 @@ namespace OlympGuide.Infrastructre.Repositories
 {
     public class SportFieldProposalRepository(OlympGuideDbContext context) : ISportFieldProposalRepository
     {
-        public async Task<List<SportFieldProposalType>> GetAllSportFieldProposals()
+        public async Task<List<SportFieldProposalType>> GetAllSportFieldProposals(SportFieldProposalStates? state)
         {
-            return await context.SportFieldProposals.ToListAsync();
+            var sportFieldProposals = new List<SportFieldProposalType>();
+            if (state.HasValue)
+            {
+                sportFieldProposals = await context.SportFieldProposals
+                    .Where(sf => sf.State == state)
+                    .ToListAsync();
+            }
+            else
+            {
+                sportFieldProposals = await context.SportFieldProposals.ToListAsync();
+            }
+            return sportFieldProposals;
         }
 
         public async Task<List<SportFieldProposalType>> GetAllOpenSportFieldProposals()

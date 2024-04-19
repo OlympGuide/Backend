@@ -6,8 +6,8 @@ namespace OlympGuide.Domain.Features.SportField
     {
         public string Name { get; set; } = string.Empty;
         public string Description { get; set; } = string.Empty;
-        public float Longitude { get; set; }
-        public float Latitude { get; set; }
+        public double Longitude { get; set; }
+        public double Latitude { get; set; }
         public string Address { get; set; } = string.Empty;
     }
 }

@@ -19,17 +19,9 @@ namespace OlympGuide.Controllers
         [Authorize("access:admin")]
         public async Task<List<SportFieldProposalDetailsDto>> GetAllSportFieldProposals([FromQuery] SportFieldProposalStates? state)
         {
-            List<SportFieldProposalType> list;
-            if (state.HasValue && state.Equals(SportFieldProposalStates.Open))
-            {
-                list = await _service.GetAllOpenSportFieldProposals();
-            }
-            else
-            {
-                list = await _service.GetAllSportFieldProposals();
-            }
-            return _mapper.Map<List<SportFieldProposalType>, List<SportFieldProposalDetailsDto>>(list);
+            var list = await _service.GetAllSportFieldProposals(state);
 
+            return _mapper.Map<List<SportFieldProposalType>, List<SportFieldProposalDetailsDto>>(list);
         }
 
         [HttpGet("{id}")]
