@@ -33,10 +33,14 @@ runs:
         kubectl config set-cluster default --server=${{ inputs.k8s-api }}
         kubectl config set-context sa/default --user=sa --cluster=default --namespace=${{ inputs.k8s-namespace }}
         kubectl config use-context sa/default
+    - name: Set up Helm
+      uses: azure/setup-helm@v1
     - name: upgrading helm release 
       shell: bash
       run: |-
         helm package ${{ inputs.helm-directory }}
         package=$(find . -name "${CHART_NAME}*.tgz")
         echo $package
-        helm upgrade ${{ inputs.helm-release-name }} $package -f ${{ github.workspace }}/${{ inputs.helm-directory }}/${{ inputs.helm-values-file }} --install -n ${{ inputs.k8s-namespace }} --wait
+        helm list -n olymp-guide-stage
+        helm upgrade ${{ inputs.helm-release-name }} $package --install --debug -f ${{ github.workspace }}/${{ inputs.helm-directory }}/${{ inputs.helm-values-file }} -n ${{ inputs.k8s-namespace }} --wait
+  
