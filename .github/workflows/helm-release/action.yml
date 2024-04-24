@@ -41,4 +41,6 @@ runs:
         helm package ${{ inputs.helm-directory }}
         package=$(find . -name "${CHART_NAME}*.tgz")
         echo $package
-        helm upgrade ${{ inputs.helm-release-name }} $package -f ${{ github.workspace }}/${{ inputs.helm-directory }}/${{ inputs.helm-values-file }} --install -n ${{ inputs.k8s-namespace }} --wait
+        helm list -n olymp-guide-stage
+        helm upgrade ${{ inputs.helm-release-name }} $package --install --debug -f ${{ github.workspace }}/${{ inputs.helm-directory }}/${{ inputs.helm-values-file }} -n ${{ inputs.k8s-namespace }} --wait
+  

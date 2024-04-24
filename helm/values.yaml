@@ -2,7 +2,7 @@ backend:
   deployment:
     name: olympguide-backend
     replicas: 1
-    forceRedeploy: false
+    forceRedeploy: true
     image:
       pullSecret: github-token-secret ## Key for Service Account Secret on K8s
       repository: ghcr.io/olympguide/backend/webserver
