@@ -18,11 +18,11 @@ namespace OlympGuideTests.SportFieldProposal
                 .UseInMemoryDatabase(databaseName: "SportFieldProposalServiceTests")
                 .Options;
             var dbContext = new OlympGuideDbContext(options);
-            var _proposalRepository = new SportFieldProposalRepository(dbContext);
-            var _userRepository = new UserRepository(dbContext, new Mock<ILogger<UserRepository>>().Object);
+            var proposalRepository = new SportFieldProposalRepository(dbContext);
+            var userRepository = new UserRepository(dbContext, new Mock<ILogger<UserRepository>>().Object);
 
             var user = new UserProfile();
-            await _userRepository.AddUser(user);
+            await userRepository.AddUser(user);
 
             var newSportFieldProposal = new SportFieldProposalType()
             {
@@ -37,7 +37,7 @@ namespace OlympGuideTests.SportFieldProposal
             };
 
             // Act
-            await _proposalRepository.AddSportFieldProposal(newSportFieldProposal);
+            await proposalRepository.AddSportFieldProposal(newSportFieldProposal);
 
             // Assert
             Assert.Equal(1, dbContext.Users.Count(u => u.Id == newSportFieldProposal.User.Id)); // Check if there is only one entry for the user ID
