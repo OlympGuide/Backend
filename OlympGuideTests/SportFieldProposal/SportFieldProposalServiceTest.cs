@@ -9,6 +9,7 @@ namespace OlympGuideTests.SportFieldProposal
 {
     public class SportFieldProposalServiceTests
     {
+
         [Fact]
         public async Task AddSportFieldProposal_ValidInput_CallsRepositoryAddSportFieldProposal()
         {
@@ -111,5 +112,7 @@ namespace OlympGuideTests.SportFieldProposal
             // Assert
             repositoryMock.Verify(repo => repo.ChangeStateById(validId, SportFieldProposalStates.Open), Times.Once);
         }
+
+
     }
 }

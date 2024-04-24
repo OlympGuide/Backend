@@ -8,10 +8,10 @@ namespace OlympGuide.Domain.Features.SportFieldProposal
         public DateTime Date { get; set; }
         public UserProfile User { get; set; } = new();
         public string SportFieldName { get; set; } = string.Empty;
-        public string SportFieldDescription { get; set; } = string.Empty;
+        public string? SportFieldDescription { get; set; }
         public double SportFieldLongitude { get; set; }
         public double SportFieldLatitude { get; set; }
-        public string SportFieldAddress {  get; set; } = string.Empty;
+        public string? SportFieldAddress {  get; set; }
         public SportFieldProposalStates State { get; set; } = SportFieldProposalStates.Open;
     }
 }
