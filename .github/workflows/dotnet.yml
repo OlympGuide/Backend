@@ -21,7 +21,7 @@ env:
   ORGANISATION: OlympGuide
   # HELM env
   HELM_DIRECTORY: helm
-  HELM_RELEASE_NAME: olympguide
+  HELM_RELEASE_NAME: olympguidebackend
   HELM_VALUES_FILE: values.yaml
   # K8S env
   K8S_API: https://pm4.init-lab.ch/k8s/clusters/local
