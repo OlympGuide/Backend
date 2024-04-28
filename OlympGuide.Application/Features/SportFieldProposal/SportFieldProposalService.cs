@@ -9,7 +9,6 @@ namespace OlympGuide.Application.Features.SportFieldProposal
     {
         private readonly ISportFieldProposalRepository _repository = repository;
         private readonly IMediator _mediator = mediator;
-        private readonly IUserService _userService = userService;
 
         public Task<List<SportFieldProposalType>> GetAllSportFieldProposals()
         {
@@ -74,7 +73,7 @@ namespace OlympGuide.Application.Features.SportFieldProposal
                 }
                 return sportFieldProposal;
             }
-            catch(InvalidOperationException)
+            catch (InvalidOperationException)
             {
                 throw new NoSportFieldFoundException(sportFieldProposalId);
             }
