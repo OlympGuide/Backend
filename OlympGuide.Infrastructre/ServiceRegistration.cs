@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using OlympGuide.Domain.Features.Reservation;
 using OlympGuide.Domain.Features.SportField;
 using OlympGuide.Domain.Features.SportFieldProposal;
 using OlympGuide.Domain.Features.User;
@@ -20,6 +21,7 @@ namespace OlympGuide.Infrastructre
 
             services.AddScoped<ISportFieldRepository, SportFieldRepository>();
             services.AddScoped<ISportFieldProposalRepository, SportFieldProposalRepository>();
+            services.AddScoped<IReservationRepository, ReservationRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
         }
     }
