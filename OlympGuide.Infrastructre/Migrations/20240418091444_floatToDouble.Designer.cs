@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using OlympGuide.Infrastructre;
@@ -11,9 +12,11 @@ using OlympGuide.Infrastructre;
 namespace OlympGuide.Infrastructre.Migrations
 {
     [DbContext(typeof(OlympGuideDbContext))]
-    partial class OlympGuideDBContextModelSnapshot : ModelSnapshot
+    [Migration("20240418091444_floatToDouble")]
+    partial class floatToDouble
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -70,10 +73,12 @@ namespace OlympGuide.Infrastructre.Migrations
                         .HasColumnName("date");
 
                     b.Property<string>("SportFieldAddress")
+                        .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("sport_field_address");
 
                     b.Property<string>("SportFieldDescription")
+                        .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("sport_field_description");
 
@@ -100,9 +105,6 @@ namespace OlympGuide.Infrastructre.Migrations
 
                     b.HasKey("Id")
                         .HasName("pk_sport_field_proposals");
-
-                    b.HasIndex("UserId")
-                        .HasDatabaseName("ix_sport_field_proposals_user_id");
 
                     b.ToTable("sport_field_proposals", (string)null);
                 });
@@ -162,18 +164,6 @@ namespace OlympGuide.Infrastructre.Migrations
                         .HasName("pk_users");
 
                     b.ToTable("users", (string)null);
-                });
-
-            modelBuilder.Entity("OlympGuide.Domain.Features.SportFieldProposal.SportFieldProposalType", b =>
-                {
-                    b.HasOne("OlympGuide.Domain.Features.User.UserProfile", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("fk_sport_field_proposals_users_user_id");
-
-                    b.Navigation("User");
                 });
 #pragma warning restore 612, 618
         }

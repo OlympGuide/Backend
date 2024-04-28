@@ -10,24 +10,19 @@ namespace OlympGuide.Application.Features.SportFieldProposal
         private readonly ISportFieldProposalRepository _repository = repository;
         private readonly IMediator _mediator = mediator;
 
-        public Task<List<SportFieldProposalType>> GetAllSportFieldProposals()
+        public Task<List<SportFieldProposalType>> GetAllSportFieldProposals(SportFieldProposalStates? state)
         {
-            return _repository.GetAllSportFieldProposals();
-        }
-
-        public Task<List<SportFieldProposalType>> GetAllOpenSportFieldProposals()
-        {
-            return _repository.GetAllOpenSportFieldProposals();
+            return _repository.GetAllSportFieldProposals(state);
         }
 
         public async Task<SportFieldProposalType> AddSportFieldProposal(SportFieldProposalDto sportFieldProposalToAdd)
         {
-            var userId = await userService.GetCurrentUserIdFromUserContext();
+            var user = await userService.GetCurrentUserFromUserContext();
 
             var newSportFieldProposal = new SportFieldProposalType()
             {
                 Date = DateTime.UtcNow,
-                UserId = userId,
+                User = user,
                 SportFieldName = sportFieldProposalToAdd.SportFieldName,
                 SportFieldDescription = sportFieldProposalToAdd.SportFieldDescription,
                 SportFieldLongitude = sportFieldProposalToAdd.SportFieldLongitude,

@@ -13,8 +13,8 @@ namespace OlympGuideTests.SportField
             {
                 Name = "Football Field",
                 Description = "Description",
-                Longitude = -74.0060f,
-                Latitude = 40.7128f
+                Longitude = -74.0060d,
+                Latitude = 40.7128d
             };
 
             // Act
@@ -32,8 +32,8 @@ namespace OlympGuideTests.SportField
             {
                 Name = "",
                 Description = "Description",
-                Longitude = -74.0060f,
-                Latitude = 40.7128f
+                Longitude = -74.0060d,
+                Latitude = 40.7128d
             };
 
             // Act
@@ -51,8 +51,8 @@ namespace OlympGuideTests.SportField
             {
                 Name = "Football Field",
                 Description = "Description",
-                Longitude = -74.0060f,
-                Latitude = 100.0f
+                Longitude = -74.0060d,
+                Latitude = 100.0d
             };
 
             // Act
@@ -70,8 +70,8 @@ namespace OlympGuideTests.SportField
             {
                 Name = "Football Field",
                 Description = "Description",
-                Longitude = -200.0f,
-                Latitude = 40.7128f
+                Longitude = -200.0d,
+                Latitude = 40.7128d
             };
 
             // Act
