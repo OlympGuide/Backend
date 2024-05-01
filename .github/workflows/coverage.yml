@@ -48,7 +48,7 @@ jobs:
       run: dotnet test --no-build --verbosity normal
       working-directory: ${{ env.BACKEND_DIRECTORY }}
     - name: Collect Code Coverage Data
-      run: dotnet test .\OlympGuideTests\OlympGuideTests.csproj  --collect:"XPlat Code Coverage" --results-directory .\OlympGuideTests\TestCoverageReport
+      run: dotnet test ./OlympGuideTests/OlympGuideTests.csproj  --collect:"XPlat Code Coverage" --results-directory ./OlympGuideTests/TestCoverageReport
     - name: Code Coverage Report
       uses: irongut/CodeCoverageSummary@v1.3.0
       with:
