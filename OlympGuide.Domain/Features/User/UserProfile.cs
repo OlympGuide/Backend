@@ -7,9 +7,9 @@ namespace OlympGuide.Domain.Features.User
     /// </summary>
     public class UserProfile: Entity
     {
-        public string Email { get; init; } = string.Empty;
-        public string Name { get; init; } = string.Empty;
-        public string DisplayName { get; init; } = string.Empty;
-        public List<UserRole> Roles { get; init; } = new();
+        public string Email { get; set; } = string.Empty;
+        public string Name { get; set; } = string.Empty;
+        public string DisplayName { get; set; } = string.Empty;
+        public List<UserRole> Roles { get; set; } = new();
     }
 }

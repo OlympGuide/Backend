@@ -22,6 +22,12 @@
         /// </summary>
         /// <returns></returns>
         Task<UserProfile> GetCurrentUserFromUserContext();
+        /// <summary>
+        /// Check if user role has changed from the current user. if the user roles has been changed, it will be updated.
+        /// </summary>
+        /// <returns></returns>
+        Task<UserProfile> UpdateUser();
+
         Task<UserProfile> GetUserProfile(Guid id);
         Task<UserProfile> GetUserProfile(string accessToken);
     }
