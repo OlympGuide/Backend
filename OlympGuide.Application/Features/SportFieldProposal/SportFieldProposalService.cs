@@ -10,9 +10,9 @@ namespace OlympGuide.Application.Features.SportFieldProposal
         private readonly ISportFieldProposalRepository _repository = repository;
         private readonly IMediator _mediator = mediator;
 
-        public Task<List<SportFieldProposalType>> GetAllSportFieldProposals(SportFieldProposalStates? state)
+        public async Task<List<SportFieldProposalType>> GetAllSportFieldProposals(SportFieldProposalStates? state)
         {
-            return _repository.GetAllSportFieldProposals(state);
+            return await _repository.GetAllSportFieldProposals(state);
         }
 
         public async Task<SportFieldProposalType> AddSportFieldProposal(SportFieldProposalDto sportFieldProposalToAdd)

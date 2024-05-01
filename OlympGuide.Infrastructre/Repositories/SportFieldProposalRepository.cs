@@ -21,13 +21,6 @@ namespace OlympGuide.Infrastructre.Repositories
             return sportFieldProposals;
         }
 
-        public async Task<List<SportFieldProposalType>> GetAllOpenSportFieldProposals()
-        {
-            return await context.SportFieldProposals
-                .Where(sf => sf.State == SportFieldProposalStates.Open)
-                .ToListAsync();
-        }
-
         public async Task<SportFieldProposalType> GetSportFieldProposalById(Guid sportFieldProposalId)
         {
             return await context.SportFieldProposals
