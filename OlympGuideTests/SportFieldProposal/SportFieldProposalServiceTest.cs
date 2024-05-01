@@ -99,7 +99,11 @@ namespace OlympGuideTests.SportFieldProposal
         {
             // Arrange
             var repositoryMock = new Mock<ISportFieldProposalRepository>();
-            repositoryMock.Setup(repo => repo.ChangeStateById(It.IsAny<Guid>(), It.IsAny<SportFieldProposalStates>())).ReturnsAsync(new SportFieldProposalType());
+            var sportFieldProposal = new SportFieldProposalType()
+            {
+                User = new UserProfile()
+            };
+            repositoryMock.Setup(repo => repo.ChangeStateById(It.IsAny<Guid>(), It.IsAny<SportFieldProposalStates>())).ReturnsAsync(sportFieldProposal);
             var mediatorMock = new Mock<IMediator>();
             var userServiceMock = new Mock<IUserService>();
             userServiceMock.Setup(service => service.GetCurrentUserIdFromUserContext()).ReturnsAsync(Guid.Empty);
@@ -112,7 +116,5 @@ namespace OlympGuideTests.SportFieldProposal
             // Assert
             repositoryMock.Verify(repo => repo.ChangeStateById(validId, SportFieldProposalStates.Open), Times.Once);
         }
-
-
     }
 }
