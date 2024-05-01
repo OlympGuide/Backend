@@ -6,9 +6,10 @@ namespace OlympGuide.Application.Features.Reservation
     public class ReservationService(IReservationRepository repository, IUserService userService) : IReservationService
     {
         private readonly IReservationRepository _repository = repository;
+        private readonly IUserService _userService = userService;
         public async Task<List<ReservationType>> GetAllReservations()
         {
-            var user = await userService.GetCurrentUserFromUserContext();
+            var user = await _userService.GetCurrentUserFromUserContext();
             if(user.Roles.Contains(UserRole.Administrator))
             {
                 return await _repository.GetAllReservations();
@@ -56,11 +57,7 @@ namespace OlympGuide.Application.Features.Reservation
             {
                 throw new ArgumentException("Guid must no be null");
             }
-            var user = await userService.GetUserProfile(userId);
-            if (user == null)
-            {
-                throw new UserNotFoundException(userId);
-            }
+            var user = await _userService.GetUserProfile(userId);
             try
             {
                 return await _repository.GetReservationsByUser(user);
@@ -73,7 +70,7 @@ namespace OlympGuide.Application.Features.Reservation
 
         public async Task<ReservationType> AddReservation(ReservationDto reservationToAdd)
         {
-            var user = await userService.GetCurrentUserFromUserContext();
+            var user = await _userService.GetCurrentUserFromUserContext();
 
             var newReservation = new ReservationType()
             {
@@ -103,5 +100,22 @@ namespace OlympGuide.Application.Features.Reservation
             }
         }
 
+        public async Task<ReservationType> DeleteReservationById(Guid reservationId)
+        {
+            if (reservationId == Guid.Empty)
+            {
+                throw new ArgumentException("Guid must no be null");
+            }
+
+            try
+            {
+                return await _repository.DeleteReservationById(reservationId);
+            }
+            catch (InvalidOperationException)
+            {
+                throw new NoReservationFoundException(reservationId);
+            }
+
+        }
     }
 }

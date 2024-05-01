@@ -68,5 +68,16 @@ namespace OlympGuide.Controllers
 
             return reservationDto;
         }
+
+        [HttpDelete("{id}")]
+        [Authorize("access:user")]
+        [Authorize("access:admin")]
+        public async Task<ReservationDetailsDto> DeleteReservationById(Guid id)
+        {
+            var reservation = await _service.DeleteReservationById(id);
+            var reservationDto = _mapper.Map<ReservationType, ReservationDetailsDto>(reservation);
+
+            return reservationDto;
+        }
     }
 }
