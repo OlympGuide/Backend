@@ -87,6 +87,27 @@ namespace OlympGuide.Application.Features.User
             }
         }
 
+        public async Task<UserProfile> UpdateUser()
+        {
+            var token = _userContext.GetTokenFromCurrentUser();
+            if (string.IsNullOrEmpty(token))
+                throw new InvalidOperationException("Bearer token is emtpy or null");
+
+            var userInformations = await _authenticationProvider.GetUserInformations(token);
+            var userIdentifier = await _authenticationProvider.GetUserIdentifierFromToken(token);
+            var user = await _repository.GetByIdentifier(userIdentifier);
+            
+            user.Roles = userInformations.Roles;
+            user.Name = userInformations.Name;
+            user.Email = userInformations.Email;
+            user.DisplayName = userInformations.DisplayName;
+
+            _logger.LogInformation("User is udpated.");
+            await _repository.UpdateUser(user);
+            _logger.LogInformation("User has been updated.");
+            return user;
+        }
+
         private async Task CreateUserProfile(string token)
         {
             var userInformations = await _authenticationProvider.GetUserInformations(token);

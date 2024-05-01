@@ -115,6 +115,49 @@ namespace OlympGuideTests.User
             // Act & Assert
             await Assert.ThrowsAsync<UserNotFoundException>(() => serviceUnderTest.GetUserProfile(token));
         }
+
+        [Fact]
+        public async Task UpdateUser_SuccessfulUpdate_ReturnsUpdatedUser()
+        {
+            // Arrange
+            var token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJPbmxpbmUgSldUIEJ1aWxkZXIiLCJpYXQiOjE3MTMyNjMyMDgsImV4cCI6MTc0NDc5OTIwOCwiYXVkIjoid3d3LmV4YW1wbGUuY29tIiwic3ViIjoiYXNkZjEyYWc0NTEifQ.RIjdA138yIDKD2L_ll8kLi15cq1BcPw_aEtDMflsOI4";
+            var userIdentifier = "UpdateUser_SuccessfulUpdate_ReturnsUpdatedUser";
+
+            var userInformations = new CreateUserInformations
+            (
+                UserIdentifier: userIdentifier,
+                Roles: new List<UserRole> { UserRole.DefaultUser, UserRole.Administrator },
+                Name: "John Doe",
+                Email: "john.doe@example.com",
+                DisplayName: "John D."
+            );
+
+            var user = new UserProfile
+            {  
+                Roles = new List<UserRole>(),
+                Name = "",
+                Email = "",
+                DisplayName = ""
+            };
+
+            _mockAuthProvider.Setup(p => p.GetUserIdentifierFromToken(token)).ReturnsAsync(userIdentifier);
+            _mockAuthProvider.Setup(p => p.GetUserInformations(token)).ReturnsAsync(userInformations);
+            _mockUserContext.Setup(x => x.GetTokenFromCurrentUser()).Returns(token);
+            _mockMapper.Setup(mapper => mapper.Map<UserProfile>(It.IsAny<CreateUserInformations>())).Returns(user);
+
+            // Act
+            await _userService.GetUserProfile(token);
+            var retrievedUser = await _userService.UpdateUser();
+
+            // Assert
+            Assert.Equal(retrievedUser.Name, userInformations.Name);
+            Assert.Equal(retrievedUser.Email, userInformations.Email);
+            Assert.Equal(retrievedUser.Roles.Count, userInformations.Roles.Count);
+            Assert.True(retrievedUser.Roles.All(r => userInformations.Roles.Contains(r)));
+            Assert.Equal(retrievedUser.DisplayName, userInformations.DisplayName);
+        }
+
+
     }
 
 }

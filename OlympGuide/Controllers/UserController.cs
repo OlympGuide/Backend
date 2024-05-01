@@ -15,7 +15,8 @@ namespace OlympGuide.Controllers
         [HttpGet("Me")]
         public async Task<UserProfileDto> GetUser()
         {
-            var user = await _service.GetCurrentUserFromUserContext();
+            await _service.GetCurrentUserFromUserContext();
+            var user = await _service.UpdateUser();
             return _mapper.Map<UserProfile, UserProfileDto>(user);
         }
     }

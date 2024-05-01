@@ -29,8 +29,6 @@ namespace OlympGuide.Extension
                 var db = scope.ServiceProvider.GetRequiredService<OlympGuideDbContext>();
                 logger.LogInformation("Apply migration to database");
                 logger.LogInformation($"Environment: {env.EnvironmentName}");
-                var connectionstring = configuration.GetConnectionString("OlympGuideDB");
-                logger.LogInformation($"DB: {connectionstring}");
 
                 db.Database.Migrate();
             }
