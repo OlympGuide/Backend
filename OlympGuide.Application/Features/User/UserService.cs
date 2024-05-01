@@ -102,7 +102,9 @@ namespace OlympGuide.Application.Features.User
             user.Email = userInformations.Email;
             user.DisplayName = userInformations.DisplayName;
 
+            _logger.LogInformation("User is udpated.");
             await _repository.UpdateUser(user);
+            _logger.LogInformation("User has been updated.");
             return user;
         }
 
