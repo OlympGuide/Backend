@@ -38,6 +38,16 @@ jobs:
       run: dotnet test --no-build --verbosity normal
       working-directory: ${{ env.BACKEND_DIRECTORY }}
 
+    - name: Collect Code Coverage Data
+      run: dotnet test ./OlympGuideTests/OlympGuideTests.csproj  --collect:"XPlat Code Coverage" --results-directory ./OlympGuideTests/TestCoverageReport
+      
+    - name: Upload Test Coverage Report
+      uses: actions/upload-artifact@v2
+      with:
+        name: test-coverage-report
+        path: ./OlympGuideTests/TestCoverageReport
+        retention-days: 1
+
   code-inspector:
     needs: build
     runs-on: ubuntu-latest 
@@ -62,6 +72,25 @@ jobs:
             CollectionNeverUpdated.Global
           exclude: |
             **DbContext.cs
+
+  test-coverage:
+    needs: code-inspector
+    runs-on: ubuntu-latest 
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref:  ${{ github.event.pull_request.head.ref }}
+      
+      - name: Download Test Coverage Report
+        uses: actions/download-artifact@v2
+        with:
+          name: test-coverage-report
+          path: ./OlympGuideTests/TestCoverageReport
+
+      - name: Code Coverage Report
+        uses: irongut/CodeCoverageSummary@v1.3.0
+        with:
+          filename: ./OlympGuideTests/TestCoverageReport/**/coverage.cobertura.xml
 
   build-artifact:
     needs: code-inspector
