@@ -146,7 +146,7 @@ namespace OlympGuideTests.User
             _mockMapper.Setup(mapper => mapper.Map<UserProfile>(It.IsAny<CreateUserInformations>())).Returns(user);
 
             // Act
-            var result = await _userService.GetUserProfile(token);
+            await _userService.GetUserProfile(token);
             var retrievedUser = await _userService.UpdateUser();
 
             // Assert
