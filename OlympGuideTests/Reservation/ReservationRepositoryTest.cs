@@ -3,7 +3,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Moq;
-using OlympGuide.Domain.Features.SportFieldProposal;
 using OlympGuide.Domain.Features.User;
 using OlympGuide.Infrastructre.Repositories;
 using OlympGuide.Infrastructre;
