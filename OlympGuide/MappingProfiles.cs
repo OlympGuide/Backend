@@ -18,7 +18,7 @@ namespace OlympGuide
             CreateMap<SportFieldProposalDetailsDto, SportFieldProposalType>().ReverseMap();
             CreateMap<CreateUserInformations, UserProfile>().ReverseMap();
             CreateMap<UserProfile, UserProfileDto>().ReverseMap();
-            CreateMap<ReservationDto, ReservationType>().ReverseMap();
+            CreateMap<ReservationDetailsDto, ReservationType>().ReverseMap();
         }
     }
 }
