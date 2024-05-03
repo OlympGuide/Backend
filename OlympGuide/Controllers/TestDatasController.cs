@@ -5,7 +5,7 @@ namespace OlympGuide.Controllers
 {
     [Route("[controller]")]
     [ApiController]
-    public class TestDataController(TestDataRepository testDataRepository) : Controller
+    public class TestDatasController(TestDataRepository testDataRepository) : Controller
     {
         private readonly TestDataRepository _testDataRepository = testDataRepository;
 
