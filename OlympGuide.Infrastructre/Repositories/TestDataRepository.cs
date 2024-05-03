@@ -204,7 +204,7 @@ namespace OlympGuide.Infrastructre.Repositories
 
                 const int reservationsPerSportField = 20;
 
-                const int reservationPeriodHourStart = 7;
+                const int reservationPeriodHourStart = 5;
                 const int reservationPeriod = 14;
 
                 foreach (var sportField in sportFields)
@@ -249,7 +249,7 @@ namespace OlympGuide.Infrastructre.Repositories
                     new()
                     {
                         Id = GenerateGuid(),
-                        Date = DateTime.Now,
+                        Date = DateTime.UtcNow,
                         User = users[random.Next(0, users.Count)],
                         SportFieldName = "Salzhaus",
                         SportFieldDescription =
@@ -285,7 +285,7 @@ namespace OlympGuide.Infrastructre.Repositories
 
         private DateTime GenerateDateTimeForReservation(int day, int hour)
         {
-            var dateTime = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0, 0, 0)
+            var dateTime = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0, 0, 0, DateTimeKind.Utc)
                 .AddDays(day)
                 .AddHours(hour);
 
