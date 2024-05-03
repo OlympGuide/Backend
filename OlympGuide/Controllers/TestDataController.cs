@@ -9,7 +9,7 @@ namespace OlympGuide.Controllers
     {
         private readonly TestDataRepository _testDataRepository = testDataRepository;
 
-        [HttpGet("")]
+        [HttpPost("")]
         public async Task<int> CreateOrRecreateTestData()
         {
             await _testDataRepository.DeleteTestData();
