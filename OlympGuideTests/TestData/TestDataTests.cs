@@ -29,6 +29,9 @@ namespace OlympGuideTests.TestData
 
             var sportFieldProposalCount = dbContext.SportFieldProposals.Count();
             Assert.True(sportFieldProposalCount > 0, "the sport field proposal table is empty");
+
+            var userCount = dbContext.SportFieldProposals.Count();
+            Assert.True(userCount > 0, "the user table is empty");
         }
 
         [Fact]
@@ -53,6 +56,9 @@ namespace OlympGuideTests.TestData
 
             var sportFieldProposalCount = dbContext.SportFieldProposals.Count();
             Assert.True(sportFieldProposalCount == 0, "the sport field proposal table is not empty");
+
+            var userCount = dbContext.Users.Count();
+            Assert.True(userCount == 0, "the user is not empty");
         }
 
         private OlympGuideDbContext CreateDbContext() {
@@ -63,5 +69,5 @@ namespace OlympGuideTests.TestData
 
             return dbContext;
         }
-}
+    }
 }

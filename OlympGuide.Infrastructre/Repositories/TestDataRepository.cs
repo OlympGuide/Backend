@@ -16,16 +16,16 @@ namespace OlympGuide.Infrastructre.Repositories
 
         public async Task<int> CreateTestData()
         {
-            var createSportFieldProposalsTask = this.CreateTestSportFieldProposals();
-
+            var users = await this.CreateTestUsers();
             var sportFields = await this.CreateTestSportFields();
-            var reservations = await this.CreateTestReservations(sportFields);
-            var sportFieldProposals = await createSportFieldProposalsTask;
+            var reservations = await this.CreateTestReservations(sportFields, users);
+            var sportFieldProposals = await this.CreateTestSportFieldProposals(users);
 
             Task.WaitAll(
-                context.SportFieldProposals.AddRangeAsync(sportFieldProposals), 
-                context.SportFields.AddRangeAsync(sportFields), 
-                context.Reservations.AddRangeAsync(reservations));
+                context.Users.AddRangeAsync(users),
+                context.SportFields.AddRangeAsync(sportFields),
+                context.Reservations.AddRangeAsync(reservations),
+                context.SportFieldProposals.AddRangeAsync(sportFieldProposals));
 
             var amountCreated = await context.SaveChangesAsync();
             return amountCreated;
@@ -42,15 +42,71 @@ namespace OlympGuide.Infrastructre.Repositories
             var reservationsToRemove = context.Reservations
                 .Where(r => r.Id.ToString().StartsWith(_guidBase, StringComparison.InvariantCultureIgnoreCase));
 
+            var usersToRemove = context.Users
+                .Where(u => u.Id.ToString().StartsWith(_guidBase, StringComparison.InvariantCultureIgnoreCase));
+
             context.SportFieldProposals.RemoveRange(sportFieldProposalsToRemove);
             context.SportFields.RemoveRange(sportFieldsToRemove);
             context.Reservations.RemoveRange(reservationsToRemove);
+            context.Users.RemoveRange(usersToRemove);
 
             var amountDeleted = await context.SaveChangesAsync();
             return amountDeleted;
         }
 
         #region Test Data Creation
+
+        private async Task<List<UserProfile>> CreateTestUsers()
+        {
+            return await Task.Run(() =>
+            {
+                var userProfiles = new List<UserProfile>()
+                {
+                    new()
+                    {
+                        Id = GenerateGuid(),
+                        Name = "Sven Schäfer",
+                        DisplayName = "schöfli",
+                        Email = "SvenSchaefer@zhaw.ch",
+                        Roles = new() { UserRole.DefaultUser }
+                    },
+                    new()
+                    {
+                        Id = GenerateGuid(),
+                        Name = "Katrin Kaestner",
+                        DisplayName = "katy",
+                        Email = "KatrinKaestner@zhaw.ch",
+                        Roles = new() { UserRole.DefaultUser }
+                    },
+                    new()
+                    {
+                        Id = GenerateGuid(),
+                        Name = "Amélie Pelland",
+                        DisplayName = "pellerine",
+                        Email = "AméliePelland@zhaw.ch",
+                        Roles = new() { UserRole.DefaultUser }
+                    },
+                    new()
+                    {
+                        Id = GenerateGuid(),
+                        Name = "Alfonso Ferrari",
+                        DisplayName = "ferrari",
+                        Email = "AlfonsoFerrari@zhaw.ch",
+                        Roles = new() { UserRole.DefaultUser }
+                    },
+                    new()
+                    {
+                        Id = GenerateGuid(),
+                        Name = "Fabrice Cyr",
+                        DisplayName = "fafa",
+                        Email = "FabriceCyr@zhaw.ch",
+                        Roles = new() { UserRole.DefaultUser }
+                    }
+                };
+
+                return userProfiles;
+            });
+        }
 
         private async Task<List<SportFieldType>> CreateTestSportFields()
         {
@@ -132,11 +188,13 @@ namespace OlympGuide.Infrastructre.Repositories
             });
         }
 
-        private async Task<List<ReservationType>> CreateTestReservations(List<SportFieldType> sportFields, int amount = 30)
+        private async Task<List<ReservationType>> CreateTestReservations(List<SportFieldType> sportFields, List<UserProfile> users)
         {
             return await Task.Run(() =>
             {
                 var reservations = new List<ReservationType>();
+
+                const int reservationsPerSportField = 20;
 
                 const int reservationPeriodHourStart = 7;
                 const int reservationPeriod = 14;
@@ -144,9 +202,9 @@ namespace OlympGuide.Infrastructre.Repositories
                 foreach (var sportField in sportFields)
                 {
                     var currentHour = 0;
-                    var currentDay = -3;
+                    var currentDay = -1;
 
-                    for (var i = 0; i < amount; i++)
+                    for (var i = 0; i < reservationsPerSportField; i++)
                     {
                         var startHour = currentHour += random.Next(0, 6);
                         var endHour = currentHour += random.Next(1, 3);
@@ -155,7 +213,7 @@ namespace OlympGuide.Infrastructre.Repositories
                         {
                             Id = GenerateGuid(),
                             SportFieldId = sportField.Id,
-                            User = new UserProfile(),
+                            User = users[random.Next(0, users.Count)],
                             Start = this.GenerateDateTimeForReservation(currentDay,
                                 reservationPeriodHourStart + startHour),
                             End = this.GenerateDateTimeForReservation(currentDay, reservationPeriodHourStart + endHour),
@@ -174,7 +232,7 @@ namespace OlympGuide.Infrastructre.Repositories
             });
         }
 
-        private async Task<List<SportFieldProposalType>> CreateTestSportFieldProposals()
+        private async Task<List<SportFieldProposalType>> CreateTestSportFieldProposals(List<UserProfile> users)
         {
             return await Task.Run(() =>
             {
@@ -184,7 +242,7 @@ namespace OlympGuide.Infrastructre.Repositories
                     {
                         Id = GenerateGuid(),
                         Date = DateTime.Now,
-                        User = new UserProfile(),
+                        User = users[random.Next(0, users.Count)],
                         SportFieldName = "Salzhaus",
                         SportFieldDescription =
                             "Nacht- und Musikclub in ehemaligem Lagerhaus mit regelmässigen Livekonzerten und Gast-DJs.",
