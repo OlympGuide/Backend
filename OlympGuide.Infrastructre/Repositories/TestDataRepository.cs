@@ -34,17 +34,25 @@ namespace OlympGuide.Infrastructre.Repositories
         public async Task<int> DeleteTestData()
         {
             var sportFieldProposalsToRemove = context.SportFieldProposals
-                .Where(sfp => sfp.Id.ToString().StartsWith(_guidBase, StringComparison.InvariantCultureIgnoreCase));
+                .ToList()
+                .Where(sfp => sfp.Id.ToString().StartsWith(_guidBase, StringComparison.InvariantCultureIgnoreCase))
+                .ToList();
 
             var sportFieldsToRemove = context.SportFields
-                .Where(sf => sf.Id.ToString().StartsWith(_guidBase, StringComparison.InvariantCultureIgnoreCase));
+                .ToList()
+                .Where(sf => sf.Id.ToString().StartsWith(_guidBase, StringComparison.InvariantCultureIgnoreCase))
+                .ToList();
 
             var reservationsToRemove = context.Reservations
-                .Where(r => r.Id.ToString().StartsWith(_guidBase, StringComparison.InvariantCultureIgnoreCase));
+                .ToList()
+                .Where(r => r.Id.ToString().StartsWith(_guidBase, StringComparison.InvariantCultureIgnoreCase))
+                .ToList();
 
             var usersToRemove = context.Users
-                .Where(u => u.Id.ToString().StartsWith(_guidBase, StringComparison.InvariantCultureIgnoreCase));
-
+                .ToList()
+                .Where(u => u.Id.ToString().StartsWith(_guidBase, StringComparison.InvariantCultureIgnoreCase))
+                .ToList();
+            
             context.SportFieldProposals.RemoveRange(sportFieldProposalsToRemove);
             context.SportFields.RemoveRange(sportFieldsToRemove);
             context.Reservations.RemoveRange(reservationsToRemove);
