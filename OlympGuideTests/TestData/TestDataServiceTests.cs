@@ -1,10 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using OlympGuide.Application.Features.TestData;
 using OlympGuide.Infrastructre.Repositories;
 using OlympGuide.Infrastructre;
 
 namespace OlympGuideTests.TestData
 {
-    public class TestDataTests
+    public class TestDataServiceTests
     {
         [Fact]
         public async Task CreateTestData_Successful_TableNotEmpty()
@@ -12,9 +13,10 @@ namespace OlympGuideTests.TestData
             // Arrange
             var dbContext = this.CreateDbContext();
             var testDataRepository = new TestDataRepository(dbContext);
+            var testDataService = new TestDataService(testDataRepository);
             
             // Act
-            var amountCreated = await testDataRepository.CreateTestData();
+            var amountCreated = await testDataService.CreateTestData();
 
             // Assert
             Assert.True(amountCreated > 0, "no test data were created");
@@ -40,9 +42,10 @@ namespace OlympGuideTests.TestData
             // Arrange
             var dbContext = this.CreateDbContext();
             var testDataRepository = new TestDataRepository(dbContext);
+            var testDataService = new TestDataService(testDataRepository);
 
             // Act
-            await testDataRepository.CreateTestData();
+            await testDataService.CreateTestData();
             var amountDeleted = await testDataRepository.DeleteTestData();
 
             // Assert
@@ -63,7 +66,7 @@ namespace OlympGuideTests.TestData
 
         private OlympGuideDbContext CreateDbContext() {
             var options = new DbContextOptionsBuilder<OlympGuideDbContext>()
-                .UseInMemoryDatabase(databaseName: "TestDataTests")
+                .UseInMemoryDatabase(databaseName: "TestDataServiceTests")
                 .Options;
             var dbContext = new OlympGuideDbContext(options);
 

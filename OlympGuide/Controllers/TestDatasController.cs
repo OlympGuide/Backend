@@ -1,19 +1,19 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using OlympGuide.Infrastructre.Repositories;
+using OlympGuide.Application.Features.TestData;
 
 namespace OlympGuide.Controllers
 {
     [Route("[controller]")]
     [ApiController]
-    public class TestDatasController(TestDataRepository testDataRepository) : Controller
+    public class TestDatasController(ITestDataService testDataService) : Controller
     {
-        private readonly TestDataRepository _testDataRepository = testDataRepository;
+        private readonly ITestDataService _testDataService = testDataService;
 
         [HttpPost("")]
         public async Task<int> CreateOrRecreateTestData()
         {
-            await _testDataRepository.DeleteTestData();
-            var amountCreated = await _testDataRepository.CreateTestData();
+            await _testDataService.DeleteTestData();
+            var amountCreated = await _testDataService.CreateTestData();
 
             return amountCreated;
         }
