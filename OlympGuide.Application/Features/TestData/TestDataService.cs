@@ -13,8 +13,7 @@ namespace OlympGuide.Application.Features.TestData
         private static readonly object Lock = new();
 
         private readonly ITestDataRepository _testDataRepository = testDataRepository;
-
-        private readonly Random random = new();
+        private readonly Random _random = new();
 
         public async Task<int> CreateTestData()
         {
@@ -185,14 +184,14 @@ namespace OlympGuide.Application.Features.TestData
 
                     for (var i = 0; i < reservationsPerSportField; i++)
                     {
-                        var startHour = currentHour += random.Next(0, 6);
-                        var endHour = currentHour += random.Next(1, 3);
+                        var startHour = currentHour += _random.Next(0, 6);
+                        var endHour = currentHour += _random.Next(1, 3);
 
                         reservations.Add(new ReservationType
                         {
                             Id = GenerateGuid(),
                             SportFieldId = sportField.Id,
-                            User = users[random.Next(0, users.Count)],
+                            User = users[_random.Next(0, users.Count)],
                             Start = this.GenerateDateTimeForReservation(currentDay,
                                 reservationPeriodHourStart + startHour),
                             End = this.GenerateDateTimeForReservation(currentDay, reservationPeriodHourStart + endHour),
@@ -221,7 +220,7 @@ namespace OlympGuide.Application.Features.TestData
                     {
                         Id = GenerateGuid(),
                         Date = DateTime.UtcNow,
-                        User = users[random.Next(0, users.Count)],
+                        User = users[_random.Next(0, users.Count)],
                         SportFieldName = "Salzhaus",
                         SportFieldDescription =
                             "Nacht- und Musikclub in ehemaligem Lagerhaus mit regelmässigen Livekonzerten und Gast-DJs.",
@@ -233,7 +232,7 @@ namespace OlympGuide.Application.Features.TestData
                     {
                         Id = GenerateGuid(),
                         Date = DateTime.UtcNow,
-                        User = users[random.Next(0, users.Count)],
+                        User = users[_random.Next(0, users.Count)],
                         SportFieldName = "Fussballplatz Rebwiesenstrasse",
                         SportFieldLatitude = 47.494137684135325,
                         SportFieldLongitude = 8.705790915104656
@@ -242,7 +241,7 @@ namespace OlympGuide.Application.Features.TestData
                     {
                         Id = GenerateGuid(),
                         Date = DateTime.UtcNow,
-                        User = users[random.Next(0, users.Count)],
+                        User = users[_random.Next(0, users.Count)],
                         SportFieldName = "Finnenbahn Rennweg",
                         SportFieldLatitude = 47.50241077412348, 
                         SportFieldLongitude = 8.713614845036803
