@@ -4,6 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using OlympGuide.Domain.Features.Reservation;
 using OlympGuide.Domain.Features.SportField;
 using OlympGuide.Domain.Features.SportFieldProposal;
+using OlympGuide.Domain.Features.TestData;
 using OlympGuide.Domain.Features.User;
 using OlympGuide.Infrastructre.Repositories;
 
@@ -23,6 +24,7 @@ namespace OlympGuide.Infrastructre
             services.AddScoped<ISportFieldProposalRepository, SportFieldProposalRepository>();
             services.AddScoped<IReservationRepository, ReservationRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<ITestDataRepository, TestDataRepository>();
         }
     }
 }
