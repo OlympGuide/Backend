@@ -22,11 +22,9 @@ namespace OlympGuideTests.TestData
             Assert.True(amountCreated > 0, "no test data were created");
 
             var reservationCount = dbContext.Reservations.Count();
-            var test = dbContext.Reservations.ToList();
             Assert.True(reservationCount > 0, "the reservation table is empty");
 
             var sportFieldCount = dbContext.SportFields.Count();
-            var test2 = dbContext.SportFields.ToList();
             Assert.True(sportFieldCount > 0, "the sport field table is empty");
 
             var sportFieldProposalCount = dbContext.SportFieldProposals.Count();

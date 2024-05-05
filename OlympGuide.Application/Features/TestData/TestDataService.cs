@@ -9,7 +9,7 @@ namespace OlympGuide.Application.Features.TestData
 {
     public class TestDataService(ITestDataRepository testDataRepository) : ITestDataService
     {
-        private static int _guidCounter = 0;
+        private static int _guidCounter;
         private static readonly object Lock = new();
 
         private readonly ITestDataRepository _testDataRepository = testDataRepository;
