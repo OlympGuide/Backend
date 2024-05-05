@@ -6,6 +6,7 @@
         Basketball,
         Volleyball,
         Swimming,
+        Tennis,
         Miscellaneous
     }
 }

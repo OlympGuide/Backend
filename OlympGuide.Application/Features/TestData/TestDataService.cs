@@ -100,7 +100,8 @@ namespace OlympGuide.Application.Features.TestData
                             "Der ASVZ bietet allen Hochschulangehörigen ein attraktives und vielfältiges Sportangebot, in welchem es immer wieder Neues zu entdecken gibt und Bewährtes erhalten bleibt. Im ASVZ stehen die Menschen, die Freude an der Bewegung, die Fitness, der Ausgleich zum Studium bzw. Beruf und die Verbesserung der Lebensqualität im Zentrum.",
                         Latitude = 47.49371318423971,
                         Longitude = 8.717093499632721,
-                        Address = "Lagerplatz 28, 8400 Winterthur"
+                        Address = "Lagerplatz 28, 8400 Winterthur",
+                        Category = SportFieldCategory.Miscellaneous
                     },
                     new()
                     {
@@ -110,7 +111,8 @@ namespace OlympGuide.Application.Features.TestData
                             "Wir sind ein multikultureller Tennis Club mit einer guten Durchmischung von Hobby- und Turnierspielern / -spielerinnen. Junge, auch schon etwas Betagtere und Junioren sind bei uns sehr willkommen und fühlen sich sehr bald wohl im Club. Anfänger und auch Fortgeschrittene geniessen den Sport und auch das Gesellige des Clublebens. Gerne sind auch alteingesessene Spieler bereit, mit Neumitgliedern zu spielen.",
                         Latitude = 47.501729507221825,
                         Longitude = 8.713984116905758,
-                        Address = "Schützenwiesenweg 6, 8400 Winterthur"
+                        Address = "Schützenwiesenweg 6, 8400 Winterthur",
+                        Category = SportFieldCategory.Tennis
                     },
                     new()
                     {
@@ -118,7 +120,8 @@ namespace OlympGuide.Application.Features.TestData
                         Name = "Fussballplatz Schulhaus Heiligberg",
                         Latitude = 47.49544674677959,
                         Longitude = 8.726180906746624,
-                        Address = "Hochwachtstrasse 9, 8400 Winterthur"
+                        Address = "Hochwachtstrasse 9, 8400 Winterthur",
+                        Category = SportFieldCategory.Soccer
                     },
                     new()
                     {
@@ -126,7 +129,8 @@ namespace OlympGuide.Application.Features.TestData
                         Name = "Fussballplatz Primarschule Schönengrund",
                         Latitude = 47.49357557304693,
                         Longitude = 8.737344514983741,
-                        Address = "Weberstrasse 2, 8400 Winterthur"
+                        Address = "Weberstrasse 2, 8400 Winterthur",
+                        Category = SportFieldCategory.Soccer
                     },
                     new()
                     {
@@ -134,7 +138,8 @@ namespace OlympGuide.Application.Features.TestData
                         Name = "Seilpark Winterthur",
                         Latitude = 47.49260861980515,
                         Longitude = 8.73556178955866,
-                        Address = "Zeughausstrasse 54, 8400 Winterthur"
+                        Address = "Zeughausstrasse 54, 8400 Winterthur",
+                        Category = SportFieldCategory.Miscellaneous
                     },
                     new()
                     {
@@ -142,7 +147,8 @@ namespace OlympGuide.Application.Features.TestData
                         Name = "Basketballplatz",
                         Latitude = 47.502103671462486,
                         Longitude = 8.731687249268996,
-                        Address = "Trollstrasse, 8400 Winterthur"
+                        Address = "Trollstrasse, 8400 Winterthur",
+                        Category = SportFieldCategory.Basketball
                     },
                     new()
                     {
@@ -150,7 +156,8 @@ namespace OlympGuide.Application.Features.TestData
                         Name = "Fussballplatz",
                         Latitude = 47.50176868409301,
                         Longitude = 8.731603411044478,
-                        Address = "Trollstrasse, 8400 Winterthur"
+                        Address = "Trollstrasse, 8400 Winterthur",
+                        Category = SportFieldCategory.Soccer
                     },
                     new()
                     {
@@ -158,7 +165,8 @@ namespace OlympGuide.Application.Features.TestData
                         Name = "Volleyballplatz Rennweg",
                         Latitude = 47.502792309674476,
                         Longitude = 8.714411669067376,
-                        Address = "Wartstrasse 71, 8400 Winterthur"
+                        Address = "Wartstrasse 71, 8400 Winterthur",
+                        Category = SportFieldCategory.Volleyball
                     },
                 };
 
@@ -226,7 +234,8 @@ namespace OlympGuide.Application.Features.TestData
                             "Nacht- und Musikclub in ehemaligem Lagerhaus mit regelmässigen Livekonzerten und Gast-DJs.",
                         SportFieldLatitude = 47.49754039335906,
                         SportFieldLongitude = 8.722296236745477,
-                        SportFieldAddress = "untere Vogelsangstrasse 6, 8400 Winterthur"
+                        SportFieldAddress = "untere Vogelsangstrasse 6, 8400 Winterthur",
+                        SportFieldCategory = SportFieldCategory.Swimming
                     },
                     new()
                     {
@@ -235,7 +244,8 @@ namespace OlympGuide.Application.Features.TestData
                         User = users[_random.Next(0, users.Count)],
                         SportFieldName = "Fussballplatz Rebwiesenstrasse",
                         SportFieldLatitude = 47.494137684135325,
-                        SportFieldLongitude = 8.705790915104656
+                        SportFieldLongitude = 8.705790915104656,
+                        SportFieldCategory = SportFieldCategory.Soccer
                     },
                     new()
                     {
@@ -244,7 +254,8 @@ namespace OlympGuide.Application.Features.TestData
                         User = users[_random.Next(0, users.Count)],
                         SportFieldName = "Finnenbahn Rennweg",
                         SportFieldLatitude = 47.50241077412348, 
-                        SportFieldLongitude = 8.713614845036803
+                        SportFieldLongitude = 8.713614845036803,
+                        SportFieldCategory = SportFieldCategory.Miscellaneous
                     }
                 };
 
