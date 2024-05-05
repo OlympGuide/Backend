@@ -39,7 +39,7 @@ namespace OlympGuide.Application.Features.SportField
 
         public Task<List<SportFieldType>> GetSportFieldsByCategory(SportFieldCategory category)
         {
-            return _repository.GetAllSportFielsByCategory(category);
+            return _repository.GetSportFieldsByCategory(category);
         }
     }
 }
