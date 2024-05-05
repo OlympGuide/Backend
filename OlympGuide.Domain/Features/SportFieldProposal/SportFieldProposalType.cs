@@ -1,4 +1,5 @@
 ﻿using OlympGuide.Domain.Abstraction;
+using OlympGuide.Domain.Features.SportField;
 using OlympGuide.Domain.Features.User;
 
 namespace OlympGuide.Domain.Features.SportFieldProposal
@@ -12,6 +13,7 @@ namespace OlympGuide.Domain.Features.SportFieldProposal
         public double SportFieldLongitude { get; set; }
         public double SportFieldLatitude { get; set; }
         public string? SportFieldAddress {  get; set; }
+        public SportFieldCategory SportFieldCategory { get; set; }
         public SportFieldProposalStates State { get; set; } = SportFieldProposalStates.Open;
     }
 }
