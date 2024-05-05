@@ -228,6 +228,24 @@ namespace OlympGuide.Application.Features.TestData
                         SportFieldLatitude = 47.49754039335906,
                         SportFieldLongitude = 8.722296236745477,
                         SportFieldAddress = "untere Vogelsangstrasse 6, 8400 Winterthur"
+                    },
+                    new()
+                    {
+                        Id = GenerateGuid(),
+                        Date = DateTime.UtcNow,
+                        User = users[random.Next(0, users.Count)],
+                        SportFieldName = "Fussballplatz Rebwiesenstrasse",
+                        SportFieldLatitude = 47.494137684135325,
+                        SportFieldLongitude = 8.705790915104656
+                    },
+                    new()
+                    {
+                        Id = GenerateGuid(),
+                        Date = DateTime.UtcNow,
+                        User = users[random.Next(0, users.Count)],
+                        SportFieldName = "Finnenbahn Rennweg",
+                        SportFieldLatitude = 47.50241077412348, 
+                        SportFieldLongitude = 8.713614845036803
                     }
                 };
 
