@@ -8,5 +8,6 @@ namespace OlympGuide.Application.Features.SportField
         public Task<List<SportFieldType>> GetAllSportFields();
         public Task<SportFieldType> GetSportFieldById(Guid sportFieldId);
         public Task<SportFieldType> AddSportField(SportFieldType sportFieldToAdd);
+        public Task<List<SportFieldType>> GetSportFieldsByCategory(SportFieldCategory category);
     }
 }

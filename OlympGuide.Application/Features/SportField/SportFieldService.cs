@@ -36,5 +36,10 @@ namespace OlympGuide.Application.Features.SportField
                 throw new NoSportFieldFoundException(sportFieldId);
             }
         }
+
+        public Task<List<SportFieldType>> GetSportFieldsByCategory(SportFieldCategory category)
+        {
+            return _repository.GetAllSportFielsByCategory(category);
+        }
     }
 }

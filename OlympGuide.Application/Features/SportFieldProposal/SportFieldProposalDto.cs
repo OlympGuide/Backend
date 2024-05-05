@@ -1,5 +1,7 @@
-﻿namespace OlympGuide.Application.Features.SportFieldProposal
+﻿using OlympGuide.Domain.Features.SportField;
+
+namespace OlympGuide.Application.Features.SportFieldProposal
 {
-    public record SportFieldProposalDto(string SportFieldName, string? SportFieldDescription, double SportFieldLongitude, double SportFieldLatitude, string? SportFieldAddress);
+    public record SportFieldProposalDto(string SportFieldName, string? SportFieldDescription, double SportFieldLongitude, double SportFieldLatitude, string? SportFieldAddress, SportFieldCategory Category);
 
 }

@@ -26,5 +26,12 @@ namespace OlympGuide.Infrastructre.Repositories
 
             return sportFieldToAdd;
         }
+
+        public async Task<List<SportFieldType>> GetAllSportFielsByCategory(SportFieldCategory catergory)
+        {
+            return await context.SportFields
+                .Where(sf => sf.Category == catergory)
+                .ToListAsync();
+        }
     }
 }
