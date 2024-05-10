@@ -6,7 +6,7 @@ namespace OlympGuide.Domain.Features.SportFieldProposal
     public class SportFieldProposalType : Entity
     {
         public DateTime Date { get; set; }
-        public required UserProfile User { get; set; }
+        public virtual required UserProfile User { get; set; }
         public string SportFieldName { get; set; } = string.Empty;
         public string? SportFieldDescription { get; set; }
         public double SportFieldLongitude { get; set; }

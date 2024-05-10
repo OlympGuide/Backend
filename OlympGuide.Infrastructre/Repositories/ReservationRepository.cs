@@ -55,6 +55,19 @@ namespace OlympGuide.Infrastructre.Repositories
 
         }
 
+        public async Task<ReservationType> ChangeReservationById(Guid reservationId, ReservationType newReservation)
+        {
+            var reservation = await context.Reservations
+                .SingleAsync(sf => sf.Id == reservationId);
+
+            reservation = newReservation;
+            context.Reservations.Update(reservation);
+            await context.SaveChangesAsync();
+
+            return reservation;
+
+        }
+
         public async Task<ReservationType> DeleteReservationById(Guid reservationId)
         {
             var reservation = await context.Reservations
