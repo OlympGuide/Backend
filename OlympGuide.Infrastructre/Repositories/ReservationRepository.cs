@@ -63,7 +63,7 @@ namespace OlympGuide.Infrastructre.Repositories
                 throw new ArgumentException("Die angegebene Reservierung existiert nicht im Kontext.");
             }
 
-            context.Entry((ReservationType)existingReservation).CurrentValues.SetValues(newReservation);
+            context.Entry(existingReservation).CurrentValues.SetValues(newReservation);
 
             await context.SaveChangesAsync();
             return newReservation;
