@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Options;
 using OlympGuide.Domain.Features.Reservation;
 using OlympGuide.Domain.Features.SportField;
 using OlympGuide.Domain.Features.SportFieldProposal;
