@@ -9,5 +9,6 @@ namespace OlympGuide.Domain.Features.SportField
         public double Longitude { get; set; }
         public double Latitude { get; set; }
         public string? Address { get; set; }
+        public SportFieldCategory Category { get; set; } 
     }
 }

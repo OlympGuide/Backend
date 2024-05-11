@@ -24,7 +24,8 @@ namespace OlympGuideTests.SportFieldProposal
                 "Description",
                 10.0f,
                 20.0f,
-                "123 Main St"
+                "123 Main St",
+                SportFieldCategory.Soccer
             );
 
             // Act
