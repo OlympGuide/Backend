@@ -61,12 +61,10 @@ namespace OlympGuide.Controllers
 
         [HttpPut("{id}")]
         [Authorize("access:admin")]
-        public async Task<ReservationDetailsDto> ChangeStateById(Guid id, [FromBody] ReservationStates newState)
+        public async Task<ReservationDetailsDto> ChangeReservationById(Guid id, [FromBody] ReservationDto reservation)
         {
-            var reservation = await _service.ChangeStateById(id, newState);
-            var reservationDto = _mapper.Map<ReservationType, ReservationDetailsDto>(reservation);
-
-            return reservationDto;
+            var newReservation = await _service.ChangeReservationById(id,reservation);
+            return _mapper.Map<ReservationType, ReservationDetailsDto>(newReservation);
         }
 
         [HttpDelete("{id}")]

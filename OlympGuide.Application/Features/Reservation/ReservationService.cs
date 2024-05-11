@@ -100,6 +100,27 @@ namespace OlympGuide.Application.Features.Reservation
             }
         }
 
+        public async Task<ReservationType> ChangeReservationById(Guid reservationId, ReservationDto reservationToChange)
+        {
+            if (reservationId == Guid.Empty)
+            {
+                throw new ArgumentException("Guid must no be Empty");
+            }
+            try
+            {
+                var reservation = await _repository.GetReservationById(reservationId);
+                reservation.Start = reservationToChange.Start;
+                reservation.End = reservationToChange.End;
+                reservation.SportFieldId = reservationToChange.SportFieldId;
+
+                return await _repository.ChangeReservation(reservation);
+            }
+            catch (InvalidOperationException)
+            {
+                throw new NoReservationFoundException(reservationId);
+            }
+        }
+
         public async Task<ReservationType> DeleteReservationById(Guid reservationId)
         {
             if (reservationId == Guid.Empty)
@@ -117,5 +138,6 @@ namespace OlympGuide.Application.Features.Reservation
             }
 
         }
+
     }
 }

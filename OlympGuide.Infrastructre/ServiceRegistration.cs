@@ -18,6 +18,7 @@ namespace OlympGuide.Infrastructre
                   options
                       .UseNpgsql(configuration.GetConnectionString("OlympGuideDB"))
                       .UseSnakeCaseNamingConvention()
+                      .UseLazyLoadingProxies()
                   );
 
             services.AddScoped<ISportFieldRepository, SportFieldRepository>();

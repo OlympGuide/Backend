@@ -10,6 +10,7 @@ namespace OlympGuide.Domain.Features.Reservation
         public Task<List<ReservationType>> GetReservationsBySportField(Guid sportFieldId);
         public Task<ReservationType> AddReservation(ReservationType reservationToAdd);
         public Task<ReservationType> DeleteReservationById(Guid reservationId);
+        public Task<ReservationType> ChangeReservation(ReservationType reservation);
         public Task<ReservationType> ChangeStateById(Guid reservationId, ReservationStates newState);
     }
 }

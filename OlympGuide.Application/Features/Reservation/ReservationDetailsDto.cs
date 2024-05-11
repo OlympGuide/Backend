@@ -1,8 +1,8 @@
-﻿using OlympGuide.Domain.Features.Reservation;
-using OlympGuide.Domain.Features.User;
+﻿using OlympGuide.Application.Features.User;
+using OlympGuide.Domain.Features.Reservation;
 
 namespace OlympGuide.Application.Features.Reservation
 {
-    public record ReservationDetailsDto(Guid Id, Guid SportFieldId, UserProfile User, DateTime Start, DateTime End, ReservationStates State);
+    public record ReservationDetailsDto(Guid Id, Guid SportFieldId, UserProfileDto User, DateTime Start, DateTime End, ReservationStates State);
 
 }

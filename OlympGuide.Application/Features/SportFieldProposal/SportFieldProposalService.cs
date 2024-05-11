@@ -28,6 +28,7 @@ namespace OlympGuide.Application.Features.SportFieldProposal
                 SportFieldLongitude = sportFieldProposalToAdd.SportFieldLongitude,
                 SportFieldLatitude = sportFieldProposalToAdd.SportFieldLatitude,
                 SportFieldAddress = sportFieldProposalToAdd.SportFieldAddress,
+                SportFieldCategory = sportFieldProposalToAdd.SportFieldCategory,
                 State = SportFieldProposalStates.Open
             };
 
