@@ -17,7 +17,8 @@ namespace OlympGuide.Application.Features.SportFieldProposal
                 Description = message.SportFieldProposal.SportFieldDescription,
                 Longitude = message.SportFieldProposal.SportFieldLongitude,
                 Latitude = message.SportFieldProposal.SportFieldLatitude,
-                Address = message.SportFieldProposal.SportFieldAddress
+                Address = message.SportFieldProposal.SportFieldAddress,
+                Category = message.SportFieldProposal.SportFieldCategory
             };
             _service.AddSportField(sportFieldToAdd);
             return Task.CompletedTask;
