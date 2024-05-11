@@ -2,7 +2,6 @@ using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using OlympGuide.Application.Features.Reservation;
-using OlympGuide.Application.Features.SportField;
 using OlympGuide.Domain.Features.Reservation;
 
 namespace OlympGuide.Controllers
