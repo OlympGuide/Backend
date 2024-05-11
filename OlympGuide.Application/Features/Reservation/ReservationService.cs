@@ -113,7 +113,7 @@ namespace OlympGuide.Application.Features.Reservation
                 reservation.End = reservationToChange.End;
                 reservation.SportFieldId = reservationToChange.SportFieldId;
 
-                return await _repository.ChangeReservationById(reservationId, reservation);
+                return await _repository.ChangeReservation(reservation);
             }
             catch (InvalidOperationException)
             {
