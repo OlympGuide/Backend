@@ -57,14 +57,7 @@ namespace OlympGuide.Infrastructre.Repositories
 
         public async Task<ReservationType> ChangeReservation(ReservationType newReservation)
         {
-            var existingReservation = await context.Reservations.FindAsync(newReservation.Id);
-            if (existingReservation == null)
-            {
-                throw new ArgumentException("Die angegebene Reservierung existiert nicht im Kontext.");
-            }
-
-            context.Entry(existingReservation).CurrentValues.SetValues(newReservation);
-
+            context.Reservations.Update(newReservation);
             await context.SaveChangesAsync();
             return newReservation;
 
