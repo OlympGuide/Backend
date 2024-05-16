@@ -28,7 +28,7 @@ namespace OlympGuide.Infrastructre.Repositories
         public async Task<List<ReservationType>> GetReservationsBySportField(Guid sportFieldId)
         {
             return await context.Reservations
-                .Where(sf => sf.SportFieldId == sportFieldId)
+                .Where(sf => sf.SportField.Id == sportFieldId)
                 .ToListAsync();
         }
 
