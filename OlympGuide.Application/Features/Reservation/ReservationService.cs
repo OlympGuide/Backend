@@ -1,12 +1,14 @@
-﻿using OlympGuide.Domain.Features.Reservation;
+﻿using OlympGuide.Application.Features.SportField;
+using OlympGuide.Domain.Features.Reservation;
 using OlympGuide.Domain.Features.User;
 
 namespace OlympGuide.Application.Features.Reservation
 {
-    public class ReservationService(IReservationRepository repository, IUserService userService) : IReservationService
+    public class ReservationService(IReservationRepository repository, IUserService userService, ISportFieldService sportFieldService) : IReservationService
     {
         private readonly IReservationRepository _repository = repository;
         private readonly IUserService _userService = userService;
+        private readonly ISportFieldService _sportFieldService = sportFieldService;
         public async Task<List<ReservationType>> GetAllReservations()
         {
             var user = await _userService.GetCurrentUserFromUserContext();
@@ -75,7 +77,7 @@ namespace OlympGuide.Application.Features.Reservation
             var newReservation = new ReservationType()
             {
                 User = user,
-                SportFieldId = reservationToAdd.SportFieldId,
+                SportField = await _sportFieldService.GetSportFieldById(reservationToAdd.SportFieldId),
                 Start = reservationToAdd.Start,
                 End = reservationToAdd.End,
                 State = ReservationStates.Open
@@ -111,7 +113,7 @@ namespace OlympGuide.Application.Features.Reservation
                 var reservation = await _repository.GetReservationById(reservationId);
                 reservation.Start = reservationToChange.Start;
                 reservation.End = reservationToChange.End;
-                reservation.SportFieldId = reservationToChange.SportFieldId;
+                reservation.SportField = await _sportFieldService.GetSportFieldById(reservationToChange.SportFieldId);
 
                 return await _repository.ChangeReservation(reservation);
             }

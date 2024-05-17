@@ -198,7 +198,7 @@ namespace OlympGuide.Application.Features.TestData
                         reservations.Add(new ReservationType
                         {
                             Id = GenerateGuid(),
-                            SportFieldId = sportField.Id,
+                            SportField = sportField,
                             User = users[_random.Next(0, users.Count)],
                             Start = this.GenerateDateTimeForReservation(currentDay,
                                 reservationPeriodHourStart + startHour),

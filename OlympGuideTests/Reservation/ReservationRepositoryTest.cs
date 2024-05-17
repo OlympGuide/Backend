@@ -33,7 +33,7 @@ namespace OlympGuideTests.Reservation
             var newReservation = new ReservationType()
             {
                 User = user,
-                SportFieldId = sportField.Id,
+                SportField = sportField,
                 Start = DateTime.Now,
                 End = DateTime.Now,
                 State = ReservationStates.Open
